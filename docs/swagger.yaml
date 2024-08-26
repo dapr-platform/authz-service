@@ -1,0 +1,3386 @@
+basePath: /swagger/authz-service
+definitions:
+  common.Page:
+    properties:
+      items: {}
+      page:
+        type: integer
+      page_size:
+        type: integer
+      total:
+        type: integer
+    type: object
+  common.Response:
+    properties:
+      data: {}
+      msg:
+        type: string
+      status:
+        type: integer
+    type: object
+  entity.MenuId:
+    properties:
+      resource_id:
+        description: for example proj-001
+        type: string
+    type: object
+  entity.UserInfo:
+    properties:
+      address:
+        description: address
+        type: string
+      avatar_url:
+        description: avatar_url
+        type: string
+      create_at:
+        description: create_at
+        type: string
+      email:
+        description: email
+        type: string
+      gender:
+        description: gender
+        type: integer
+      id:
+        description: id
+        type: string
+      identity:
+        description: identity
+        type: string
+      is_admin:
+        description: is super admin
+        type: integer
+      menu_ids:
+        items:
+          $ref: '#/definitions/entity.MenuId'
+        type: array
+      mobile:
+        description: mobile
+        type: string
+      name:
+        description: name
+        type: string
+      org_id:
+        description: org_id
+        type: string
+      password:
+        description: password
+        type: string
+      status:
+        description: status
+        type: integer
+      tenant_id:
+        description: tenant_id
+        type: string
+      type:
+        description: type
+        type: integer
+      update_at:
+        description: update_at
+        type: string
+    type: object
+  entity.UserLoginReq:
+    properties:
+      identity:
+        type: string
+      password:
+        type: string
+    type: object
+  model.Resource:
+    properties:
+      api_url:
+        description: api鉴权用到
+        type: string
+      data_conditions:
+        description: 数据条件（数据鉴权用到，存放对象的json字符串)
+        type: string
+      id:
+        description: 唯一标识,例如UI-001-001
+        type: string
+      module:
+        description: 模块
+        type: string
+      name:
+        description: 名称
+        type: string
+      parent_id:
+        description: parent_id
+        type: string
+      service_name:
+        description: 服务名
+        type: string
+      service_name_cn:
+        description: 中文服务名
+        type: string
+      sort_index:
+        description: sort_index
+        type: integer
+      support_ops:
+        description: 支持的操作(字典值,1,2,3)
+        type: string
+      type:
+        description: 分类（1:菜单,2:api,3:功能点,4:数据)
+        type: integer
+    type: object
+  model.Role:
+    properties:
+      create_at:
+        description: create_at
+        type: string
+      id:
+        description: 唯一标识
+        type: string
+      name:
+        description: 名称
+        type: string
+      remark:
+        description: remark
+        type: string
+      sort_index:
+        description: sort_index
+        type: integer
+      status:
+        description: status
+        type: integer
+      update_at:
+        description: update_at
+        type: string
+    type: object
+  model.Role_detail:
+    properties:
+      api_resources:
+        description: api_resources
+      create_at:
+        description: create_at
+        type: string
+      data_resources:
+        description: data_resources
+      func_resources:
+        description: func_resources
+      id:
+        description: id
+        type: string
+      menu_resources:
+        description: menu_resources
+      name:
+        description: name
+        type: string
+      remark:
+        description: remark
+        type: string
+      sort_index:
+        description: sort_index
+        type: integer
+      status:
+        description: status
+        type: integer
+      update_at:
+        description: update_at
+        type: string
+    type: object
+  model.Role_resource_operate:
+    properties:
+      filter_conditions:
+        description: 过滤条件json字符串
+        type: string
+      id:
+        description: 唯一标识
+        type: string
+      op:
+        description: 操作（字典值）
+        type: string
+      resource_id:
+        description: 资源id
+        type: string
+      role_id:
+        description: 角色id
+        type: string
+    type: object
+  model.Role_with_resource_ids:
+    properties:
+      api_resource_ids:
+        description: api_resource_ids
+      create_at:
+        description: create_at
+        type: string
+      data_resource_ids:
+        description: data_resource_ids
+      func_resource_ids:
+        description: func_resource_ids
+      id:
+        description: id
+        type: string
+      menu_resource_ids:
+        description: menu_resource_ids
+      name:
+        description: name
+        type: string
+      remark:
+        description: remark
+        type: string
+      sort_index:
+        description: sort_index
+        type: integer
+      status:
+        description: status
+        type: integer
+      update_at:
+        description: update_at
+        type: string
+    type: object
+  model.TokenInfo:
+    properties:
+      access_token:
+        type: string
+      expires_in:
+        type: integer
+      refresh_token:
+        type: string
+      token_type:
+        type: string
+    type: object
+  model.User:
+    properties:
+      address:
+        description: address
+        type: string
+      avatar_url:
+        description: avatar_url
+        type: string
+      create_at:
+        description: create_at
+        type: string
+      email:
+        description: email
+        type: string
+      gender:
+        description: gender
+        type: integer
+      id:
+        description: id
+        type: string
+      identity:
+        description: identity
+        type: string
+      mobile:
+        description: mobile
+        type: string
+      name:
+        description: name
+        type: string
+      org_id:
+        description: org_id
+        type: string
+      password:
+        description: password
+        type: string
+      status:
+        description: status
+        type: integer
+      tenant_id:
+        description: tenant_id
+        type: string
+      type:
+        description: type
+        type: integer
+      update_at:
+        description: update_at
+        type: string
+    type: object
+  model.User_with_menu:
+    properties:
+      address:
+        description: address
+        type: string
+      avatar_url:
+        description: avatar_url
+        type: string
+      create_at:
+        description: create_at
+        type: string
+      email:
+        description: email
+        type: string
+      gender:
+        description: gender
+        type: integer
+      id:
+        description: id
+        type: string
+      identity:
+        description: identity
+        type: string
+      menu_ids:
+        description: menu_ids
+      mobile:
+        description: mobile
+        type: string
+      name:
+        description: name
+        type: string
+      org_id:
+        description: org_id
+        type: string
+      password:
+        description: password
+        type: string
+      status:
+        description: status
+        type: integer
+      tenant_id:
+        description: tenant_id
+        type: string
+      type:
+        description: type
+        type: integer
+      update_at:
+        description: update_at
+        type: string
+    type: object
+  model.User_with_role:
+    properties:
+      address:
+        description: address
+        type: string
+      avatar_url:
+        description: avatar_url
+        type: string
+      create_at:
+        description: create_at
+        type: string
+      email:
+        description: email
+        type: string
+      gender:
+        description: gender
+        type: integer
+      id:
+        description: id
+        type: string
+      identity:
+        description: identity
+        type: string
+      mobile:
+        description: mobile
+        type: string
+      name:
+        description: name
+        type: string
+      org_id:
+        description: org_id
+        type: string
+      password:
+        description: password
+        type: string
+      roles:
+        description: roles
+      status:
+        description: status
+        type: integer
+      tenant_id:
+        description: tenant_id
+        type: string
+      type:
+        description: type
+        type: integer
+      update_at:
+        description: update_at
+        type: string
+    type: object
+  model.Userole:
+    properties:
+      id:
+        description: 唯一标识
+        type: string
+      role_id:
+        description: 角色id
+        type: string
+      user_id:
+        description: 用户id
+        type: string
+    type: object
+info:
+  contact: {}
+  description: authz-service API
+  title: authz-service API
+  version: "1.0"
+paths:
+  /captcha-gen:
+    get:
+      description: get Captcha
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: captcha
+          schema:
+            allOf:
+            - $ref: '#/definitions/common.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: get Captcha
+      tags:
+      - Oauth2
+  /oauth/token:
+    post:
+      description: get token
+      parameters:
+      - description: identity
+        in: formData
+        name: identity
+        type: string
+      - description: password
+        in: formData
+        name: password
+        type: string
+      - description: grant_type
+        in: formData
+        name: grant_type
+        required: true
+        type: string
+      - description: captcha_key
+        in: formData
+        name: captcha_key
+        type: string
+      - description: captcha_value
+        in: formData
+        name: captcha_value
+        type: string
+      - description: captcha_value
+        in: formData
+        name: refresh_token
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: token info
+          schema:
+            $ref: '#/definitions/model.TokenInfo'
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: get token
+      tags:
+      - Oauth2
+  /oauth/token-valid:
+    post:
+      description: token valid
+      parameters:
+      - description: tokenInfo
+        in: body
+        name: info
+        required: true
+        schema:
+          $ref: '#/definitions/model.TokenInfo'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: token info
+          schema:
+            $ref: '#/definitions/model.TokenInfo'
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: token valid
+      tags:
+      - Oauth2
+  /resource:
+    get:
+      description: query objects
+      parameters:
+      - description: _select
+        in: query
+        name: _select
+        type: string
+      - description: order
+        in: query
+        name: _order
+        type: string
+      - description: id
+        in: query
+        name: id
+        type: string
+      - description: name
+        in: query
+        name: name
+        type: string
+      - description: parent_id
+        in: query
+        name: parent_id
+        type: string
+      - description: module
+        in: query
+        name: module
+        type: string
+      - description: service_name
+        in: query
+        name: service_name
+        type: string
+      - description: service_name_cn
+        in: query
+        name: service_name_cn
+        type: string
+      - description: type
+        in: query
+        name: type
+        type: string
+      - description: api_url
+        in: query
+        name: api_url
+        type: string
+      - description: sort_index
+        in: query
+        name: sort_index
+        type: string
+      - description: data_conditions
+        in: query
+        name: data_conditions
+        type: string
+      - description: support_ops
+        in: query
+        name: support_ops
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: objects array
+          schema:
+            allOf:
+            - $ref: '#/definitions/common.Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/model.Resource'
+                  type: array
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: query objects
+      tags:
+      - Resource
+    post:
+      consumes:
+      - application/json
+      description: save
+      parameters:
+      - description: object
+        in: body
+        name: item
+        required: true
+        schema:
+          $ref: '#/definitions/model.Resource'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: object
+          schema:
+            allOf:
+            - $ref: '#/definitions/common.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/model.Resource'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: save
+      tags:
+      - Resource
+  /resource/{id}:
+    delete:
+      description: delete
+      parameters:
+      - description: 实例id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: object
+          schema:
+            allOf:
+            - $ref: '#/definitions/common.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/model.Resource'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: delete
+      tags:
+      - Resource
+  /resource/batch-delete:
+    post:
+      consumes:
+      - application/json
+      description: batch delete
+      parameters:
+      - description: id array
+        in: body
+        name: ids
+        required: true
+        schema:
+          items:
+            type: string
+          type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/common.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: batch delete
+      tags:
+      - Resource
+  /resource/batch-upsert:
+    post:
+      consumes:
+      - application/json
+      description: batch update
+      parameters:
+      - description: objects array
+        in: body
+        name: entities
+        required: true
+        schema:
+          items:
+            additionalProperties: true
+            type: object
+          type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/common.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: batch update
+      tags:
+      - Resource
+  /resource/groupby:
+    get:
+      description: GroupBy, for example,  _select=level, then return  {level_val1:sum1,level_val2:sum2},
+        _where can input status=0
+      parameters:
+      - description: _select
+        in: query
+        name: _select
+        required: true
+        type: string
+      - description: _where
+        in: query
+        name: _where
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: objects array
+          schema:
+            allOf:
+            - $ref: '#/definitions/common.Response'
+            - properties:
+                data:
+                  items:
+                    additionalProperties: true
+                    type: object
+                  type: array
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: GroupBy
+      tags:
+      - Resource
+  /resource/page:
+    get:
+      description: page query, _page(from 1 begin), _page_size, _order, and others
+        fields, status=1, name=$like.%CAM%
+      parameters:
+      - description: current page
+        in: query
+        name: _page
+        required: true
+        type: integer
+      - description: page size
+        in: query
+        name: _page_size
+        required: true
+        type: integer
+      - description: order
+        in: query
+        name: _order
+        type: string
+      - description: id
+        in: query
+        name: id
+        type: string
+      - description: name
+        in: query
+        name: name
+        type: string
+      - description: parent_id
+        in: query
+        name: parent_id
+        type: string
+      - description: module
+        in: query
+        name: module
+        type: string
+      - description: service_name
+        in: query
+        name: service_name
+        type: string
+      - description: service_name_cn
+        in: query
+        name: service_name_cn
+        type: string
+      - description: type
+        in: query
+        name: type
+        type: string
+      - description: api_url
+        in: query
+        name: api_url
+        type: string
+      - description: sort_index
+        in: query
+        name: sort_index
+        type: string
+      - description: data_conditions
+        in: query
+        name: data_conditions
+        type: string
+      - description: support_ops
+        in: query
+        name: support_ops
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: objects array
+          schema:
+            allOf:
+            - $ref: '#/definitions/common.Response'
+            - properties:
+                data:
+                  allOf:
+                  - $ref: '#/definitions/common.Page'
+                  - properties:
+                      items:
+                        items:
+                          $ref: '#/definitions/model.Resource'
+                        type: array
+                    type: object
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: page query
+      tags:
+      - Resource
+  /role:
+    get:
+      description: query objects
+      parameters:
+      - description: _select
+        in: query
+        name: _select
+        type: string
+      - description: order
+        in: query
+        name: _order
+        type: string
+      - description: id
+        in: query
+        name: id
+        type: string
+      - description: name
+        in: query
+        name: name
+        type: string
+      - description: sort_index
+        in: query
+        name: sort_index
+        type: string
+      - description: status
+        in: query
+        name: status
+        type: string
+      - description: create_at
+        in: query
+        name: create_at
+        type: string
+      - description: update_at
+        in: query
+        name: update_at
+        type: string
+      - description: remark
+        in: query
+        name: remark
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: objects array
+          schema:
+            allOf:
+            - $ref: '#/definitions/common.Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/model.Role'
+                  type: array
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: query objects
+      tags:
+      - Role
+    post:
+      consumes:
+      - application/json
+      description: save
+      parameters:
+      - description: object
+        in: body
+        name: item
+        required: true
+        schema:
+          $ref: '#/definitions/model.Role'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: object
+          schema:
+            allOf:
+            - $ref: '#/definitions/common.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/model.Role'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: save
+      tags:
+      - Role
+  /role-detail:
+    get:
+      description: query objects
+      parameters:
+      - description: _select
+        in: query
+        name: _select
+        type: string
+      - description: order
+        in: query
+        name: _order
+        type: string
+      - description: id
+        in: query
+        name: id
+        type: string
+      - description: name
+        in: query
+        name: name
+        type: string
+      - description: sort_index
+        in: query
+        name: sort_index
+        type: string
+      - description: status
+        in: query
+        name: status
+        type: string
+      - description: create_at
+        in: query
+        name: create_at
+        type: string
+      - description: update_at
+        in: query
+        name: update_at
+        type: string
+      - description: remark
+        in: query
+        name: remark
+        type: string
+      - description: menu_resources
+        in: query
+        name: menu_resources
+        type: string
+      - description: func_resources
+        in: query
+        name: func_resources
+        type: string
+      - description: api_resources
+        in: query
+        name: api_resources
+        type: string
+      - description: data_resources
+        in: query
+        name: data_resources
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: objects array
+          schema:
+            allOf:
+            - $ref: '#/definitions/common.Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/model.Role_detail'
+                  type: array
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: query objects
+      tags:
+      - Role_detail
+    post:
+      consumes:
+      - application/json
+      description: save
+      parameters:
+      - description: object
+        in: body
+        name: item
+        required: true
+        schema:
+          $ref: '#/definitions/model.Role_detail'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: object
+          schema:
+            allOf:
+            - $ref: '#/definitions/common.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/model.Role_detail'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: save
+      tags:
+      - Role_detail
+  /role-detail/{id}:
+    delete:
+      description: delete
+      parameters:
+      - description: 实例id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: object
+          schema:
+            allOf:
+            - $ref: '#/definitions/common.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/model.Role_detail'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: delete
+      tags:
+      - Role_detail
+  /role-detail/batch-delete:
+    post:
+      consumes:
+      - application/json
+      description: batch delete
+      parameters:
+      - description: id array
+        in: body
+        name: ids
+        required: true
+        schema:
+          items:
+            type: string
+          type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/common.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: batch delete
+      tags:
+      - Role_detail
+  /role-detail/batch-upsert:
+    post:
+      consumes:
+      - application/json
+      description: batch update
+      parameters:
+      - description: objects array
+        in: body
+        name: entities
+        required: true
+        schema:
+          items:
+            additionalProperties: true
+            type: object
+          type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/common.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: batch update
+      tags:
+      - Role_detail
+  /role-detail/groupby:
+    get:
+      description: GroupBy, for example,  _select=level, then return  {level_val1:sum1,level_val2:sum2},
+        _where can input status=0
+      parameters:
+      - description: _select
+        in: query
+        name: _select
+        required: true
+        type: string
+      - description: _where
+        in: query
+        name: _where
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: objects array
+          schema:
+            allOf:
+            - $ref: '#/definitions/common.Response'
+            - properties:
+                data:
+                  items:
+                    additionalProperties: true
+                    type: object
+                  type: array
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: GroupBy
+      tags:
+      - Role_detail
+  /role-detail/page:
+    get:
+      description: page query, _page(from 1 begin), _page_size, _order, and others
+        fields, status=1, name=$like.%CAM%
+      parameters:
+      - description: current page
+        in: query
+        name: _page
+        required: true
+        type: integer
+      - description: page size
+        in: query
+        name: _page_size
+        required: true
+        type: integer
+      - description: order
+        in: query
+        name: _order
+        type: string
+      - description: id
+        in: query
+        name: id
+        type: string
+      - description: name
+        in: query
+        name: name
+        type: string
+      - description: sort_index
+        in: query
+        name: sort_index
+        type: string
+      - description: status
+        in: query
+        name: status
+        type: string
+      - description: create_at
+        in: query
+        name: create_at
+        type: string
+      - description: update_at
+        in: query
+        name: update_at
+        type: string
+      - description: remark
+        in: query
+        name: remark
+        type: string
+      - description: menu_resources
+        in: query
+        name: menu_resources
+        type: string
+      - description: func_resources
+        in: query
+        name: func_resources
+        type: string
+      - description: api_resources
+        in: query
+        name: api_resources
+        type: string
+      - description: data_resources
+        in: query
+        name: data_resources
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: objects array
+          schema:
+            allOf:
+            - $ref: '#/definitions/common.Response'
+            - properties:
+                data:
+                  allOf:
+                  - $ref: '#/definitions/common.Page'
+                  - properties:
+                      items:
+                        items:
+                          $ref: '#/definitions/model.Role_detail'
+                        type: array
+                    type: object
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: page query
+      tags:
+      - Role_detail
+  /role-resource-operate:
+    get:
+      description: query objects
+      parameters:
+      - description: _select
+        in: query
+        name: _select
+        type: string
+      - description: order
+        in: query
+        name: _order
+        type: string
+      - description: id
+        in: query
+        name: id
+        type: string
+      - description: role_id
+        in: query
+        name: role_id
+        type: string
+      - description: resource_id
+        in: query
+        name: resource_id
+        type: string
+      - description: op
+        in: query
+        name: op
+        type: string
+      - description: filter_conditions
+        in: query
+        name: filter_conditions
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: objects array
+          schema:
+            allOf:
+            - $ref: '#/definitions/common.Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/model.Role_resource_operate'
+                  type: array
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: query objects
+      tags:
+      - Role_resource_operate
+    post:
+      consumes:
+      - application/json
+      description: save
+      parameters:
+      - description: object
+        in: body
+        name: item
+        required: true
+        schema:
+          $ref: '#/definitions/model.Role_resource_operate'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: object
+          schema:
+            allOf:
+            - $ref: '#/definitions/common.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/model.Role_resource_operate'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: save
+      tags:
+      - Role_resource_operate
+  /role-resource-operate/{id}:
+    delete:
+      description: delete
+      parameters:
+      - description: 实例id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: object
+          schema:
+            allOf:
+            - $ref: '#/definitions/common.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/model.Role_resource_operate'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: delete
+      tags:
+      - Role_resource_operate
+  /role-resource-operate/batch-delete:
+    post:
+      consumes:
+      - application/json
+      description: batch delete
+      parameters:
+      - description: id array
+        in: body
+        name: ids
+        required: true
+        schema:
+          items:
+            type: string
+          type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/common.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: batch delete
+      tags:
+      - Role_resource_operate
+  /role-resource-operate/batch-upsert:
+    post:
+      consumes:
+      - application/json
+      description: batch update
+      parameters:
+      - description: objects array
+        in: body
+        name: entities
+        required: true
+        schema:
+          items:
+            additionalProperties: true
+            type: object
+          type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/common.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: batch update
+      tags:
+      - Role_resource_operate
+  /role-resource-operate/groupby:
+    get:
+      description: GroupBy, for example,  _select=level, then return  {level_val1:sum1,level_val2:sum2},
+        _where can input status=0
+      parameters:
+      - description: _select
+        in: query
+        name: _select
+        required: true
+        type: string
+      - description: _where
+        in: query
+        name: _where
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: objects array
+          schema:
+            allOf:
+            - $ref: '#/definitions/common.Response'
+            - properties:
+                data:
+                  items:
+                    additionalProperties: true
+                    type: object
+                  type: array
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: GroupBy
+      tags:
+      - Role_resource_operate
+  /role-resource-operate/page:
+    get:
+      description: page query, _page(from 1 begin), _page_size, _order, and others
+        fields, status=1, name=$like.%CAM%
+      parameters:
+      - description: current page
+        in: query
+        name: _page
+        required: true
+        type: integer
+      - description: page size
+        in: query
+        name: _page_size
+        required: true
+        type: integer
+      - description: order
+        in: query
+        name: _order
+        type: string
+      - description: id
+        in: query
+        name: id
+        type: string
+      - description: role_id
+        in: query
+        name: role_id
+        type: string
+      - description: resource_id
+        in: query
+        name: resource_id
+        type: string
+      - description: op
+        in: query
+        name: op
+        type: string
+      - description: filter_conditions
+        in: query
+        name: filter_conditions
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: objects array
+          schema:
+            allOf:
+            - $ref: '#/definitions/common.Response'
+            - properties:
+                data:
+                  allOf:
+                  - $ref: '#/definitions/common.Page'
+                  - properties:
+                      items:
+                        items:
+                          $ref: '#/definitions/model.Role_resource_operate'
+                        type: array
+                    type: object
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: page query
+      tags:
+      - Role_resource_operate
+  /role-with-resource-ids:
+    get:
+      description: query objects
+      parameters:
+      - description: _select
+        in: query
+        name: _select
+        type: string
+      - description: order
+        in: query
+        name: _order
+        type: string
+      - description: id
+        in: query
+        name: id
+        type: string
+      - description: name
+        in: query
+        name: name
+        type: string
+      - description: sort_index
+        in: query
+        name: sort_index
+        type: string
+      - description: status
+        in: query
+        name: status
+        type: string
+      - description: create_at
+        in: query
+        name: create_at
+        type: string
+      - description: update_at
+        in: query
+        name: update_at
+        type: string
+      - description: remark
+        in: query
+        name: remark
+        type: string
+      - description: menu_resource_ids
+        in: query
+        name: menu_resource_ids
+        type: string
+      - description: func_resource_ids
+        in: query
+        name: func_resource_ids
+        type: string
+      - description: api_resource_ids
+        in: query
+        name: api_resource_ids
+        type: string
+      - description: data_resource_ids
+        in: query
+        name: data_resource_ids
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: objects array
+          schema:
+            allOf:
+            - $ref: '#/definitions/common.Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/model.Role_with_resource_ids'
+                  type: array
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: query objects
+      tags:
+      - Role_with_resource_ids
+    post:
+      consumes:
+      - application/json
+      description: save
+      parameters:
+      - description: object
+        in: body
+        name: item
+        required: true
+        schema:
+          $ref: '#/definitions/model.Role_with_resource_ids'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: object
+          schema:
+            allOf:
+            - $ref: '#/definitions/common.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/model.Role_with_resource_ids'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: save
+      tags:
+      - Role_with_resource_ids
+  /role-with-resource-ids/{id}:
+    delete:
+      description: delete
+      parameters:
+      - description: 实例id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: object
+          schema:
+            allOf:
+            - $ref: '#/definitions/common.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/model.Role_with_resource_ids'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: delete
+      tags:
+      - Role_with_resource_ids
+  /role-with-resource-ids/batch-delete:
+    post:
+      consumes:
+      - application/json
+      description: batch delete
+      parameters:
+      - description: id array
+        in: body
+        name: ids
+        required: true
+        schema:
+          items:
+            type: string
+          type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/common.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: batch delete
+      tags:
+      - Role_with_resource_ids
+  /role-with-resource-ids/batch-upsert:
+    post:
+      consumes:
+      - application/json
+      description: batch update
+      parameters:
+      - description: objects array
+        in: body
+        name: entities
+        required: true
+        schema:
+          items:
+            additionalProperties: true
+            type: object
+          type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/common.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: batch update
+      tags:
+      - Role_with_resource_ids
+  /role-with-resource-ids/groupby:
+    get:
+      description: GroupBy, for example,  _select=level, then return  {level_val1:sum1,level_val2:sum2},
+        _where can input status=0
+      parameters:
+      - description: _select
+        in: query
+        name: _select
+        required: true
+        type: string
+      - description: _where
+        in: query
+        name: _where
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: objects array
+          schema:
+            allOf:
+            - $ref: '#/definitions/common.Response'
+            - properties:
+                data:
+                  items:
+                    additionalProperties: true
+                    type: object
+                  type: array
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: GroupBy
+      tags:
+      - Role_with_resource_ids
+  /role-with-resource-ids/page:
+    get:
+      description: page query, _page(from 1 begin), _page_size, _order, and others
+        fields, status=1, name=$like.%CAM%
+      parameters:
+      - description: current page
+        in: query
+        name: _page
+        required: true
+        type: integer
+      - description: page size
+        in: query
+        name: _page_size
+        required: true
+        type: integer
+      - description: order
+        in: query
+        name: _order
+        type: string
+      - description: id
+        in: query
+        name: id
+        type: string
+      - description: name
+        in: query
+        name: name
+        type: string
+      - description: sort_index
+        in: query
+        name: sort_index
+        type: string
+      - description: status
+        in: query
+        name: status
+        type: string
+      - description: create_at
+        in: query
+        name: create_at
+        type: string
+      - description: update_at
+        in: query
+        name: update_at
+        type: string
+      - description: remark
+        in: query
+        name: remark
+        type: string
+      - description: menu_resource_ids
+        in: query
+        name: menu_resource_ids
+        type: string
+      - description: func_resource_ids
+        in: query
+        name: func_resource_ids
+        type: string
+      - description: api_resource_ids
+        in: query
+        name: api_resource_ids
+        type: string
+      - description: data_resource_ids
+        in: query
+        name: data_resource_ids
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: objects array
+          schema:
+            allOf:
+            - $ref: '#/definitions/common.Response'
+            - properties:
+                data:
+                  allOf:
+                  - $ref: '#/definitions/common.Page'
+                  - properties:
+                      items:
+                        items:
+                          $ref: '#/definitions/model.Role_with_resource_ids'
+                        type: array
+                    type: object
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: page query
+      tags:
+      - Role_with_resource_ids
+  /role/{id}:
+    delete:
+      description: delete
+      parameters:
+      - description: 实例id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: object
+          schema:
+            allOf:
+            - $ref: '#/definitions/common.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/model.Role'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: delete
+      tags:
+      - Role
+  /role/batch-delete:
+    post:
+      consumes:
+      - application/json
+      description: batch delete
+      parameters:
+      - description: id array
+        in: body
+        name: ids
+        required: true
+        schema:
+          items:
+            type: string
+          type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/common.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: batch delete
+      tags:
+      - Role
+  /role/batch-upsert:
+    post:
+      consumes:
+      - application/json
+      description: batch update
+      parameters:
+      - description: objects array
+        in: body
+        name: entities
+        required: true
+        schema:
+          items:
+            additionalProperties: true
+            type: object
+          type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/common.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: batch update
+      tags:
+      - Role
+  /role/groupby:
+    get:
+      description: GroupBy, for example,  _select=level, then return  {level_val1:sum1,level_val2:sum2},
+        _where can input status=0
+      parameters:
+      - description: _select
+        in: query
+        name: _select
+        required: true
+        type: string
+      - description: _where
+        in: query
+        name: _where
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: objects array
+          schema:
+            allOf:
+            - $ref: '#/definitions/common.Response'
+            - properties:
+                data:
+                  items:
+                    additionalProperties: true
+                    type: object
+                  type: array
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: GroupBy
+      tags:
+      - Role
+  /role/page:
+    get:
+      description: page query, _page(from 1 begin), _page_size, _order, and others
+        fields, status=1, name=$like.%CAM%
+      parameters:
+      - description: current page
+        in: query
+        name: _page
+        required: true
+        type: integer
+      - description: page size
+        in: query
+        name: _page_size
+        required: true
+        type: integer
+      - description: order
+        in: query
+        name: _order
+        type: string
+      - description: id
+        in: query
+        name: id
+        type: string
+      - description: name
+        in: query
+        name: name
+        type: string
+      - description: sort_index
+        in: query
+        name: sort_index
+        type: string
+      - description: status
+        in: query
+        name: status
+        type: string
+      - description: create_at
+        in: query
+        name: create_at
+        type: string
+      - description: update_at
+        in: query
+        name: update_at
+        type: string
+      - description: remark
+        in: query
+        name: remark
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: objects array
+          schema:
+            allOf:
+            - $ref: '#/definitions/common.Response'
+            - properties:
+                data:
+                  allOf:
+                  - $ref: '#/definitions/common.Page'
+                  - properties:
+                      items:
+                        items:
+                          $ref: '#/definitions/model.Role'
+                        type: array
+                    type: object
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: page query
+      tags:
+      - Role
+  /test:
+    get:
+      description: test
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/common.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: test
+      tags:
+      - Test
+  /user:
+    get:
+      description: query objects
+      parameters:
+      - description: _select
+        in: query
+        name: _select
+        type: string
+      - description: order
+        in: query
+        name: _order
+        type: string
+      - description: id
+        in: query
+        name: id
+        type: string
+      - description: tenant_id
+        in: query
+        name: tenant_id
+        type: string
+      - description: mobile
+        in: query
+        name: mobile
+        type: string
+      - description: email
+        in: query
+        name: email
+        type: string
+      - description: identity
+        in: query
+        name: identity
+        type: string
+      - description: name
+        in: query
+        name: name
+        type: string
+      - description: gender
+        in: query
+        name: gender
+        type: string
+      - description: address
+        in: query
+        name: address
+        type: string
+      - description: password
+        in: query
+        name: password
+        type: string
+      - description: type
+        in: query
+        name: type
+        type: string
+      - description: org_id
+        in: query
+        name: org_id
+        type: string
+      - description: avatar_url
+        in: query
+        name: avatar_url
+        type: string
+      - description: create_at
+        in: query
+        name: create_at
+        type: string
+      - description: update_at
+        in: query
+        name: update_at
+        type: string
+      - description: status
+        in: query
+        name: status
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: objects array
+          schema:
+            allOf:
+            - $ref: '#/definitions/common.Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/model.User'
+                  type: array
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: query objects
+      tags:
+      - User
+    post:
+      consumes:
+      - application/json
+      description: save
+      parameters:
+      - description: object
+        in: body
+        name: item
+        required: true
+        schema:
+          $ref: '#/definitions/model.User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: object
+          schema:
+            allOf:
+            - $ref: '#/definitions/common.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/model.User'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: save
+      tags:
+      - User
+  /user-with-menu:
+    get:
+      description: query objects
+      parameters:
+      - description: _select
+        in: query
+        name: _select
+        type: string
+      - description: order
+        in: query
+        name: _order
+        type: string
+      - description: id
+        in: query
+        name: id
+        type: string
+      - description: tenant_id
+        in: query
+        name: tenant_id
+        type: string
+      - description: mobile
+        in: query
+        name: mobile
+        type: string
+      - description: email
+        in: query
+        name: email
+        type: string
+      - description: identity
+        in: query
+        name: identity
+        type: string
+      - description: name
+        in: query
+        name: name
+        type: string
+      - description: gender
+        in: query
+        name: gender
+        type: string
+      - description: address
+        in: query
+        name: address
+        type: string
+      - description: password
+        in: query
+        name: password
+        type: string
+      - description: type
+        in: query
+        name: type
+        type: string
+      - description: org_id
+        in: query
+        name: org_id
+        type: string
+      - description: avatar_url
+        in: query
+        name: avatar_url
+        type: string
+      - description: create_at
+        in: query
+        name: create_at
+        type: string
+      - description: update_at
+        in: query
+        name: update_at
+        type: string
+      - description: status
+        in: query
+        name: status
+        type: string
+      - description: menu_ids
+        in: query
+        name: menu_ids
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: objects array
+          schema:
+            allOf:
+            - $ref: '#/definitions/common.Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/model.User_with_menu'
+                  type: array
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: query objects
+      tags:
+      - User_with_menu
+    post:
+      consumes:
+      - application/json
+      description: save
+      parameters:
+      - description: object
+        in: body
+        name: item
+        required: true
+        schema:
+          $ref: '#/definitions/model.User_with_menu'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: object
+          schema:
+            allOf:
+            - $ref: '#/definitions/common.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/model.User_with_menu'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: save
+      tags:
+      - User_with_menu
+  /user-with-menu/{id}:
+    delete:
+      description: delete
+      parameters:
+      - description: 实例id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: object
+          schema:
+            allOf:
+            - $ref: '#/definitions/common.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/model.User_with_menu'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: delete
+      tags:
+      - User_with_menu
+  /user-with-menu/batch-delete:
+    post:
+      consumes:
+      - application/json
+      description: batch delete
+      parameters:
+      - description: id array
+        in: body
+        name: ids
+        required: true
+        schema:
+          items:
+            type: string
+          type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/common.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: batch delete
+      tags:
+      - User_with_menu
+  /user-with-menu/batch-upsert:
+    post:
+      consumes:
+      - application/json
+      description: batch update
+      parameters:
+      - description: objects array
+        in: body
+        name: entities
+        required: true
+        schema:
+          items:
+            additionalProperties: true
+            type: object
+          type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/common.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: batch update
+      tags:
+      - User_with_menu
+  /user-with-menu/groupby:
+    get:
+      description: GroupBy, for example,  _select=level, then return  {level_val1:sum1,level_val2:sum2},
+        _where can input status=0
+      parameters:
+      - description: _select
+        in: query
+        name: _select
+        required: true
+        type: string
+      - description: _where
+        in: query
+        name: _where
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: objects array
+          schema:
+            allOf:
+            - $ref: '#/definitions/common.Response'
+            - properties:
+                data:
+                  items:
+                    additionalProperties: true
+                    type: object
+                  type: array
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: GroupBy
+      tags:
+      - User_with_menu
+  /user-with-menu/page:
+    get:
+      description: page query, _page(from 1 begin), _page_size, _order, and others
+        fields, status=1, name=$like.%CAM%
+      parameters:
+      - description: current page
+        in: query
+        name: _page
+        required: true
+        type: integer
+      - description: page size
+        in: query
+        name: _page_size
+        required: true
+        type: integer
+      - description: order
+        in: query
+        name: _order
+        type: string
+      - description: id
+        in: query
+        name: id
+        type: string
+      - description: tenant_id
+        in: query
+        name: tenant_id
+        type: string
+      - description: mobile
+        in: query
+        name: mobile
+        type: string
+      - description: email
+        in: query
+        name: email
+        type: string
+      - description: identity
+        in: query
+        name: identity
+        type: string
+      - description: name
+        in: query
+        name: name
+        type: string
+      - description: gender
+        in: query
+        name: gender
+        type: string
+      - description: address
+        in: query
+        name: address
+        type: string
+      - description: password
+        in: query
+        name: password
+        type: string
+      - description: type
+        in: query
+        name: type
+        type: string
+      - description: org_id
+        in: query
+        name: org_id
+        type: string
+      - description: avatar_url
+        in: query
+        name: avatar_url
+        type: string
+      - description: create_at
+        in: query
+        name: create_at
+        type: string
+      - description: update_at
+        in: query
+        name: update_at
+        type: string
+      - description: status
+        in: query
+        name: status
+        type: string
+      - description: menu_ids
+        in: query
+        name: menu_ids
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: objects array
+          schema:
+            allOf:
+            - $ref: '#/definitions/common.Response'
+            - properties:
+                data:
+                  allOf:
+                  - $ref: '#/definitions/common.Page'
+                  - properties:
+                      items:
+                        items:
+                          $ref: '#/definitions/model.User_with_menu'
+                        type: array
+                    type: object
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: page query
+      tags:
+      - User_with_menu
+  /user-with-role:
+    get:
+      description: query objects
+      parameters:
+      - description: _select
+        in: query
+        name: _select
+        type: string
+      - description: order
+        in: query
+        name: _order
+        type: string
+      - description: id
+        in: query
+        name: id
+        type: string
+      - description: tenant_id
+        in: query
+        name: tenant_id
+        type: string
+      - description: mobile
+        in: query
+        name: mobile
+        type: string
+      - description: email
+        in: query
+        name: email
+        type: string
+      - description: identity
+        in: query
+        name: identity
+        type: string
+      - description: name
+        in: query
+        name: name
+        type: string
+      - description: gender
+        in: query
+        name: gender
+        type: string
+      - description: address
+        in: query
+        name: address
+        type: string
+      - description: password
+        in: query
+        name: password
+        type: string
+      - description: type
+        in: query
+        name: type
+        type: string
+      - description: org_id
+        in: query
+        name: org_id
+        type: string
+      - description: avatar_url
+        in: query
+        name: avatar_url
+        type: string
+      - description: create_at
+        in: query
+        name: create_at
+        type: string
+      - description: update_at
+        in: query
+        name: update_at
+        type: string
+      - description: status
+        in: query
+        name: status
+        type: string
+      - description: roles
+        in: query
+        name: roles
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: objects array
+          schema:
+            allOf:
+            - $ref: '#/definitions/common.Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/model.User_with_role'
+                  type: array
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: query objects
+      tags:
+      - User_with_role
+    post:
+      consumes:
+      - application/json
+      description: save
+      parameters:
+      - description: object
+        in: body
+        name: item
+        required: true
+        schema:
+          $ref: '#/definitions/model.User_with_role'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: object
+          schema:
+            allOf:
+            - $ref: '#/definitions/common.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/model.User_with_role'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: save
+      tags:
+      - User_with_role
+  /user-with-role/{id}:
+    delete:
+      description: delete
+      parameters:
+      - description: 实例id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: object
+          schema:
+            allOf:
+            - $ref: '#/definitions/common.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/model.User_with_role'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: delete
+      tags:
+      - User_with_role
+  /user-with-role/batch-delete:
+    post:
+      consumes:
+      - application/json
+      description: batch delete
+      parameters:
+      - description: id array
+        in: body
+        name: ids
+        required: true
+        schema:
+          items:
+            type: string
+          type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/common.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: batch delete
+      tags:
+      - User_with_role
+  /user-with-role/batch-upsert:
+    post:
+      consumes:
+      - application/json
+      description: batch update
+      parameters:
+      - description: objects array
+        in: body
+        name: entities
+        required: true
+        schema:
+          items:
+            additionalProperties: true
+            type: object
+          type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/common.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: batch update
+      tags:
+      - User_with_role
+  /user-with-role/groupby:
+    get:
+      description: GroupBy, for example,  _select=level, then return  {level_val1:sum1,level_val2:sum2},
+        _where can input status=0
+      parameters:
+      - description: _select
+        in: query
+        name: _select
+        required: true
+        type: string
+      - description: _where
+        in: query
+        name: _where
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: objects array
+          schema:
+            allOf:
+            - $ref: '#/definitions/common.Response'
+            - properties:
+                data:
+                  items:
+                    additionalProperties: true
+                    type: object
+                  type: array
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: GroupBy
+      tags:
+      - User_with_role
+  /user-with-role/page:
+    get:
+      description: page query, _page(from 1 begin), _page_size, _order, and others
+        fields, status=1, name=$like.%CAM%
+      parameters:
+      - description: current page
+        in: query
+        name: _page
+        required: true
+        type: integer
+      - description: page size
+        in: query
+        name: _page_size
+        required: true
+        type: integer
+      - description: order
+        in: query
+        name: _order
+        type: string
+      - description: id
+        in: query
+        name: id
+        type: string
+      - description: tenant_id
+        in: query
+        name: tenant_id
+        type: string
+      - description: mobile
+        in: query
+        name: mobile
+        type: string
+      - description: email
+        in: query
+        name: email
+        type: string
+      - description: identity
+        in: query
+        name: identity
+        type: string
+      - description: name
+        in: query
+        name: name
+        type: string
+      - description: gender
+        in: query
+        name: gender
+        type: string
+      - description: address
+        in: query
+        name: address
+        type: string
+      - description: password
+        in: query
+        name: password
+        type: string
+      - description: type
+        in: query
+        name: type
+        type: string
+      - description: org_id
+        in: query
+        name: org_id
+        type: string
+      - description: avatar_url
+        in: query
+        name: avatar_url
+        type: string
+      - description: create_at
+        in: query
+        name: create_at
+        type: string
+      - description: update_at
+        in: query
+        name: update_at
+        type: string
+      - description: status
+        in: query
+        name: status
+        type: string
+      - description: roles
+        in: query
+        name: roles
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: objects array
+          schema:
+            allOf:
+            - $ref: '#/definitions/common.Response'
+            - properties:
+                data:
+                  allOf:
+                  - $ref: '#/definitions/common.Page'
+                  - properties:
+                      items:
+                        items:
+                          $ref: '#/definitions/model.User_with_role'
+                        type: array
+                    type: object
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: page query
+      tags:
+      - User_with_role
+  /user/{id}:
+    delete:
+      description: delete
+      parameters:
+      - description: 实例id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: object
+          schema:
+            allOf:
+            - $ref: '#/definitions/common.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/model.User'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: delete
+      tags:
+      - User
+  /user/batch-delete:
+    post:
+      consumes:
+      - application/json
+      description: batch delete
+      parameters:
+      - description: id array
+        in: body
+        name: ids
+        required: true
+        schema:
+          items:
+            type: string
+          type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/common.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: batch delete
+      tags:
+      - User
+  /user/batch-upsert:
+    post:
+      consumes:
+      - application/json
+      description: batch update
+      parameters:
+      - description: objects array
+        in: body
+        name: entities
+        required: true
+        schema:
+          items:
+            additionalProperties: true
+            type: object
+          type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/common.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: batch update
+      tags:
+      - User
+  /user/current:
+    get:
+      description: get user info
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: UserInfo
+          schema:
+            allOf:
+            - $ref: '#/definitions/common.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/entity.UserInfo'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: get user info
+      tags:
+      - User
+  /user/groupby:
+    get:
+      description: GroupBy, for example,  _select=level, then return  {level_val1:sum1,level_val2:sum2},
+        _where can input status=0
+      parameters:
+      - description: _select
+        in: query
+        name: _select
+        required: true
+        type: string
+      - description: _where
+        in: query
+        name: _where
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: objects array
+          schema:
+            allOf:
+            - $ref: '#/definitions/common.Response'
+            - properties:
+                data:
+                  items:
+                    additionalProperties: true
+                    type: object
+                  type: array
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: GroupBy
+      tags:
+      - User
+  /user/login:
+    post:
+      description: login  by identity and password
+      parameters:
+      - description: req
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/entity.UserLoginReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: UserInfo
+          schema:
+            allOf:
+            - $ref: '#/definitions/common.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/entity.UserInfo'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: login by identity and password
+      tags:
+      - User
+  /user/page:
+    get:
+      description: page query, _page(from 1 begin), _page_size, _order, and others
+        fields, status=1, name=$like.%CAM%
+      parameters:
+      - description: current page
+        in: query
+        name: _page
+        required: true
+        type: integer
+      - description: page size
+        in: query
+        name: _page_size
+        required: true
+        type: integer
+      - description: order
+        in: query
+        name: _order
+        type: string
+      - description: id
+        in: query
+        name: id
+        type: string
+      - description: tenant_id
+        in: query
+        name: tenant_id
+        type: string
+      - description: mobile
+        in: query
+        name: mobile
+        type: string
+      - description: email
+        in: query
+        name: email
+        type: string
+      - description: identity
+        in: query
+        name: identity
+        type: string
+      - description: name
+        in: query
+        name: name
+        type: string
+      - description: gender
+        in: query
+        name: gender
+        type: string
+      - description: address
+        in: query
+        name: address
+        type: string
+      - description: password
+        in: query
+        name: password
+        type: string
+      - description: type
+        in: query
+        name: type
+        type: string
+      - description: org_id
+        in: query
+        name: org_id
+        type: string
+      - description: avatar_url
+        in: query
+        name: avatar_url
+        type: string
+      - description: create_at
+        in: query
+        name: create_at
+        type: string
+      - description: update_at
+        in: query
+        name: update_at
+        type: string
+      - description: status
+        in: query
+        name: status
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: objects array
+          schema:
+            allOf:
+            - $ref: '#/definitions/common.Response'
+            - properties:
+                data:
+                  allOf:
+                  - $ref: '#/definitions/common.Page'
+                  - properties:
+                      items:
+                        items:
+                          $ref: '#/definitions/model.User'
+                        type: array
+                    type: object
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: page query
+      tags:
+      - User
+  /userole:
+    get:
+      description: query objects
+      parameters:
+      - description: _select
+        in: query
+        name: _select
+        type: string
+      - description: order
+        in: query
+        name: _order
+        type: string
+      - description: id
+        in: query
+        name: id
+        type: string
+      - description: user_id
+        in: query
+        name: user_id
+        type: string
+      - description: role_id
+        in: query
+        name: role_id
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: objects array
+          schema:
+            allOf:
+            - $ref: '#/definitions/common.Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/model.Userole'
+                  type: array
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: query objects
+      tags:
+      - Userole
+    post:
+      consumes:
+      - application/json
+      description: save
+      parameters:
+      - description: object
+        in: body
+        name: item
+        required: true
+        schema:
+          $ref: '#/definitions/model.Userole'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: object
+          schema:
+            allOf:
+            - $ref: '#/definitions/common.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/model.Userole'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: save
+      tags:
+      - Userole
+  /userole/{id}:
+    delete:
+      description: delete
+      parameters:
+      - description: 实例id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: object
+          schema:
+            allOf:
+            - $ref: '#/definitions/common.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/model.Userole'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: delete
+      tags:
+      - Userole
+  /userole/batch-delete:
+    post:
+      consumes:
+      - application/json
+      description: batch delete
+      parameters:
+      - description: id array
+        in: body
+        name: ids
+        required: true
+        schema:
+          items:
+            type: string
+          type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/common.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: batch delete
+      tags:
+      - Userole
+  /userole/batch-upsert:
+    post:
+      consumes:
+      - application/json
+      description: batch update
+      parameters:
+      - description: objects array
+        in: body
+        name: entities
+        required: true
+        schema:
+          items:
+            additionalProperties: true
+            type: object
+          type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/common.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: batch update
+      tags:
+      - Userole
+  /userole/groupby:
+    get:
+      description: GroupBy, for example,  _select=level, then return  {level_val1:sum1,level_val2:sum2},
+        _where can input status=0
+      parameters:
+      - description: _select
+        in: query
+        name: _select
+        required: true
+        type: string
+      - description: _where
+        in: query
+        name: _where
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: objects array
+          schema:
+            allOf:
+            - $ref: '#/definitions/common.Response'
+            - properties:
+                data:
+                  items:
+                    additionalProperties: true
+                    type: object
+                  type: array
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: GroupBy
+      tags:
+      - Userole
+  /userole/page:
+    get:
+      description: page query, _page(from 1 begin), _page_size, _order, and others
+        fields, status=1, name=$like.%CAM%
+      parameters:
+      - description: current page
+        in: query
+        name: _page
+        required: true
+        type: integer
+      - description: page size
+        in: query
+        name: _page_size
+        required: true
+        type: integer
+      - description: order
+        in: query
+        name: _order
+        type: string
+      - description: id
+        in: query
+        name: id
+        type: string
+      - description: user_id
+        in: query
+        name: user_id
+        type: string
+      - description: role_id
+        in: query
+        name: role_id
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: objects array
+          schema:
+            allOf:
+            - $ref: '#/definitions/common.Response'
+            - properties:
+                data:
+                  allOf:
+                  - $ref: '#/definitions/common.Page'
+                  - properties:
+                      items:
+                        items:
+                          $ref: '#/definitions/model.Userole'
+                        type: array
+                    type: object
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: page query
+      tags:
+      - Userole
+swagger: "2.0"
