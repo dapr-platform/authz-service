@@ -1,6 +1,7 @@
 package service
 
 import (
+	myconfig "authz-service/config"
 	"authz-service/dapr_store"
 	"authz-service/eventpub"
 	"authz-service/model"
@@ -26,7 +27,7 @@ func init() {
 	manager.SetPasswordTokenCfg(config)
 	manager.MustTokenStorage(dapr_store.NewDaprTokenStore())
 	clientStore := store.NewClientStore()
-	err := clientStore.Set("default", &models.Client{ID: "default", Secret: "secret"})
+	err := clientStore.Set(myconfig.CLIENT_ID, &models.Client{ID: myconfig.CLIENT_ID, Secret: myconfig.CLIENT_SECRET})
 	if err != nil {
 		common.Logger.Error("Set client store error", err)
 		panic(err)
@@ -45,7 +46,7 @@ func init() {
 	OauthServer = server.NewServer(serverConfig, manager)
 	OauthServer.SetPasswordAuthorizationHandler(passwordAuthHandler)
 	OauthServer.SetClientInfoHandler(func(r *http.Request) (clientID, clientSecret string, err error) {
-		return "default", "secret", nil
+		return clientID, clientSecret, nil
 	})
 
 }

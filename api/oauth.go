@@ -12,7 +12,74 @@ import (
 
 func initOauthRoute(r chi.Router) {
 	r.HandleFunc(common.BASE_CONTEXT+"/oauth/token", tokenHandler)
+	r.HandleFunc(common.BASE_CONTEXT+"/oauth/token-by-field", tokenByFieldHandler)
 	r.HandleFunc(common.BASE_CONTEXT+"/oauth/token-valid", tokenValidHandler)
+}
+
+// @Summary 根据用户字段 get token
+// @Description 根据用户字段 get token,例如根据手机号,只限server端使用，
+//
+//	需要带有client_id,client_secret, 这两个字段部署时可通过环境变量设置,避免安全问题
+//
+// @Tags Oauth2
+// @Param field formData string true "field"
+// @Param value formData string true "value"
+// @Param client_id formData string true "client_id"
+// @Param client_secret formData string false "client_secret"
+// @Produce  json
+// @Success 200 {object} model.TokenInfo "token info"
+// @Failure 500 {object} string ""
+// @Router /oauth/token-by-field [post]
+func tokenByFieldHandler(w http.ResponseWriter, r *http.Request) {
+	field := r.FormValue("field")
+	if field == "" {
+		common.Logger.Error("field is required")
+		http.Error(w, "field is required", http.StatusBadRequest)
+		return
+	}
+	value := r.FormValue("value")
+	if value == "" {
+		common.Logger.Error("value is required")
+		http.Error(w, "value is required", http.StatusBadRequest)
+		return
+	}
+	client_id := r.FormValue("client_id")
+	if client_id == "" {
+		common.Logger.Error("client_id is required")
+		http.Error(w, "client_id is required", http.StatusBadRequest)
+		return
+	}
+	client_secret := r.FormValue("client_secret")
+	if field == "" {
+		common.Logger.Error("client_secret is required")
+		http.Error(w, "client_secret is required", http.StatusBadRequest)
+		return
+	}
+	if client_id != config.CLIENT_ID || client_secret != config.CLIENT_SECRET {
+		common.HttpError(w, common.ErrParam.AppendMsg("client_id or client_secret error"), http.StatusBadRequest)
+		return
+	}
+	user, err := service.GetUserByFieldName(r.Context(), field, value)
+	if err != nil {
+		common.HttpError(w, common.ErrParam.AppendMsg(err.Error()), http.StatusInternalServerError)
+		return
+	}
+	if user == nil {
+		common.HttpError(w, common.ErrParam.AppendMsg("user is nil"), http.StatusBadRequest)
+		return
+	}
+	if user.Status != 1 {
+		common.HttpError(w, common.ErrParam.AppendMsg("user is forbidden"), http.StatusBadRequest)
+		return
+	}
+	r.Form.Set("username", user.ID)
+	r.Form.Set("password", user.Password)
+	r.Form.Set("grant_type", "password")
+	err = service.OauthServer.HandleTokenRequest(w, r)
+	if err != nil {
+		common.HttpError(w, common.ErrService.AppendMsg(err.Error()), http.StatusInternalServerError)
+	}
+
 }
 
 // @Summary get token
