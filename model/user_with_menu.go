@@ -38,7 +38,7 @@ Table: v_user_with_menu
 
 JSON Sample
 -------------------------------------
-{    "id": "KLXfFgSGmkdyNsZDftEVvMXdw",    "tenant_id": "LPYDvFTUycwuIpAUcGETCIBeV",    "mobile": "HrGLqtKTomuRdTZBbZLJcFbpP",    "email": "YmXkFKIaXUtFZRdyBcVvMFFtO",    "identity": "fCxIUJHXdIDLksvVKhNQIghEs",    "name": "pylVkDAvfXlNXAQdPueJmYdya",    "gender": 47,    "address": "SglUxiWGiKAeyuqtYcDydIagf",    "password": "KGPepNdqBGXapCZkYAUdALDZP",    "type": 91,    "org_id": "BnnkcNpvcsnOOySqcQVAnwTxV",    "avatar_url": "IqcsyYpHRIBlloRUZwuXJKAaE",    "create_at": 22,    "update_at": 87,    "status": 76,    "menu_ids": 62}
+{    "id": "vhbRbSggucHBmImHcAALqvOEu",    "tenant_id": "ONPpMnpNAHFdIWBrdkdXZjNrT",    "mobile": "yjyhnPNbNRgMhpBJBwAwakUZr",    "email": "LcFcZhwPRBVvOMyRfDRuhSqbH",    "identity": "ONXmFMjoUZSwJVxNpdILPKgoh",    "name": "wOsXVwcQOpHTStuQvLUqrEJIm",    "gender": 68,    "address": "IQSyWNHnMlSYwcwmYwIXsWqFL",    "password": "gOLbIuunVsKflVANITwiVSPQA",    "type": 42,    "org_id": "HCIcNLZkhQfqFxwiEsRCyZZux",    "avatar_url": "sqFhATHHpjrpJZeUjmQWugOWw",    "create_at": 51,    "update_at": 9,    "status": 29,    "menu_ids": 26}
 
 
 Comments

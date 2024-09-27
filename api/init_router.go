@@ -18,4 +18,5 @@ func InitRoute(r chi.Router) {
 	InitRole_resource_operateRoute(r)
 	InitRole_detailRoute(r)
 	InitUser_with_menuRoute(r)
+	InitCustomRole_resource_operateRoute(r)
 }

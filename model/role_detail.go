@@ -33,7 +33,7 @@ Table: v_role_detail
 
 JSON Sample
 -------------------------------------
-{    "id": "xlTEkjyKwswpYQNpSVHjVlBFO",    "name": "yHtknGSbbMHuIMEkCcDndVUvP",    "sort_index": 85,    "status": 19,    "create_at": 86,    "update_at": 41,    "remark": "SAifJVxvtvPGroHAMxRvBDgma",    "menu_resources": 65,    "func_resources": 89,    "api_resources": 44,    "data_resources": 67}
+{    "id": "PotXLcEjMBKAhSTqRfELShPiY",    "name": "eecDZZesvbpSnNLUeoKnYypjP",    "sort_index": 53,    "status": 77,    "create_at": 27,    "update_at": 67,    "remark": "yQlmPANanetglEluNquGBOTbu",    "menu_resources": 77,    "func_resources": 11,    "api_resources": 23,    "data_resources": 8}
 
 
 Comments
