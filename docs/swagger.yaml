@@ -24,6 +24,35 @@ definitions:
         description: for example proj-001
         type: string
     type: object
+  entity.RoleDetailVo:
+    properties:
+      api_resources:
+        description: api权限
+        items:
+          $ref: '#/definitions/model.Role_rel_detail'
+        type: array
+      data_resources:
+        description: 数据权限
+        items:
+          $ref: '#/definitions/model.Role_rel_detail'
+        type: array
+      func_resources:
+        description: 功能点权限
+        items:
+          $ref: '#/definitions/model.Role_rel_detail'
+        type: array
+      id:
+        description: 唯一标识
+        type: string
+      menu_resources:
+        description: 菜单权限
+        items:
+          $ref: '#/definitions/model.Role_rel_detail'
+        type: array
+      name:
+        description: 名称
+        type: string
+    type: object
   entity.UserInfo:
     properties:
       address:
@@ -177,6 +206,51 @@ definitions:
       update_at:
         description: update_at
         type: string
+    type: object
+  model.Role_rel_detail:
+    properties:
+      api_url:
+        description: api_url
+        type: string
+      data_conditions:
+        description: data_conditions
+        type: string
+      filter_conditions:
+        description: filter_conditions
+        type: string
+      id:
+        description: id
+        type: string
+      module:
+        description: module
+        type: string
+      op:
+        description: op
+        type: string
+      resource_id:
+        description: resource_id
+        type: string
+      resource_name:
+        description: resource_name
+        type: string
+      role_id:
+        description: role_id
+        type: string
+      role_name:
+        description: role_name
+        type: string
+      service_name:
+        description: service_name
+        type: string
+      service_name_cn:
+        description: service_name_cn
+        type: string
+      support_ops:
+        description: support_ops
+        type: string
+      type:
+        description: type
+        type: integer
     type: object
   model.Role_resource_operate:
     properties:
@@ -434,10 +508,12 @@ paths:
       - description: identity
         in: formData
         name: identity
+        required: true
         type: string
       - description: password
         in: formData
         name: password
+        required: true
         type: string
       - description: grant_type
         in: formData
@@ -468,6 +544,43 @@ paths:
           schema:
             type: string
       summary: get token
+      tags:
+      - Oauth2
+  /oauth/token-by-field:
+    post:
+      description: 根据用户字段 get token,例如根据手机号,只限server端使用，
+      parameters:
+      - description: field
+        in: formData
+        name: field
+        required: true
+        type: string
+      - description: value
+        in: formData
+        name: value
+        required: true
+        type: string
+      - description: client_id
+        in: formData
+        name: client_id
+        required: true
+        type: string
+      - description: client_secret
+        in: formData
+        name: client_secret
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: token info
+          schema:
+            $ref: '#/definitions/model.TokenInfo'
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: 根据用户字段 get token
       tags:
       - Oauth2
   /oauth/token-valid:
@@ -1219,6 +1332,347 @@ paths:
       summary: page query
       tags:
       - Role_detail
+  /role-rel-detail:
+    get:
+      description: query objects
+      parameters:
+      - description: _select
+        in: query
+        name: _select
+        type: string
+      - description: order
+        in: query
+        name: _order
+        type: string
+      - description: id
+        in: query
+        name: id
+        type: string
+      - description: role_id
+        in: query
+        name: role_id
+        type: string
+      - description: resource_id
+        in: query
+        name: resource_id
+        type: string
+      - description: op
+        in: query
+        name: op
+        type: string
+      - description: filter_conditions
+        in: query
+        name: filter_conditions
+        type: string
+      - description: role_name
+        in: query
+        name: role_name
+        type: string
+      - description: resource_name
+        in: query
+        name: resource_name
+        type: string
+      - description: module
+        in: query
+        name: module
+        type: string
+      - description: service_name
+        in: query
+        name: service_name
+        type: string
+      - description: service_name_cn
+        in: query
+        name: service_name_cn
+        type: string
+      - description: type
+        in: query
+        name: type
+        type: string
+      - description: api_url
+        in: query
+        name: api_url
+        type: string
+      - description: data_conditions
+        in: query
+        name: data_conditions
+        type: string
+      - description: support_ops
+        in: query
+        name: support_ops
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: objects array
+          schema:
+            allOf:
+            - $ref: '#/definitions/common.Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/model.Role_rel_detail'
+                  type: array
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: query objects
+      tags:
+      - Role_rel_detail
+    post:
+      consumes:
+      - application/json
+      description: save
+      parameters:
+      - description: object
+        in: body
+        name: item
+        required: true
+        schema:
+          $ref: '#/definitions/model.Role_rel_detail'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: object
+          schema:
+            allOf:
+            - $ref: '#/definitions/common.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/model.Role_rel_detail'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: save
+      tags:
+      - Role_rel_detail
+  /role-rel-detail/{id}:
+    delete:
+      description: delete
+      parameters:
+      - description: 实例id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: object
+          schema:
+            allOf:
+            - $ref: '#/definitions/common.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/model.Role_rel_detail'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: delete
+      tags:
+      - Role_rel_detail
+  /role-rel-detail/batch-delete:
+    post:
+      consumes:
+      - application/json
+      description: batch delete
+      parameters:
+      - description: id array
+        in: body
+        name: ids
+        required: true
+        schema:
+          items:
+            type: string
+          type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/common.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: batch delete
+      tags:
+      - Role_rel_detail
+  /role-rel-detail/batch-upsert:
+    post:
+      consumes:
+      - application/json
+      description: batch update
+      parameters:
+      - description: objects array
+        in: body
+        name: entities
+        required: true
+        schema:
+          items:
+            additionalProperties: true
+            type: object
+          type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/common.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: batch update
+      tags:
+      - Role_rel_detail
+  /role-rel-detail/groupby:
+    get:
+      description: GroupBy, for example,  _select=level, then return  {level_val1:sum1,level_val2:sum2},
+        _where can input status=0
+      parameters:
+      - description: _select
+        in: query
+        name: _select
+        required: true
+        type: string
+      - description: _where
+        in: query
+        name: _where
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: objects array
+          schema:
+            allOf:
+            - $ref: '#/definitions/common.Response'
+            - properties:
+                data:
+                  items:
+                    additionalProperties: true
+                    type: object
+                  type: array
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: GroupBy
+      tags:
+      - Role_rel_detail
+  /role-rel-detail/page:
+    get:
+      description: page query, _page(from 1 begin), _page_size, _order, and others
+        fields, status=1, name=$like.%CAM%
+      parameters:
+      - description: current page
+        in: query
+        name: _page
+        required: true
+        type: integer
+      - description: page size
+        in: query
+        name: _page_size
+        required: true
+        type: integer
+      - description: order
+        in: query
+        name: _order
+        type: string
+      - description: id
+        in: query
+        name: id
+        type: string
+      - description: role_id
+        in: query
+        name: role_id
+        type: string
+      - description: resource_id
+        in: query
+        name: resource_id
+        type: string
+      - description: op
+        in: query
+        name: op
+        type: string
+      - description: filter_conditions
+        in: query
+        name: filter_conditions
+        type: string
+      - description: role_name
+        in: query
+        name: role_name
+        type: string
+      - description: resource_name
+        in: query
+        name: resource_name
+        type: string
+      - description: module
+        in: query
+        name: module
+        type: string
+      - description: service_name
+        in: query
+        name: service_name
+        type: string
+      - description: service_name_cn
+        in: query
+        name: service_name_cn
+        type: string
+      - description: type
+        in: query
+        name: type
+        type: string
+      - description: api_url
+        in: query
+        name: api_url
+        type: string
+      - description: data_conditions
+        in: query
+        name: data_conditions
+        type: string
+      - description: support_ops
+        in: query
+        name: support_ops
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: objects array
+          schema:
+            allOf:
+            - $ref: '#/definitions/common.Response'
+            - properties:
+                data:
+                  allOf:
+                  - $ref: '#/definitions/common.Page'
+                  - properties:
+                      items:
+                        items:
+                          $ref: '#/definitions/model.Role_rel_detail'
+                        type: array
+                    type: object
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: page query
+      tags:
+      - Role_rel_detail
   /role-resource-operate:
     get:
       description: query objects
@@ -1328,6 +1782,44 @@ paths:
           schema:
             $ref: '#/definitions/common.Response'
       summary: delete
+      tags:
+      - Role_resource_operate
+  /role-resource-operate/batch:
+    post:
+      consumes:
+      - application/json
+      description: 批量更新角色的资源关系, 需要传role_id, 先全部删除再增加
+      parameters:
+      - description: role_id
+        in: query
+        name: role_id
+        required: true
+        type: string
+      - description: 实例全部信息
+        in: body
+        name: items
+        required: true
+        schema:
+          items:
+            $ref: '#/definitions/model.Role_resource_operate'
+          type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 实例
+          schema:
+            allOf:
+            - $ref: '#/definitions/common.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/model.Role_resource_operate'
+              type: object
+        "500":
+          description: 错误code和错误信息
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: 批量更新角色的资源关系
       tags:
       - Role_resource_operate
   /role-resource-operate/batch-delete:
@@ -1888,6 +2380,43 @@ paths:
           schema:
             $ref: '#/definitions/common.Response'
       summary: batch update
+      tags:
+      - Role
+  /role/detail:
+    get:
+      description: 查询角色详情列表
+      parameters:
+      - description: current page
+        in: query
+        name: _page
+        type: integer
+      - description: page size
+        in: query
+        name: _page_size
+        type: integer
+      - description: order
+        in: query
+        name: _order
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 实例
+          schema:
+            allOf:
+            - $ref: '#/definitions/common.Response'
+            - properties:
+                data:
+                  items:
+                    $ref: '#/definitions/entity.RoleDetailVo'
+                  type: array
+              type: object
+        "500":
+          description: 错误code和错误信息
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: 查询角色详情列表
       tags:
       - Role
   /role/groupby:

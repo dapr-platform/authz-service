@@ -68,13 +68,15 @@ const docTemplate = `{
                         "type": "string",
                         "description": "identity",
                         "name": "identity",
-                        "in": "formData"
+                        "in": "formData",
+                        "required": true
                     },
                     {
                         "type": "string",
                         "description": "password",
                         "name": "password",
-                        "in": "formData"
+                        "in": "formData",
+                        "required": true
                     },
                     {
                         "type": "string",
@@ -99,6 +101,61 @@ const docTemplate = `{
                         "type": "string",
                         "description": "captcha_value",
                         "name": "refresh_token",
+                        "in": "formData"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "token info",
+                        "schema": {
+                            "$ref": "#/definitions/model.TokenInfo"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/oauth/token-by-field": {
+            "post": {
+                "description": "根据用户字段 get token,例如根据手机号,只限server端使用，",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Oauth2"
+                ],
+                "summary": "根据用户字段 get token",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "field",
+                        "name": "field",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "value",
+                        "name": "value",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "client_id",
+                        "name": "client_id",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "client_secret",
+                        "name": "client_secret",
                         "in": "formData"
                     }
                 ],
@@ -1308,6 +1365,545 @@ const docTemplate = `{
                 }
             }
         },
+        "/role-rel-detail": {
+            "get": {
+                "description": "query objects",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Role_rel_detail"
+                ],
+                "summary": "query objects",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "_select",
+                        "name": "_select",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "order",
+                        "name": "_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "id",
+                        "name": "id",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "role_id",
+                        "name": "role_id",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "resource_id",
+                        "name": "resource_id",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "op",
+                        "name": "op",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "filter_conditions",
+                        "name": "filter_conditions",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "role_name",
+                        "name": "role_name",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "resource_name",
+                        "name": "resource_name",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "module",
+                        "name": "module",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "service_name",
+                        "name": "service_name",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "service_name_cn",
+                        "name": "service_name_cn",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "type",
+                        "name": "type",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "api_url",
+                        "name": "api_url",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "data_conditions",
+                        "name": "data_conditions",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "support_ops",
+                        "name": "support_ops",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "objects array",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/common.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/model.Role_rel_detail"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/common.Response"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "save",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Role_rel_detail"
+                ],
+                "summary": "save",
+                "parameters": [
+                    {
+                        "description": "object",
+                        "name": "item",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.Role_rel_detail"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "object",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/common.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/model.Role_rel_detail"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/common.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/role-rel-detail/batch-delete": {
+            "post": {
+                "description": "batch delete",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Role_rel_detail"
+                ],
+                "summary": "batch delete",
+                "parameters": [
+                    {
+                        "description": "id array",
+                        "name": "ids",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/common.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/common.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/role-rel-detail/batch-upsert": {
+            "post": {
+                "description": "batch update",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Role_rel_detail"
+                ],
+                "summary": "batch update",
+                "parameters": [
+                    {
+                        "description": "objects array",
+                        "name": "entities",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "additionalProperties": true
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/common.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/common.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/role-rel-detail/groupby": {
+            "get": {
+                "description": "GroupBy, for example,  _select=level, then return  {level_val1:sum1,level_val2:sum2}, _where can input status=0",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Role_rel_detail"
+                ],
+                "summary": "GroupBy",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "_select",
+                        "name": "_select",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "_where",
+                        "name": "_where",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "objects array",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/common.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "additionalProperties": true
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/common.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/role-rel-detail/page": {
+            "get": {
+                "description": "page query, _page(from 1 begin), _page_size, _order, and others fields, status=1, name=$like.%CAM%",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Role_rel_detail"
+                ],
+                "summary": "page query",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "current page",
+                        "name": "_page",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "page size",
+                        "name": "_page_size",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "order",
+                        "name": "_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "id",
+                        "name": "id",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "role_id",
+                        "name": "role_id",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "resource_id",
+                        "name": "resource_id",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "op",
+                        "name": "op",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "filter_conditions",
+                        "name": "filter_conditions",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "role_name",
+                        "name": "role_name",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "resource_name",
+                        "name": "resource_name",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "module",
+                        "name": "module",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "service_name",
+                        "name": "service_name",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "service_name_cn",
+                        "name": "service_name_cn",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "type",
+                        "name": "type",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "api_url",
+                        "name": "api_url",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "data_conditions",
+                        "name": "data_conditions",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "support_ops",
+                        "name": "support_ops",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "objects array",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/common.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "allOf": [
+                                                {
+                                                    "$ref": "#/definitions/common.Page"
+                                                },
+                                                {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "items": {
+                                                            "type": "array",
+                                                            "items": {
+                                                                "$ref": "#/definitions/model.Role_rel_detail"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/common.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/role-rel-detail/{id}": {
+            "delete": {
+                "description": "delete",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Role_rel_detail"
+                ],
+                "summary": "delete",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "实例id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "object",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/common.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/model.Role_rel_detail"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/common.Response"
+                        }
+                    }
+                }
+            }
+        },
         "/role-resource-operate": {
             "get": {
                 "description": "query objects",
@@ -1436,6 +2032,68 @@ const docTemplate = `{
                     },
                     "500": {
                         "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/common.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/role-resource-operate/batch": {
+            "post": {
+                "description": "批量更新角色的资源关系, 需要传role_id, 先全部删除再增加",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Role_resource_operate"
+                ],
+                "summary": "批量更新角色的资源关系",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "role_id",
+                        "name": "role_id",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "description": "实例全部信息",
+                        "name": "items",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/model.Role_resource_operate"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "实例",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/common.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/model.Role_resource_operate"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "错误code和错误信息",
                         "schema": {
                             "$ref": "#/definitions/common.Response"
                         }
@@ -2322,6 +2980,67 @@ const docTemplate = `{
                     },
                     "500": {
                         "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/common.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/role/detail": {
+            "get": {
+                "description": "查询角色详情列表",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Role"
+                ],
+                "summary": "查询角色详情列表",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "current page",
+                        "name": "_page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "page size",
+                        "name": "_page_size",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "order",
+                        "name": "_order",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "实例",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/common.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/definitions/entity.RoleDetailVo"
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "错误code和错误信息",
                         "schema": {
                             "$ref": "#/definitions/common.Response"
                         }
@@ -4785,6 +5504,47 @@ const docTemplate = `{
                 }
             }
         },
+        "entity.RoleDetailVo": {
+            "type": "object",
+            "properties": {
+                "api_resources": {
+                    "description": "api权限",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Role_rel_detail"
+                    }
+                },
+                "data_resources": {
+                    "description": "数据权限",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Role_rel_detail"
+                    }
+                },
+                "func_resources": {
+                    "description": "功能点权限",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Role_rel_detail"
+                    }
+                },
+                "id": {
+                    "description": "唯一标识",
+                    "type": "string"
+                },
+                "menu_resources": {
+                    "description": "菜单权限",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Role_rel_detail"
+                    }
+                },
+                "name": {
+                    "description": "名称",
+                    "type": "string"
+                }
+            }
+        },
         "entity.UserInfo": {
             "type": "object",
             "properties": {
@@ -4995,6 +5755,67 @@ const docTemplate = `{
                 "update_at": {
                     "description": "update_at",
                     "type": "string"
+                }
+            }
+        },
+        "model.Role_rel_detail": {
+            "type": "object",
+            "properties": {
+                "api_url": {
+                    "description": "api_url",
+                    "type": "string"
+                },
+                "data_conditions": {
+                    "description": "data_conditions",
+                    "type": "string"
+                },
+                "filter_conditions": {
+                    "description": "filter_conditions",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "id",
+                    "type": "string"
+                },
+                "module": {
+                    "description": "module",
+                    "type": "string"
+                },
+                "op": {
+                    "description": "op",
+                    "type": "string"
+                },
+                "resource_id": {
+                    "description": "resource_id",
+                    "type": "string"
+                },
+                "resource_name": {
+                    "description": "resource_name",
+                    "type": "string"
+                },
+                "role_id": {
+                    "description": "role_id",
+                    "type": "string"
+                },
+                "role_name": {
+                    "description": "role_name",
+                    "type": "string"
+                },
+                "service_name": {
+                    "description": "service_name",
+                    "type": "string"
+                },
+                "service_name_cn": {
+                    "description": "service_name_cn",
+                    "type": "string"
+                },
+                "support_ops": {
+                    "description": "support_ops",
+                    "type": "string"
+                },
+                "type": {
+                    "description": "type",
+                    "type": "integer"
                 }
             }
         },
