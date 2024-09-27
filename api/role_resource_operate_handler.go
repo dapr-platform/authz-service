@@ -17,6 +17,7 @@ func InitCustomRole_resource_operateRoute(r chi.Router) {
 
 	r.Post(common.BASE_CONTEXT+"/role-resource-operate/batch", BatchAddRole_resource_operateHandler)
 	r.Get(common.BASE_CONTEXT+"/role/detail", roleDetailHandler)
+	r.Post(common.BASE_CONTEXT+"/resource/batch", BatchAddResourceHandler)
 
 }
 
@@ -83,4 +84,28 @@ func roleDetailHandler(w http.ResponseWriter, r *http.Request) {
 		common.CommonQuery[entity.RoleDetailVo](w, r, common.GetDaprClient(), model.Role_detailTableInfo.Name, model.Role_detail_FIELD_NAME_id)
 	}
 
+}
+
+// @Summary 批量添加权限点
+// @Description 批量添加权限点
+// @Tags Resource
+// @Accept       json
+// @Param item body []model.Resource true "权限点全部信息"
+// @Produce  json
+// @Success 200 {object} common.Response{data=model.Resource} "权限点"
+// @Failure 500 {object} common.Response "错误code和错误信息"
+// @Router /resource/batch [post]
+func BatchAddResourceHandler(w http.ResponseWriter, r *http.Request) {
+	var data []model.Resource
+	err := common.ReadRequestBody(r, &data)
+	if err != nil {
+		common.HttpResult(w, common.ErrParam.AppendMsg("body error").AppendMsg(err.Error()))
+		return
+	}
+	err = common.DbBatchUpsert[model.Resource](r.Context(), common.GetDaprClient(), data, model.ResourceTableInfo.Name, model.Resource_FIELD_NAME_id)
+	if err != nil {
+		common.HttpResult(w, common.ErrService.AppendMsg("DbBatchUpsert error").AppendMsg(err.Error()))
+		return
+	}
+	common.HttpResult(w, common.OK)
 }
