@@ -24,7 +24,6 @@ func UpsertUserBeforeHook(r *http.Request, in any) (out any, err error) {
 			return nil, errors.New("用户名已存在")
 		}
 	}
-
 	return in, nil
 }
 
