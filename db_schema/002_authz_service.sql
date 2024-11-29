@@ -7,27 +7,43 @@ CREATE TABLE if not exists o_user(
                        email VARCHAR(255) NOT NULL,
                        identity VARCHAR(255) NOT NULL,
                        name VARCHAR(255) NOT NULL,
+                       nickname VARCHAR(255) NOT NULL,
                        gender integer NOT NULL default 0,
                        address VARCHAR(1024) NOT NULL default '',
                        password VARCHAR(255) NOT NULL,
-                       type INTEGER NOT NULL,
+                       type INTEGER NOT NULL DEFAULT 0,
                        org_id VARCHAR(255) NOT NULL,
+                       id_card VARCHAR(255) NOT NULL,
+                       work_number VARCHAR(255) NOT NULL,
                        avatar_url VARCHAR(255) NOT NULL,
                        create_at TIMESTAMP NOT NULL,
                        update_at TIMESTAMP NOT NULL,
-                       status INTEGER NOT NULL,
+                       remark VARCHAR(255) NOT NULL DEFAULT '',
+                       status INTEGER NOT NULL DEFAULT 0,
                        PRIMARY KEY (id)
 );
 
-CREATE UNIQUE INDEX IDX_o_user_NAME ON o_user(identity);
+CREATE UNIQUE INDEX IDX_o_user_NAME ON o_user(name);
 
+COMMENT ON TABLE o_user IS '用户表';
 COMMENT ON COLUMN o_user.id IS 'Primary Key';
+COMMENT ON COLUMN o_user.tenant_id IS '租户ID';
+COMMENT ON COLUMN o_user.mobile IS '手机号';
+COMMENT ON COLUMN o_user.email IS '邮箱';
 COMMENT ON COLUMN o_user.identity IS '用户标识';
-COMMENT ON COLUMN o_user.type IS '用户类型';
+COMMENT ON COLUMN o_user.name IS '姓名';
+COMMENT ON COLUMN o_user.nickname IS '昵称';
+COMMENT ON COLUMN o_user.gender IS '性别(0:未知,1:男,2:女)';
+COMMENT ON COLUMN o_user.address IS '地址';
+COMMENT ON COLUMN o_user.password IS '密码';
+COMMENT ON COLUMN o_user.type IS '用户类型,1:管理员,2:普通用户,3:访客';
 COMMENT ON COLUMN o_user.org_id IS '组织ID';
+COMMENT ON COLUMN o_user.id_card IS '身份证';
+COMMENT ON COLUMN o_user.work_number IS '工号';
 COMMENT ON COLUMN o_user.avatar_url IS '头像';
 COMMENT ON COLUMN o_user.create_at IS '创建时间';
 COMMENT ON COLUMN o_user.update_at IS '更新时间';
+COMMENT ON COLUMN o_user.remark IS '备注';
 COMMENT ON COLUMN o_user.status IS '状态(1正常，2:禁止登陆，3:删除';
 
 create extension if not exists tablefunc;
@@ -56,8 +72,8 @@ begin
 end
 $function$;
 
-insert into o_user(id, tenant_id,mobile, email, identity,name,gender,address, password, type, org_id,  avatar_url, create_at, update_at,  status)
-values ((select nanoid()),'','+8613911111111', 'admin@business.com','admin','admin',1,'',(SELECT encode(digest('things2024'::bytea, 'sha1'), 'hex')),1,'','',now(),now(),1 );
+insert into o_user(id, tenant_id,mobile, email, identity,name,gender,address, password, type, org_id, id_card, work_number, avatar_url, create_at, update_at,  status)
+values ((select nanoid()),'','+8613911111111', 'admin@business.com','admin','admin',1,'',(SELECT encode(digest('things2024'::bytea, 'sha1'), 'hex')),1,'','','','',now(),now(),1 );
 
 
 CREATE TABLE o_resource(
@@ -100,9 +116,15 @@ CREATE TABLE o_role(
 COMMENT ON TABLE o_role IS '角色';
 COMMENT ON COLUMN o_role.id IS '唯一标识';
 COMMENT ON COLUMN o_role.name IS '名称';
+COMMENT ON COLUMN o_role.sort_index IS '排序索引';
+COMMENT ON COLUMN o_role.status IS '状态(1:正常,2:禁用)';
+COMMENT ON COLUMN o_role.create_at IS '创建时间';
+COMMENT ON COLUMN o_role.update_at IS '更新时间';
+COMMENT ON COLUMN o_role.remark IS '备注';
 
 insert into o_role (id, name) values ('default_user','默认用户');
 
+DROP TABLE if exists r_user_role;
 CREATE TABLE r_user_role(
                             id VARCHAR(255) NOT NULL,
                             user_id VARCHAR(255) NOT NULL,
@@ -114,6 +136,8 @@ COMMENT ON TABLE r_user_role IS '用户角色关联';
 COMMENT ON COLUMN r_user_role.id IS '唯一标识';
 COMMENT ON COLUMN r_user_role.user_id IS '用户id';
 COMMENT ON COLUMN r_user_role.role_id IS '角色id';
+
+DROP TABLE if exists r_role_resource_operate;
 CREATE TABLE r_role_resource_operate(
                                         id VARCHAR(255) NOT NULL,
                                         role_id VARCHAR(255) NOT NULL,
@@ -137,12 +161,16 @@ select t.*,p.type, p.api_url,p.data_conditions from
     (select r1.user_id,r2.resource_id,r2.op,r2.filter_conditions from r_user_role r1, r_role_resource_operate r2
      where r1.role_id=r2.role_id order by r2.op) t left join o_resource p on t.resource_id=p.id;
 
+COMMENT ON VIEW v_user_resource_op IS '用户资源操作视图';
+
 drop view if exists v_role_rel_detail;
 create view v_role_rel_detail as
 select r.*,pr.name role_name,
        pre.name resource_name,pre.module,pre.service_name,pre.service_name_cn,pre.type,pre.api_url,
        pre.data_conditions,pre.support_ops
 from r_role_resource_operate r, o_role pr,o_resource pre where r.role_id=pr.id and r.resource_id=pre.id;
+
+COMMENT ON VIEW v_role_rel_detail IS '角色资源关联详情视图';
 
 drop view if exists v_role_detail;
 create view v_role_detail as
@@ -153,6 +181,8 @@ select *,
        (select array_to_json(array_agg(e)) from (select * from v_role_rel_detail where role_id=r.id and type=4) e) data_resources
 from o_role r;
 
+COMMENT ON VIEW v_role_detail IS '角色详情视图';
+
 drop view if exists v_role_with_resource_ids;
 create view v_role_with_resource_ids as
 select *,
@@ -162,6 +192,8 @@ select *,
        (select array_to_json(array_agg(resource_id)) from (select resource_id from v_role_rel_detail where role_id=r.id and type=4) e) data_resource_ids
 from o_role r;
 
+COMMENT ON VIEW v_role_with_resource_ids IS '角色资源ID关联视图';
+
 drop view if exists v_user_with_role;
 create or replace view v_user_with_role as
 select *,
@@ -169,6 +201,7 @@ select *,
            (select * from (select r.id, r.user_id,r.role_id,pr.name from r_user_role r,o_role pr where r.role_id=pr.id) t where t.user_id=r.id) e) roles
 from o_user r ;
 
+COMMENT ON VIEW v_user_with_role IS '用户角色关联视图';
 
 drop view if exists v_user_with_menu;
 create or replace view v_user_with_menu as
@@ -178,19 +211,33 @@ select *,
                            where r.role_id=v.role_id and v.type=1) t where t.user_id=r.id) e) menu_ids
 from o_user r ;
 
+COMMENT ON VIEW v_user_with_menu IS '用户菜单关联视图';
+
 drop view if exists v_role_with_user;
 create view v_role_with_user as
 select r.id,pr.id role_id,pr.name role_name, pu.id user_id, pu.mobile,pu.email,pu.name,pu.create_at,pu.type,pu.org_id,pu.avatar_url,pu.status
 from r_user_role r,o_role pr,o_user pu where r.role_id=pr.id and r.user_id =pu.id;
 
-
+COMMENT ON VIEW v_role_with_user IS '角色用户关联视图';
 
 -- +goose StatementEnd
 
 -- +goose Down
 -- +goose StatementBegin
-drop table if exists o_role cascade ;
-drop table if exists o_resource cascade ;
-drop table if exists o_user cascade ;
+drop view if exists v_role_with_user cascade;
+drop view if exists v_user_with_menu cascade;
+drop view if exists v_user_with_role cascade;
+drop view if exists v_role_with_resource_ids cascade;
+drop view if exists v_role_detail cascade;
+drop view if exists v_role_rel_detail cascade;
+drop view if exists v_user_resource_op cascade;
+drop table if exists r_role_resource_operate cascade;
+drop table if exists r_user_role cascade;
+drop table if exists o_role cascade;
+drop table if exists o_resource cascade;
+drop table if exists o_user cascade;
+drop function if exists public.nanoid(integer);
+drop extension if exists pgcrypto;
+drop extension if exists tablefunc;
 
 -- +goose StatementEnd

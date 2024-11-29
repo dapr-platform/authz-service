@@ -5,22 +5,30 @@ import (
 	"github.com/dapr-platform/common"
 	"github.com/go-chi/chi/v5"
 	"net/http"
+
 	"strings"
 )
 
 func InitRoleRoute(r chi.Router) {
+
 	r.Get(common.BASE_CONTEXT+"/role/page", RolePageListHandler)
 	r.Get(common.BASE_CONTEXT+"/role", RoleListHandler)
+
 	r.Post(common.BASE_CONTEXT+"/role", UpsertRoleHandler)
+
 	r.Delete(common.BASE_CONTEXT+"/role/{id}", DeleteRoleHandler)
+
 	r.Post(common.BASE_CONTEXT+"/role/batch-delete", batchDeleteRoleHandler)
+
 	r.Post(common.BASE_CONTEXT+"/role/batch-upsert", batchUpsertRoleHandler)
+
 	r.Get(common.BASE_CONTEXT+"/role/groupby", RoleGroupbyHandler)
+
 }
 
 // @Summary GroupBy
 // @Description GroupBy, for example,  _select=level, then return  {level_val1:sum1,level_val2:sum2}, _where can input status=0
-// @Tags Role
+// @Tags 角色
 // @Param _select query string true "_select"
 // @Param _where query string false "_where"
 // @Produce  json
@@ -34,7 +42,7 @@ func RoleGroupbyHandler(w http.ResponseWriter, r *http.Request) {
 
 // @Summary batch update
 // @Description batch update
-// @Tags Role
+// @Tags 角色
 // @Accept  json
 // @Param entities body []map[string]any true "objects array"
 // @Produce  json
@@ -46,11 +54,11 @@ func batchUpsertRoleHandler(w http.ResponseWriter, r *http.Request) {
 	var entities []map[string]any
 	err := common.ReadRequestBody(r, &entities)
 	if err != nil {
-		common.HttpResult(w, common.ErrParam)
+		common.HttpResult(w, common.ErrParam.AppendMsg(err.Error()))
 		return
 	}
 	if len(entities) == 0 {
-		common.HttpResult(w, common.ErrParam)
+		common.HttpResult(w, common.ErrParam.AppendMsg("len of entities is 0"))
 		return
 	}
 
@@ -65,7 +73,7 @@ func batchUpsertRoleHandler(w http.ResponseWriter, r *http.Request) {
 
 // @Summary page query
 // @Description page query, _page(from 1 begin), _page_size, _order, and others fields, status=1, name=$like.%CAM%
-// @Tags Role
+// @Tags 角色
 // @Param _page query int true "current page"
 // @Param _page_size query int true "page size"
 // @Param _order query string false "order"
@@ -85,7 +93,7 @@ func RolePageListHandler(w http.ResponseWriter, r *http.Request) {
 	page := r.URL.Query().Get("_page")
 	pageSize := r.URL.Query().Get("_page_size")
 	if page == "" || pageSize == "" {
-		common.HttpResult(w, common.ErrParam)
+		common.HttpResult(w, common.ErrParam.AppendMsg("page or pageSize is empty"))
 		return
 	}
 	common.CommonPageQuery[model.Role](w, r, common.GetDaprClient(), "o_role", "id")
@@ -94,7 +102,7 @@ func RolePageListHandler(w http.ResponseWriter, r *http.Request) {
 
 // @Summary query objects
 // @Description query objects
-// @Tags Role
+// @Tags 角色
 // @Param _select query string false "_select"
 // @Param _order query string false "order"
 // @Param id query string false "id"
@@ -114,7 +122,7 @@ func RoleListHandler(w http.ResponseWriter, r *http.Request) {
 
 // @Summary save
 // @Description save
-// @Tags Role
+// @Tags 角色
 // @Accept       json
 // @Param item body model.Role true "object"
 // @Produce  json
@@ -125,7 +133,7 @@ func UpsertRoleHandler(w http.ResponseWriter, r *http.Request) {
 	var val model.Role
 	err := common.ReadRequestBody(r, &val)
 	if err != nil {
-		common.HttpResult(w, common.ErrParam)
+		common.HttpResult(w, common.ErrParam.AppendMsg(err.Error()))
 		return
 	}
 	beforeHook, exists := common.GetUpsertBeforeHook("Role")
@@ -148,7 +156,7 @@ func UpsertRoleHandler(w http.ResponseWriter, r *http.Request) {
 
 // @Summary delete
 // @Description delete
-// @Tags Role
+// @Tags 角色
 // @Param id  path string true "实例id"
 // @Produce  json
 // @Success 200 {object} common.Response{data=model.Role} "object"
@@ -169,7 +177,7 @@ func DeleteRoleHandler(w http.ResponseWriter, r *http.Request) {
 
 // @Summary batch delete
 // @Description batch delete
-// @Tags Role
+// @Tags 角色
 // @Accept  json
 // @Param ids body []string true "id array"
 // @Produce  json
@@ -181,11 +189,11 @@ func batchDeleteRoleHandler(w http.ResponseWriter, r *http.Request) {
 	var ids []string
 	err := common.ReadRequestBody(r, &ids)
 	if err != nil {
-		common.HttpResult(w, common.ErrParam)
+		common.HttpResult(w, common.ErrParam.AppendMsg(err.Error()))
 		return
 	}
 	if len(ids) == 0 {
-		common.HttpResult(w, common.ErrParam)
+		common.HttpResult(w, common.ErrParam.AppendMsg("len of ids is 0"))
 		return
 	}
 	beforeHook, exists := common.GetBatchDeleteBeforeHook("Role")

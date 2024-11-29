@@ -33,7 +33,7 @@ Table: o_resource
 
 JSON Sample
 -------------------------------------
-{    "id": "KXGdnYVWVasYrPbPRnWBcOCEW",    "name": "sRjlwGdiaQncwhwuktJMqXHLo",    "parent_id": "kAsPNjyMmDBnhZjGMLbMgCVXl",    "module": "spucETjcmOUoygWQqGnMhXMNM",    "service_name": "DKMsLeIvwYcALYjoeSIBCcofo",    "service_name_cn": "xVCBTxfXdlwoWhUFrragaVyyR",    "type": 50,    "api_url": "ntorVEVRwxDaOqFVhxVFpOSOD",    "sort_index": 72,    "data_conditions": "WJiftOkDUpMxqJxhSLSNksuJt",    "support_ops": "OnVIUmmZCVbxVkXudgpgPebKP"}
+{    "id": "GrXEccKZQdaouUMEbLpuWMjGk",    "name": "bnRUonYkaNrsLnOrIAXjoZAop",    "parent_id": "EDOvZeoOVgPZQhWIqibsWhDYw",    "module": "TmCkDLMaQKhZGIoueBwXbAwed",    "service_name": "oTkTurHxILhniSchKpZMDElFp",    "service_name_cn": "wthxGYMGDWVTtAwKSyVyfmVnQ",    "type": 66,    "api_url": "hQbcYGSpZGkDCVpPrBQRFZJgU",    "sort_index": 78,    "data_conditions": "kGdAfFipxeVBcvFraxnINVHJD",    "support_ops": "MAEQOaboWaxtrxiBgApLgnjwC"}
 
 
 
@@ -65,17 +65,27 @@ var (
 
 // Resource struct is a row record of the o_resource table in the  database
 type Resource struct {
-	ID             string `json:"id"`              //唯一标识,例如UI-001-001
-	Name           string `json:"name"`            //名称
-	ParentID       string `json:"parent_id"`       //parent_id
-	Module         string `json:"module"`          //模块
-	ServiceName    string `json:"service_name"`    //服务名
-	ServiceNameCn  string `json:"service_name_cn"` //中文服务名
-	Type           int32  `json:"type"`            //分类（1:菜单,2:api,3:功能点,4:数据)
-	APIURL         string `json:"api_url"`         //api鉴权用到
-	SortIndex      int32  `json:"sort_index"`      //sort_index
+	ID string `json:"id"` //唯一标识,例如UI-001-001
+
+	Name string `json:"name"` //名称
+
+	ParentID string `json:"parent_id"` //parent_id
+
+	Module string `json:"module"` //模块
+
+	ServiceName string `json:"service_name"` //服务名
+
+	ServiceNameCn string `json:"service_name_cn"` //中文服务名
+
+	Type int32 `json:"type"` //分类（1:菜单,2:api,3:功能点,4:数据)
+
+	APIURL string `json:"api_url"` //api鉴权用到
+
+	SortIndex int32 `json:"sort_index"` //sort_index
+
 	DataConditions string `json:"data_conditions"` //数据条件（数据鉴权用到，存放对象的json字符串)
-	SupportOps     string `json:"support_ops"`     //支持的操作(字典值,1,2,3)
+
+	SupportOps string `json:"support_ops"` //支持的操作(字典值,0:r,1:rw)
 
 }
 
@@ -296,7 +306,7 @@ var ResourceTableInfo = &TableInfo{
 		&ColumnInfo{
 			Index:              10,
 			Name:               "support_ops",
-			Comment:            `支持的操作(字典值,1,2,3)`,
+			Comment:            `支持的操作(字典值,0:r,1:rw)`,
 			Notes:              ``,
 			Nullable:           false,
 			DatabaseTypeName:   "VARCHAR",

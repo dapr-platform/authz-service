@@ -36,7 +36,7 @@ Table: v_role_rel_detail
 
 JSON Sample
 -------------------------------------
-{    "id": "kPiFikmVrZMVALlhkxnSmtBIM",    "role_id": "XhKeHRiWEqEgZEPgBMRydlmDu",    "resource_id": "kEHpeSHOYleNuKugyoULypGHV",    "op": "gdApLCBFAdJvVLXvTscmiiEtt",    "filter_conditions": "ROhHQXanUtQjfnxxgnGxTtjQS",    "role_name": "TYcPrvBfDRfAnMrcjNlWFIrbx",    "resource_name": "jKqWsYddrCDYFTZkuCNxQReQG",    "module": "cTxfbZhpRWTKWwmQwwRFkPEtJ",    "service_name": "rEtOIxTqOtDyhDPDvYLmClEvT",    "service_name_cn": "mOCTRJvdeXsCCZvfpRfWjmjtO",    "type": 63,    "api_url": "DGSZdVDyqEGSSSeFTIhefPxKD",    "data_conditions": "qdgcUyjlmopYDoHCkwsNZBaNn",    "support_ops": "AyeuYAGoTVpHDKOffUIfMKtwO"}
+{    "id": "gOBfqoUtkitupDSEFGItyJNkj",    "role_id": "IqBEGjGjEMXlPPROZSNbSYhmd",    "resource_id": "WJibDxuYnHRgtdFgCHNUMhwBN",    "op": "CcSBDqHWarUdKIlRcuoNxkAPa",    "filter_conditions": "YKWngKSUcsuHjAnGifQjbrArM",    "role_name": "fYhmHqfJLTmLRaqXboEPlrXbG",    "resource_name": "hERgSmyhCyPBqTnXjFwNfOQMr",    "module": "NVPfHuopsFrJPrfaxXncPOOCj",    "service_name": "ISnETRXYMgBYOTfxhLXOWarXw",    "service_name_cn": "SfKDyFBfMFQsgvRFpbYuihQMX",    "type": 17,    "api_url": "gVGaokhmkLYdvpDpIxWfPuGPx",    "data_conditions": "RJFCxOjCychnbSrLesrwkfYtj",    "support_ops": "cQSIatagKBpgOKntaeWRYjnTd"}
 
 
 Comments
@@ -81,20 +81,33 @@ var (
 
 // Role_rel_detail struct is a row record of the v_role_rel_detail table in the  database
 type Role_rel_detail struct {
-	ID               string `json:"id"`                //id
-	RoleID           string `json:"role_id"`           //role_id
-	ResourceID       string `json:"resource_id"`       //resource_id
-	Op               string `json:"op"`                //op
+	ID string `json:"id"` //id
+
+	RoleID string `json:"role_id"` //role_id
+
+	ResourceID string `json:"resource_id"` //resource_id
+
+	Op string `json:"op"` //op
+
 	FilterConditions string `json:"filter_conditions"` //filter_conditions
-	RoleName         string `json:"role_name"`         //role_name
-	ResourceName     string `json:"resource_name"`     //resource_name
-	Module           string `json:"module"`            //module
-	ServiceName      string `json:"service_name"`      //service_name
-	ServiceNameCn    string `json:"service_name_cn"`   //service_name_cn
-	Type             int32  `json:"type"`              //type
-	APIURL           string `json:"api_url"`           //api_url
-	DataConditions   string `json:"data_conditions"`   //data_conditions
-	SupportOps       string `json:"support_ops"`       //support_ops
+
+	RoleName string `json:"role_name"` //role_name
+
+	ResourceName string `json:"resource_name"` //resource_name
+
+	Module string `json:"module"` //module
+
+	ServiceName string `json:"service_name"` //service_name
+
+	ServiceNameCn string `json:"service_name_cn"` //service_name_cn
+
+	Type int32 `json:"type"` //type
+
+	APIURL string `json:"api_url"` //api_url
+
+	DataConditions string `json:"data_conditions"` //data_conditions
+
+	SupportOps string `json:"support_ops"` //support_ops
 
 }
 

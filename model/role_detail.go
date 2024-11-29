@@ -33,7 +33,7 @@ Table: v_role_detail
 
 JSON Sample
 -------------------------------------
-{    "id": "PotXLcEjMBKAhSTqRfELShPiY",    "name": "eecDZZesvbpSnNLUeoKnYypjP",    "sort_index": 53,    "status": 77,    "create_at": 27,    "update_at": 67,    "remark": "yQlmPANanetglEluNquGBOTbu",    "menu_resources": 77,    "func_resources": 11,    "api_resources": 23,    "data_resources": 8}
+{    "id": "TJNarxjITNfeVmedLIaDpBUsI",    "name": "lBdBkUXeAPFbPIVDdjUNyuFQR",    "sort_index": 28,    "status": 29,    "create_at": 99,    "update_at": 6,    "remark": "WWuBDJPLceKhiyqZkggwlRAPA",    "menu_resources": 94,    "func_resources": 94,    "api_resources": 62,    "data_resources": 21}
 
 
 Comments
@@ -72,17 +72,27 @@ var (
 
 // Role_detail struct is a row record of the v_role_detail table in the  database
 type Role_detail struct {
-	ID            string           `json:"id"`             //id
-	Name          string           `json:"name"`           //name
-	SortIndex     int32            `json:"sort_index"`     //sort_index
-	Status        int32            `json:"status"`         //status
-	CreateAt      common.LocalTime `json:"create_at"`      //create_at
-	UpdateAt      common.LocalTime `json:"update_at"`      //update_at
-	Remark        string           `json:"remark"`         //remark
-	MenuResources any              `json:"menu_resources"` //menu_resources
-	FuncResources any              `json:"func_resources"` //func_resources
-	APIResources  any              `json:"api_resources"`  //api_resources
-	DataResources any              `json:"data_resources"` //data_resources
+	ID string `json:"id"` //id
+
+	Name string `json:"name"` //name
+
+	SortIndex int32 `json:"sort_index"` //sort_index
+
+	Status int32 `json:"status"` //status
+
+	CreateAt common.LocalTime `json:"create_at"` //create_at
+
+	UpdateAt common.LocalTime `json:"update_at"` //update_at
+
+	Remark string `json:"remark"` //remark
+
+	MenuResources any `json:"menu_resources"` //menu_resources
+
+	FuncResources any `json:"func_resources"` //func_resources
+
+	APIResources any `json:"api_resources"` //api_resources
+
+	DataResources any `json:"data_resources"` //data_resources
 
 }
 

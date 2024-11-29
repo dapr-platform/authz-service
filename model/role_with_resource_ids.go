@@ -33,7 +33,7 @@ Table: v_role_with_resource_ids
 
 JSON Sample
 -------------------------------------
-{    "id": "rIdFvwmiVHvNUPYUnfMOBppWy",    "name": "YAsxSHfOcIXWyThPlrxprUmox",    "sort_index": 78,    "status": 95,    "create_at": 44,    "update_at": 88,    "remark": "qOfjSMxwRBPQwNTubdUiVScbb",    "menu_resource_ids": 81,    "func_resource_ids": 52,    "api_resource_ids": 86,    "data_resource_ids": 35}
+{    "id": "ZOVBFkUGQnuegtVbvsnvJtDyg",    "name": "MKaapwZOhBHIgGOIjIaQcChcP",    "sort_index": 83,    "status": 42,    "create_at": 25,    "update_at": 74,    "remark": "gitiXkccGEcTgmgNrPHavRbiQ",    "menu_resource_ids": 16,    "func_resource_ids": 3,    "api_resource_ids": 75,    "data_resource_ids": 68}
 
 
 Comments
@@ -72,17 +72,27 @@ var (
 
 // Role_with_resource_ids struct is a row record of the v_role_with_resource_ids table in the  database
 type Role_with_resource_ids struct {
-	ID              string           `json:"id"`                //id
-	Name            string           `json:"name"`              //name
-	SortIndex       int32            `json:"sort_index"`        //sort_index
-	Status          int32            `json:"status"`            //status
-	CreateAt        common.LocalTime `json:"create_at"`         //create_at
-	UpdateAt        common.LocalTime `json:"update_at"`         //update_at
-	Remark          string           `json:"remark"`            //remark
-	MenuResourceIds any              `json:"menu_resource_ids"` //menu_resource_ids
-	FuncResourceIds any              `json:"func_resource_ids"` //func_resource_ids
-	APIResourceIds  any              `json:"api_resource_ids"`  //api_resource_ids
-	DataResourceIds any              `json:"data_resource_ids"` //data_resource_ids
+	ID string `json:"id"` //id
+
+	Name string `json:"name"` //name
+
+	SortIndex int32 `json:"sort_index"` //sort_index
+
+	Status int32 `json:"status"` //status
+
+	CreateAt common.LocalTime `json:"create_at"` //create_at
+
+	UpdateAt common.LocalTime `json:"update_at"` //update_at
+
+	Remark string `json:"remark"` //remark
+
+	MenuResourceIds any `json:"menu_resource_ids"` //menu_resource_ids
+
+	FuncResourceIds any `json:"func_resource_ids"` //func_resource_ids
+
+	APIResourceIds any `json:"api_resource_ids"` //api_resource_ids
+
+	DataResourceIds any `json:"data_resource_ids"` //data_resource_ids
 
 }
 

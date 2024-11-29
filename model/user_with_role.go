@@ -29,16 +29,19 @@ Table: v_user_with_role
 [ 8] password                                       VARCHAR(255)         null: true   primary: false  isArray: false  auto: false  col: VARCHAR         len: 255     default: []
 [ 9] type                                           INT4                 null: true   primary: false  isArray: false  auto: false  col: INT4            len: -1      default: []
 [10] org_id                                         VARCHAR(255)         null: true   primary: false  isArray: false  auto: false  col: VARCHAR         len: 255     default: []
-[11] avatar_url                                     VARCHAR(255)         null: true   primary: false  isArray: false  auto: false  col: VARCHAR         len: 255     default: []
-[12] create_at                                      TIMESTAMP            null: true   primary: false  isArray: false  auto: false  col: TIMESTAMP       len: -1      default: []
-[13] update_at                                      TIMESTAMP            null: true   primary: false  isArray: false  auto: false  col: TIMESTAMP       len: -1      default: []
-[14] status                                         INT4                 null: true   primary: false  isArray: false  auto: false  col: INT4            len: -1      default: []
-[15] roles                                          JSON                 null: true   primary: false  isArray: false  auto: false  col: JSON            len: -1      default: []
+[11] id_card                                        VARCHAR(255)         null: true   primary: false  isArray: false  auto: false  col: VARCHAR         len: 255     default: []
+[12] work_number                                    VARCHAR(255)         null: true   primary: false  isArray: false  auto: false  col: VARCHAR         len: 255     default: []
+[13] avatar_url                                     VARCHAR(255)         null: true   primary: false  isArray: false  auto: false  col: VARCHAR         len: 255     default: []
+[14] create_at                                      TIMESTAMP            null: true   primary: false  isArray: false  auto: false  col: TIMESTAMP       len: -1      default: []
+[15] update_at                                      TIMESTAMP            null: true   primary: false  isArray: false  auto: false  col: TIMESTAMP       len: -1      default: []
+[16] remark                                         VARCHAR(255)         null: true   primary: false  isArray: false  auto: false  col: VARCHAR         len: 255     default: []
+[17] status                                         INT4                 null: true   primary: false  isArray: false  auto: false  col: INT4            len: -1      default: []
+[18] roles                                          JSON                 null: true   primary: false  isArray: false  auto: false  col: JSON            len: -1      default: []
 
 
 JSON Sample
 -------------------------------------
-{    "id": "fOPNjUGraQFfXHtIYePRyhyPt",    "tenant_id": "oCZpytjHmNvQMUGiehsJSNQvf",    "mobile": "IolfRuMqEQrOqbURmVGlIdAYT",    "email": "kujUOOEyXusAssXGfQYCmeVsY",    "identity": "pbKFVUbWFqeHBnjchPRkdrXTS",    "name": "brqjMmKQBBuvpcMFZlvkWbIuN",    "gender": 44,    "address": "FuUpxaTfAswbvhWxktpCCbAfj",    "password": "AJJfMYxoTUIXKSnNPsiKvOiuX",    "type": 75,    "org_id": "yBAWCtGAnVFviDbwqJcOSUEeH",    "avatar_url": "genifQAaUJugwUyExWHQJZUiR",    "create_at": 5,    "update_at": 94,    "status": 8,    "roles": 40}
+{    "id": "WBXnVmErBDyhhRSmYJnZFqYwG",    "tenant_id": "xAveOIiUljscNxZZqXhRlBcAm",    "mobile": "YiSXQyeECnNJdrnoCiVBpLYGE",    "email": "KQQcOukQymtPHYHlGnHOMmNVe",    "identity": "vGCppdBEFdBGjnClSjoQeXwdL",    "name": "fpCMXNGYSjObDyjemQLxPmsmg",    "gender": 50,    "address": "PXOsVdIKBuxJiTTbLpxAtZevp",    "password": "pXMqndmdYErMuyDStTSeGWMwl",    "type": 48,    "org_id": "qVVFbkvBwHdEmwYBosOuluudZ",    "id_card": "eqUErLisOeoKUyAHoXLnmtlcW",    "work_number": "VmmngJfhTKfermtDBbWvOybcq",    "avatar_url": "DpWpyQZcfhAesIdQiCNOyjCOy",    "create_at": 96,    "update_at": 84,    "remark": "faOXyYNlVieoMlKvFxdyEkAVX",    "status": 56,    "roles": 55}
 
 
 Comments
@@ -74,11 +77,17 @@ var (
 
 	User_with_role_FIELD_NAME_org_id = "org_id"
 
+	User_with_role_FIELD_NAME_id_card = "id_card"
+
+	User_with_role_FIELD_NAME_work_number = "work_number"
+
 	User_with_role_FIELD_NAME_avatar_url = "avatar_url"
 
 	User_with_role_FIELD_NAME_create_at = "create_at"
 
 	User_with_role_FIELD_NAME_update_at = "update_at"
+
+	User_with_role_FIELD_NAME_remark = "remark"
 
 	User_with_role_FIELD_NAME_status = "status"
 
@@ -87,22 +96,43 @@ var (
 
 // User_with_role struct is a row record of the v_user_with_role table in the  database
 type User_with_role struct {
-	ID        string           `json:"id"`         //id
-	TenantID  string           `json:"tenant_id"`  //tenant_id
-	Mobile    string           `json:"mobile"`     //mobile
-	Email     string           `json:"email"`      //email
-	Identity  string           `json:"identity"`   //identity
-	Name      string           `json:"name"`       //name
-	Gender    int32            `json:"gender"`     //gender
-	Address   string           `json:"address"`    //address
-	Password  string           `json:"password"`   //password
-	Type      int32            `json:"type"`       //type
-	OrgID     string           `json:"org_id"`     //org_id
-	AvatarURL string           `json:"avatar_url"` //avatar_url
-	CreateAt  common.LocalTime `json:"create_at"`  //create_at
-	UpdateAt  common.LocalTime `json:"update_at"`  //update_at
-	Status    int32            `json:"status"`     //status
-	Roles     any              `json:"roles"`      //roles
+	ID string `json:"id"` //id
+
+	TenantID string `json:"tenant_id"` //tenant_id
+
+	Mobile string `json:"mobile"` //mobile
+
+	Email string `json:"email"` //email
+
+	Identity string `json:"identity"` //identity
+
+	Name string `json:"name"` //name
+
+	Gender int32 `json:"gender"` //gender
+
+	Address string `json:"address"` //address
+
+	Password string `json:"password"` //password
+
+	Type int32 `json:"type"` //type
+
+	OrgID string `json:"org_id"` //org_id
+
+	IDCard string `json:"id_card"` //id_card
+
+	WorkNumber string `json:"work_number"` //work_number
+
+	AvatarURL string `json:"avatar_url"` //avatar_url
+
+	CreateAt common.LocalTime `json:"create_at"` //create_at
+
+	UpdateAt common.LocalTime `json:"update_at"` //update_at
+
+	Remark string `json:"remark"` //remark
+
+	Status int32 `json:"status"` //status
+
+	Roles any `json:"roles"` //roles
 
 }
 
@@ -345,6 +375,48 @@ Warning table: v_user_with_role primary key column id is nullable column, settin
 
 		&ColumnInfo{
 			Index:              11,
+			Name:               "id_card",
+			Comment:            `id_card`,
+			Notes:              ``,
+			Nullable:           true,
+			DatabaseTypeName:   "VARCHAR",
+			DatabaseTypePretty: "VARCHAR(255)",
+			IsPrimaryKey:       false,
+			IsAutoIncrement:    false,
+			IsArray:            false,
+			ColumnType:         "VARCHAR",
+			ColumnLength:       255,
+			GoFieldName:        "IDCard",
+			GoFieldType:        "string",
+			JSONFieldName:      "id_card",
+			ProtobufFieldName:  "id_card",
+			ProtobufType:       "string",
+			ProtobufPos:        12,
+		},
+
+		&ColumnInfo{
+			Index:              12,
+			Name:               "work_number",
+			Comment:            `work_number`,
+			Notes:              ``,
+			Nullable:           true,
+			DatabaseTypeName:   "VARCHAR",
+			DatabaseTypePretty: "VARCHAR(255)",
+			IsPrimaryKey:       false,
+			IsAutoIncrement:    false,
+			IsArray:            false,
+			ColumnType:         "VARCHAR",
+			ColumnLength:       255,
+			GoFieldName:        "WorkNumber",
+			GoFieldType:        "string",
+			JSONFieldName:      "work_number",
+			ProtobufFieldName:  "work_number",
+			ProtobufType:       "string",
+			ProtobufPos:        13,
+		},
+
+		&ColumnInfo{
+			Index:              13,
 			Name:               "avatar_url",
 			Comment:            `avatar_url`,
 			Notes:              ``,
@@ -361,11 +433,11 @@ Warning table: v_user_with_role primary key column id is nullable column, settin
 			JSONFieldName:      "avatar_url",
 			ProtobufFieldName:  "avatar_url",
 			ProtobufType:       "string",
-			ProtobufPos:        12,
+			ProtobufPos:        14,
 		},
 
 		&ColumnInfo{
-			Index:              12,
+			Index:              14,
 			Name:               "create_at",
 			Comment:            `create_at`,
 			Notes:              ``,
@@ -382,11 +454,11 @@ Warning table: v_user_with_role primary key column id is nullable column, settin
 			JSONFieldName:      "create_at",
 			ProtobufFieldName:  "create_at",
 			ProtobufType:       "uint64",
-			ProtobufPos:        13,
+			ProtobufPos:        15,
 		},
 
 		&ColumnInfo{
-			Index:              13,
+			Index:              15,
 			Name:               "update_at",
 			Comment:            `update_at`,
 			Notes:              ``,
@@ -403,11 +475,32 @@ Warning table: v_user_with_role primary key column id is nullable column, settin
 			JSONFieldName:      "update_at",
 			ProtobufFieldName:  "update_at",
 			ProtobufType:       "uint64",
-			ProtobufPos:        14,
+			ProtobufPos:        16,
 		},
 
 		&ColumnInfo{
-			Index:              14,
+			Index:              16,
+			Name:               "remark",
+			Comment:            `remark`,
+			Notes:              ``,
+			Nullable:           true,
+			DatabaseTypeName:   "VARCHAR",
+			DatabaseTypePretty: "VARCHAR(255)",
+			IsPrimaryKey:       false,
+			IsAutoIncrement:    false,
+			IsArray:            false,
+			ColumnType:         "VARCHAR",
+			ColumnLength:       255,
+			GoFieldName:        "Remark",
+			GoFieldType:        "string",
+			JSONFieldName:      "remark",
+			ProtobufFieldName:  "remark",
+			ProtobufType:       "string",
+			ProtobufPos:        17,
+		},
+
+		&ColumnInfo{
+			Index:              17,
 			Name:               "status",
 			Comment:            `status`,
 			Notes:              ``,
@@ -424,11 +517,11 @@ Warning table: v_user_with_role primary key column id is nullable column, settin
 			JSONFieldName:      "status",
 			ProtobufFieldName:  "status",
 			ProtobufType:       "int32",
-			ProtobufPos:        15,
+			ProtobufPos:        18,
 		},
 
 		&ColumnInfo{
-			Index:              15,
+			Index:              18,
 			Name:               "roles",
 			Comment:            `roles`,
 			Notes:              ``,
@@ -445,7 +538,7 @@ Warning table: v_user_with_role primary key column id is nullable column, settin
 			JSONFieldName:      "roles",
 			ProtobufFieldName:  "roles",
 			ProtobufType:       "string",
-			ProtobufPos:        16,
+			ProtobufPos:        19,
 		},
 	},
 }

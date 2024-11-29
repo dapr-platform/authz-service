@@ -5,17 +5,25 @@ import (
 	"github.com/dapr-platform/common"
 	"github.com/go-chi/chi/v5"
 	"net/http"
+
 	"strings"
 )
 
 func InitUserRoute(r chi.Router) {
+
 	r.Get(common.BASE_CONTEXT+"/user/page", UserPageListHandler)
 	r.Get(common.BASE_CONTEXT+"/user", UserListHandler)
+
 	r.Post(common.BASE_CONTEXT+"/user", UpsertUserHandler)
+
 	r.Delete(common.BASE_CONTEXT+"/user/{id}", DeleteUserHandler)
+
 	r.Post(common.BASE_CONTEXT+"/user/batch-delete", batchDeleteUserHandler)
+
 	r.Post(common.BASE_CONTEXT+"/user/batch-upsert", batchUpsertUserHandler)
+
 	r.Get(common.BASE_CONTEXT+"/user/groupby", UserGroupbyHandler)
+
 }
 
 // @Summary GroupBy
@@ -46,11 +54,11 @@ func batchUpsertUserHandler(w http.ResponseWriter, r *http.Request) {
 	var entities []map[string]any
 	err := common.ReadRequestBody(r, &entities)
 	if err != nil {
-		common.HttpResult(w, common.ErrParam)
+		common.HttpResult(w, common.ErrParam.AppendMsg(err.Error()))
 		return
 	}
 	if len(entities) == 0 {
-		common.HttpResult(w, common.ErrParam)
+		common.HttpResult(w, common.ErrParam.AppendMsg("len of entities is 0"))
 		return
 	}
 
@@ -80,9 +88,12 @@ func batchUpsertUserHandler(w http.ResponseWriter, r *http.Request) {
 // @Param password query string false "password"
 // @Param type query string false "type"
 // @Param org_id query string false "org_id"
+// @Param id_card query string false "id_card"
+// @Param work_number query string false "work_number"
 // @Param avatar_url query string false "avatar_url"
 // @Param create_at query string false "create_at"
 // @Param update_at query string false "update_at"
+// @Param remark query string false "remark"
 // @Param status query string false "status"
 // @Produce  json
 // @Success 200 {object} common.Response{data=common.Page{items=[]model.User}} "objects array"
@@ -93,7 +104,7 @@ func UserPageListHandler(w http.ResponseWriter, r *http.Request) {
 	page := r.URL.Query().Get("_page")
 	pageSize := r.URL.Query().Get("_page_size")
 	if page == "" || pageSize == "" {
-		common.HttpResult(w, common.ErrParam)
+		common.HttpResult(w, common.ErrParam.AppendMsg("page or pageSize is empty"))
 		return
 	}
 	common.CommonPageQuery[model.User](w, r, common.GetDaprClient(), "o_user", "id")
@@ -116,9 +127,12 @@ func UserPageListHandler(w http.ResponseWriter, r *http.Request) {
 // @Param password query string false "password"
 // @Param type query string false "type"
 // @Param org_id query string false "org_id"
+// @Param id_card query string false "id_card"
+// @Param work_number query string false "work_number"
 // @Param avatar_url query string false "avatar_url"
 // @Param create_at query string false "create_at"
 // @Param update_at query string false "update_at"
+// @Param remark query string false "remark"
 // @Param status query string false "status"
 // @Produce  json
 // @Success 200 {object} common.Response{data=[]model.User} "objects array"
@@ -141,7 +155,7 @@ func UpsertUserHandler(w http.ResponseWriter, r *http.Request) {
 	var val model.User
 	err := common.ReadRequestBody(r, &val)
 	if err != nil {
-		common.HttpResult(w, common.ErrParam)
+		common.HttpResult(w, common.ErrParam.AppendMsg(err.Error()))
 		return
 	}
 	beforeHook, exists := common.GetUpsertBeforeHook("User")
@@ -197,11 +211,11 @@ func batchDeleteUserHandler(w http.ResponseWriter, r *http.Request) {
 	var ids []string
 	err := common.ReadRequestBody(r, &ids)
 	if err != nil {
-		common.HttpResult(w, common.ErrParam)
+		common.HttpResult(w, common.ErrParam.AppendMsg(err.Error()))
 		return
 	}
 	if len(ids) == 0 {
-		common.HttpResult(w, common.ErrParam)
+		common.HttpResult(w, common.ErrParam.AppendMsg("len of ids is 0"))
 		return
 	}
 	beforeHook, exists := common.GetBatchDeleteBeforeHook("User")

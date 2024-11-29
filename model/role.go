@@ -29,7 +29,7 @@ Table: o_role
 
 JSON Sample
 -------------------------------------
-{    "id": "krafltUZAAlktmJwbgxpeqXCp",    "name": "FVfBJMRlEdeBfRiKCdCUpUQjP",    "sort_index": 27,    "status": 85,    "create_at": 3,    "update_at": 11,    "remark": "ZwJLVcDnQMRaUpmiDRwuhdotQ"}
+{    "id": "HRPVMKUrQTZjYXNVYmpETuOVP",    "name": "aMKEGKBYSlFHgwnlCSAtexfre",    "sort_index": 43,    "status": 77,    "create_at": 55,    "update_at": 72,    "remark": "NLdffJcCfHYVaSRBksrhtTJkk"}
 
 
 
@@ -53,13 +53,19 @@ var (
 
 // Role struct is a row record of the o_role table in the  database
 type Role struct {
-	ID        string           `json:"id"`         //唯一标识
-	Name      string           `json:"name"`       //名称
-	SortIndex int32            `json:"sort_index"` //sort_index
-	Status    int32            `json:"status"`     //status
-	CreateAt  common.LocalTime `json:"create_at"`  //create_at
-	UpdateAt  common.LocalTime `json:"update_at"`  //update_at
-	Remark    string           `json:"remark"`     //remark
+	ID string `json:"id"` //唯一标识
+
+	Name string `json:"name"` //名称
+
+	SortIndex int32 `json:"sort_index"` //sort_index
+
+	Status int32 `json:"status"` //status
+
+	CreateAt common.LocalTime `json:"create_at"` //create_at
+
+	UpdateAt common.LocalTime `json:"update_at"` //update_at
+
+	Remark string `json:"remark"` //remark
 
 }
 

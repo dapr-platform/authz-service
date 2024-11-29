@@ -27,7 +27,7 @@ Table: r_role_resource_operate
 
 JSON Sample
 -------------------------------------
-{    "id": "VxGAkiyuWwcqBEKsbECalVIbk",    "role_id": "xPyQknNLjrMZWwgjVQCDPOCWb",    "resource_id": "grGVDcBQrQkdmAmsSxDnQwhTl",    "op": "NwQPJLmlqRPONoqlKlDysuxSF",    "filter_conditions": "FSLlGcsDevZJmHOZtwxUOQpsg"}
+{    "id": "iTBiRXFigQBQTMaZeZlxoCdtZ",    "role_id": "UCaBOpFISiQYROirOHaugKgjh",    "resource_id": "kwuQQPTKsGUxXDPjjXNkCOjuq",    "op": "icnIMiTdViygsHPapAqhmlLop",    "filter_conditions": "iKrFjKiIsBMyHEgoOqHwoUFOh"}
 
 
 
@@ -47,10 +47,14 @@ var (
 
 // Role_resource_operate struct is a row record of the r_role_resource_operate table in the  database
 type Role_resource_operate struct {
-	ID               string `json:"id"`                //唯一标识
-	RoleID           string `json:"role_id"`           //角色id
-	ResourceID       string `json:"resource_id"`       //资源id
-	Op               string `json:"op"`                //操作（字典值）
+	ID string `json:"id"` //唯一标识
+
+	RoleID string `json:"role_id"` //角色id
+
+	ResourceID string `json:"resource_id"` //资源id
+
+	Op string `json:"op"` //操作（字典值）
+
 	FilterConditions string `json:"filter_conditions"` //过滤条件json字符串
 
 }

@@ -25,7 +25,7 @@ Table: r_user_role
 
 JSON Sample
 -------------------------------------
-{    "id": "ACbtxtbOSLTYjienSpDtusNCg",    "user_id": "FNBFHfHMNLGpJQcUvZYxnDgHH",    "role_id": "yomndcCrhDNVNTlnqVYtlrnia"}
+{    "id": "uldfCDWEyVRvEcxQeJkQfVBuJ",    "user_id": "eiIDPoSLLYyVeCedZCVsReavB",    "role_id": "ObIJOWZXPIhtgiUHUOKwDwbPa"}
 
 
 
@@ -41,8 +41,10 @@ var (
 
 // Userole struct is a row record of the r_user_role table in the  database
 type Userole struct {
-	ID     string `json:"id"`      //唯一标识
+	ID string `json:"id"` //唯一标识
+
 	UserID string `json:"user_id"` //用户id
+
 	RoleID string `json:"role_id"` //角色id
 
 }
