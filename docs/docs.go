@@ -219,7 +219,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Resource"
+                    "权限点资源"
                 ],
                 "summary": "query objects",
                 "parameters": [
@@ -341,7 +341,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Resource"
+                    "权限点资源"
                 ],
                 "summary": "save",
                 "parameters": [
@@ -383,6 +383,61 @@ const docTemplate = `{
                 }
             }
         },
+        "/resource/batch": {
+            "post": {
+                "description": "批量添加权限点",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Resource"
+                ],
+                "summary": "批量添加权限点",
+                "parameters": [
+                    {
+                        "description": "权限点全部信息",
+                        "name": "item",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/model.Resource"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "权限点",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/common.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/model.Resource"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "错误code和错误信息",
+                        "schema": {
+                            "$ref": "#/definitions/common.Response"
+                        }
+                    }
+                }
+            }
+        },
         "/resource/batch-delete": {
             "post": {
                 "description": "batch delete",
@@ -393,7 +448,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Resource"
+                    "权限点资源"
                 ],
                 "summary": "batch delete",
                 "parameters": [
@@ -436,7 +491,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Resource"
+                    "权限点资源"
                 ],
                 "summary": "batch update",
                 "parameters": [
@@ -477,7 +532,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Resource"
+                    "权限点资源"
                 ],
                 "summary": "GroupBy",
                 "parameters": [
@@ -534,7 +589,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Resource"
+                    "权限点资源"
                 ],
                 "summary": "page query",
                 "parameters": [
@@ -675,7 +730,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Resource"
+                    "权限点资源"
                 ],
                 "summary": "delete",
                 "parameters": [
@@ -722,7 +777,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Role"
+                    "角色"
                 ],
                 "summary": "query objects",
                 "parameters": [
@@ -820,7 +875,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Role"
+                    "角色"
                 ],
                 "summary": "save",
                 "parameters": [
@@ -1911,7 +1966,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Role_resource_operate"
+                    "角色资源操作关联"
                 ],
                 "summary": "query objects",
                 "parameters": [
@@ -1997,7 +2052,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Role_resource_operate"
+                    "角色资源操作关联"
                 ],
                 "summary": "save",
                 "parameters": [
@@ -2111,7 +2166,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Role_resource_operate"
+                    "角色资源操作关联"
                 ],
                 "summary": "batch delete",
                 "parameters": [
@@ -2154,7 +2209,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Role_resource_operate"
+                    "角色资源操作关联"
                 ],
                 "summary": "batch update",
                 "parameters": [
@@ -2195,7 +2250,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Role_resource_operate"
+                    "角色资源操作关联"
                 ],
                 "summary": "GroupBy",
                 "parameters": [
@@ -2252,7 +2307,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Role_resource_operate"
+                    "角色资源操作关联"
                 ],
                 "summary": "page query",
                 "parameters": [
@@ -2357,7 +2412,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Role_resource_operate"
+                    "角色资源操作关联"
                 ],
                 "summary": "delete",
                 "parameters": [
@@ -2910,7 +2965,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Role"
+                    "角色"
                 ],
                 "summary": "batch delete",
                 "parameters": [
@@ -2953,7 +3008,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Role"
+                    "角色"
                 ],
                 "summary": "batch update",
                 "parameters": [
@@ -3055,7 +3110,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Role"
+                    "角色"
                 ],
                 "summary": "GroupBy",
                 "parameters": [
@@ -3112,7 +3167,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Role"
+                    "角色"
                 ],
                 "summary": "page query",
                 "parameters": [
@@ -3229,7 +3284,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Role"
+                    "角色"
                 ],
                 "summary": "delete",
                 "parameters": [
@@ -3386,6 +3441,18 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
+                        "description": "id_card",
+                        "name": "id_card",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "work_number",
+                        "name": "work_number",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
                         "description": "avatar_url",
                         "name": "avatar_url",
                         "in": "query"
@@ -3400,6 +3467,12 @@ const docTemplate = `{
                         "type": "string",
                         "description": "update_at",
                         "name": "update_at",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "remark",
+                        "name": "remark",
                         "in": "query"
                     },
                     {
@@ -3581,6 +3654,18 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
+                        "description": "id_card",
+                        "name": "id_card",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "work_number",
+                        "name": "work_number",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
                         "description": "avatar_url",
                         "name": "avatar_url",
                         "in": "query"
@@ -3595,6 +3680,12 @@ const docTemplate = `{
                         "type": "string",
                         "description": "update_at",
                         "name": "update_at",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "remark",
+                        "name": "remark",
                         "in": "query"
                     },
                     {
@@ -3934,6 +4025,18 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
+                        "description": "id_card",
+                        "name": "id_card",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "work_number",
+                        "name": "work_number",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
                         "description": "avatar_url",
                         "name": "avatar_url",
                         "in": "query"
@@ -3948,6 +4051,12 @@ const docTemplate = `{
                         "type": "string",
                         "description": "update_at",
                         "name": "update_at",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "remark",
+                        "name": "remark",
                         "in": "query"
                     },
                     {
@@ -4144,6 +4253,18 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
+                        "description": "id_card",
+                        "name": "id_card",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "work_number",
+                        "name": "work_number",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
                         "description": "avatar_url",
                         "name": "avatar_url",
                         "in": "query"
@@ -4158,6 +4279,12 @@ const docTemplate = `{
                         "type": "string",
                         "description": "update_at",
                         "name": "update_at",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "remark",
+                        "name": "remark",
                         "in": "query"
                     },
                     {
@@ -4497,6 +4624,18 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
+                        "description": "id_card",
+                        "name": "id_card",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "work_number",
+                        "name": "work_number",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
                         "description": "avatar_url",
                         "name": "avatar_url",
                         "in": "query"
@@ -4511,6 +4650,12 @@ const docTemplate = `{
                         "type": "string",
                         "description": "update_at",
                         "name": "update_at",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "remark",
+                        "name": "remark",
                         "in": "query"
                     },
                     {
@@ -4946,6 +5091,18 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
+                        "description": "id_card",
+                        "name": "id_card",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "work_number",
+                        "name": "work_number",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
                         "description": "avatar_url",
                         "name": "avatar_url",
                         "in": "query"
@@ -4960,6 +5117,12 @@ const docTemplate = `{
                         "type": "string",
                         "description": "update_at",
                         "name": "update_at",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "remark",
+                        "name": "remark",
                         "in": "query"
                     },
                     {
@@ -5066,7 +5229,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Userole"
+                    "用户角色关联"
                 ],
                 "summary": "query objects",
                 "parameters": [
@@ -5140,7 +5303,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Userole"
+                    "用户角色关联"
                 ],
                 "summary": "save",
                 "parameters": [
@@ -5192,7 +5355,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Userole"
+                    "用户角色关联"
                 ],
                 "summary": "batch delete",
                 "parameters": [
@@ -5235,7 +5398,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Userole"
+                    "用户角色关联"
                 ],
                 "summary": "batch update",
                 "parameters": [
@@ -5276,7 +5439,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Userole"
+                    "用户角色关联"
                 ],
                 "summary": "GroupBy",
                 "parameters": [
@@ -5333,7 +5496,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Userole"
+                    "用户角色关联"
                 ],
                 "summary": "page query",
                 "parameters": [
@@ -5426,7 +5589,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Userole"
+                    "用户角色关联"
                 ],
                 "summary": "delete",
                 "parameters": [
@@ -5553,11 +5716,11 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "avatar_url": {
-                    "description": "avatar_url",
+                    "description": "头像",
                     "type": "string"
                 },
                 "create_at": {
-                    "description": "create_at",
+                    "description": "创建时间",
                     "type": "string"
                 },
                 "email": {
@@ -5569,11 +5732,15 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "id": {
-                    "description": "id",
+                    "description": "Primary Key",
+                    "type": "string"
+                },
+                "id_card": {
+                    "description": "身份证",
                     "type": "string"
                 },
                 "identity": {
-                    "description": "identity",
+                    "description": "用户标识",
                     "type": "string"
                 },
                 "is_admin": {
@@ -5595,15 +5762,19 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "org_id": {
-                    "description": "org_id",
+                    "description": "组织ID",
                     "type": "string"
                 },
                 "password": {
                     "description": "password",
                     "type": "string"
                 },
+                "remark": {
+                    "description": "备注",
+                    "type": "string"
+                },
                 "status": {
-                    "description": "status",
+                    "description": "状态(1正常，2:禁止登陆，3:删除",
                     "type": "integer"
                 },
                 "tenant_id": {
@@ -5611,11 +5782,15 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "type": {
-                    "description": "type",
+                    "description": "用户类型,1:管理员,2:普通用户,3:访客",
                     "type": "integer"
                 },
                 "update_at": {
-                    "description": "update_at",
+                    "description": "更新时间",
+                    "type": "string"
+                },
+                "work_number": {
+                    "description": "工号",
                     "type": "string"
                 }
             }
@@ -5671,7 +5846,7 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "support_ops": {
-                    "description": "支持的操作(字典值,1,2,3)",
+                    "description": "支持的操作(字典值,0:r,1:rw)",
                     "type": "string"
                 },
                 "type": {
@@ -5914,11 +6089,11 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "avatar_url": {
-                    "description": "avatar_url",
+                    "description": "头像",
                     "type": "string"
                 },
                 "create_at": {
-                    "description": "create_at",
+                    "description": "创建时间",
                     "type": "string"
                 },
                 "email": {
@@ -5930,11 +6105,15 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "id": {
-                    "description": "id",
+                    "description": "Primary Key",
+                    "type": "string"
+                },
+                "id_card": {
+                    "description": "身份证",
                     "type": "string"
                 },
                 "identity": {
-                    "description": "identity",
+                    "description": "用户标识",
                     "type": "string"
                 },
                 "mobile": {
@@ -5946,15 +6125,19 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "org_id": {
-                    "description": "org_id",
+                    "description": "组织ID",
                     "type": "string"
                 },
                 "password": {
                     "description": "password",
                     "type": "string"
                 },
+                "remark": {
+                    "description": "备注",
+                    "type": "string"
+                },
                 "status": {
-                    "description": "status",
+                    "description": "状态(1正常，2:禁止登陆，3:删除",
                     "type": "integer"
                 },
                 "tenant_id": {
@@ -5962,11 +6145,15 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "type": {
-                    "description": "type",
+                    "description": "用户类型,1:管理员,2:普通用户,3:访客",
                     "type": "integer"
                 },
                 "update_at": {
-                    "description": "update_at",
+                    "description": "更新时间",
+                    "type": "string"
+                },
+                "work_number": {
+                    "description": "工号",
                     "type": "string"
                 }
             }
@@ -5998,6 +6185,10 @@ const docTemplate = `{
                     "description": "id",
                     "type": "string"
                 },
+                "id_card": {
+                    "description": "id_card",
+                    "type": "string"
+                },
                 "identity": {
                     "description": "identity",
                     "type": "string"
@@ -6021,6 +6212,10 @@ const docTemplate = `{
                     "description": "password",
                     "type": "string"
                 },
+                "remark": {
+                    "description": "remark",
+                    "type": "string"
+                },
                 "status": {
                     "description": "status",
                     "type": "integer"
@@ -6035,6 +6230,10 @@ const docTemplate = `{
                 },
                 "update_at": {
                     "description": "update_at",
+                    "type": "string"
+                },
+                "work_number": {
+                    "description": "work_number",
                     "type": "string"
                 }
             }
@@ -6066,6 +6265,10 @@ const docTemplate = `{
                     "description": "id",
                     "type": "string"
                 },
+                "id_card": {
+                    "description": "id_card",
+                    "type": "string"
+                },
                 "identity": {
                     "description": "identity",
                     "type": "string"
@@ -6086,6 +6289,10 @@ const docTemplate = `{
                     "description": "password",
                     "type": "string"
                 },
+                "remark": {
+                    "description": "remark",
+                    "type": "string"
+                },
                 "roles": {
                     "description": "roles"
                 },
@@ -6103,6 +6310,10 @@ const docTemplate = `{
                 },
                 "update_at": {
                     "description": "update_at",
+                    "type": "string"
+                },
+                "work_number": {
+                    "description": "work_number",
                     "type": "string"
                 }
             }

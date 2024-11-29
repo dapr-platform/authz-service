@@ -59,10 +59,10 @@ definitions:
         description: address
         type: string
       avatar_url:
-        description: avatar_url
+        description: 头像
         type: string
       create_at:
-        description: create_at
+        description: 创建时间
         type: string
       email:
         description: email
@@ -71,10 +71,13 @@ definitions:
         description: gender
         type: integer
       id:
-        description: id
+        description: Primary Key
+        type: string
+      id_card:
+        description: 身份证
         type: string
       identity:
-        description: identity
+        description: 用户标识
         type: string
       is_admin:
         description: is super admin
@@ -90,22 +93,28 @@ definitions:
         description: name
         type: string
       org_id:
-        description: org_id
+        description: 组织ID
         type: string
       password:
         description: password
         type: string
+      remark:
+        description: 备注
+        type: string
       status:
-        description: status
+        description: 状态(1正常，2:禁止登陆，3:删除
         type: integer
       tenant_id:
         description: tenant_id
         type: string
       type:
-        description: type
+        description: 用户类型,1:管理员,2:普通用户,3:访客
         type: integer
       update_at:
-        description: update_at
+        description: 更新时间
+        type: string
+      work_number:
+        description: 工号
         type: string
     type: object
   entity.UserLoginReq:
@@ -145,7 +154,7 @@ definitions:
         description: sort_index
         type: integer
       support_ops:
-        description: 支持的操作(字典值,1,2,3)
+        description: 支持的操作(字典值,0:r,1:rw)
         type: string
       type:
         description: 分类（1:菜单,2:api,3:功能点,4:数据)
@@ -319,10 +328,10 @@ definitions:
         description: address
         type: string
       avatar_url:
-        description: avatar_url
+        description: 头像
         type: string
       create_at:
-        description: create_at
+        description: 创建时间
         type: string
       email:
         description: email
@@ -331,10 +340,13 @@ definitions:
         description: gender
         type: integer
       id:
-        description: id
+        description: Primary Key
+        type: string
+      id_card:
+        description: 身份证
         type: string
       identity:
-        description: identity
+        description: 用户标识
         type: string
       mobile:
         description: mobile
@@ -343,22 +355,28 @@ definitions:
         description: name
         type: string
       org_id:
-        description: org_id
+        description: 组织ID
         type: string
       password:
         description: password
         type: string
+      remark:
+        description: 备注
+        type: string
       status:
-        description: status
+        description: 状态(1正常，2:禁止登陆，3:删除
         type: integer
       tenant_id:
         description: tenant_id
         type: string
       type:
-        description: type
+        description: 用户类型,1:管理员,2:普通用户,3:访客
         type: integer
       update_at:
-        description: update_at
+        description: 更新时间
+        type: string
+      work_number:
+        description: 工号
         type: string
     type: object
   model.User_with_menu:
@@ -381,6 +399,9 @@ definitions:
       id:
         description: id
         type: string
+      id_card:
+        description: id_card
+        type: string
       identity:
         description: identity
         type: string
@@ -398,6 +419,9 @@ definitions:
       password:
         description: password
         type: string
+      remark:
+        description: remark
+        type: string
       status:
         description: status
         type: integer
@@ -409,6 +433,9 @@ definitions:
         type: integer
       update_at:
         description: update_at
+        type: string
+      work_number:
+        description: work_number
         type: string
     type: object
   model.User_with_role:
@@ -431,6 +458,9 @@ definitions:
       id:
         description: id
         type: string
+      id_card:
+        description: id_card
+        type: string
       identity:
         description: identity
         type: string
@@ -446,6 +476,9 @@ definitions:
       password:
         description: password
         type: string
+      remark:
+        description: remark
+        type: string
       roles:
         description: roles
       status:
@@ -459,6 +492,9 @@ definitions:
         type: integer
       update_at:
         description: update_at
+        type: string
+      work_number:
+        description: work_number
         type: string
     type: object
   model.Userole:
@@ -683,7 +719,7 @@ paths:
             $ref: '#/definitions/common.Response'
       summary: query objects
       tags:
-      - Resource
+      - 权限点资源
     post:
       consumes:
       - application/json
@@ -713,7 +749,7 @@ paths:
             $ref: '#/definitions/common.Response'
       summary: save
       tags:
-      - Resource
+      - 权限点资源
   /resource/{id}:
     delete:
       description: delete
@@ -740,6 +776,39 @@ paths:
           schema:
             $ref: '#/definitions/common.Response'
       summary: delete
+      tags:
+      - 权限点资源
+  /resource/batch:
+    post:
+      consumes:
+      - application/json
+      description: 批量添加权限点
+      parameters:
+      - description: 权限点全部信息
+        in: body
+        name: item
+        required: true
+        schema:
+          items:
+            $ref: '#/definitions/model.Resource'
+          type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 权限点
+          schema:
+            allOf:
+            - $ref: '#/definitions/common.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/model.Resource'
+              type: object
+        "500":
+          description: 错误code和错误信息
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: 批量添加权限点
       tags:
       - Resource
   /resource/batch-delete:
@@ -769,7 +838,7 @@ paths:
             $ref: '#/definitions/common.Response'
       summary: batch delete
       tags:
-      - Resource
+      - 权限点资源
   /resource/batch-upsert:
     post:
       consumes:
@@ -798,7 +867,7 @@ paths:
             $ref: '#/definitions/common.Response'
       summary: batch update
       tags:
-      - Resource
+      - 权限点资源
   /resource/groupby:
     get:
       description: GroupBy, for example,  _select=level, then return  {level_val1:sum1,level_val2:sum2},
@@ -834,7 +903,7 @@ paths:
             $ref: '#/definitions/common.Response'
       summary: GroupBy
       tags:
-      - Resource
+      - 权限点资源
   /resource/page:
     get:
       description: page query, _page(from 1 begin), _page_size, _order, and others
@@ -923,7 +992,7 @@ paths:
             $ref: '#/definitions/common.Response'
       summary: page query
       tags:
-      - Resource
+      - 权限点资源
   /role:
     get:
       description: query objects
@@ -984,7 +1053,7 @@ paths:
             $ref: '#/definitions/common.Response'
       summary: query objects
       tags:
-      - Role
+      - 角色
     post:
       consumes:
       - application/json
@@ -1014,7 +1083,7 @@ paths:
             $ref: '#/definitions/common.Response'
       summary: save
       tags:
-      - Role
+      - 角色
   /role-detail:
     get:
       description: query objects
@@ -1725,7 +1794,7 @@ paths:
             $ref: '#/definitions/common.Response'
       summary: query objects
       tags:
-      - Role_resource_operate
+      - 角色资源操作关联
     post:
       consumes:
       - application/json
@@ -1755,7 +1824,7 @@ paths:
             $ref: '#/definitions/common.Response'
       summary: save
       tags:
-      - Role_resource_operate
+      - 角色资源操作关联
   /role-resource-operate/{id}:
     delete:
       description: delete
@@ -1783,7 +1852,7 @@ paths:
             $ref: '#/definitions/common.Response'
       summary: delete
       tags:
-      - Role_resource_operate
+      - 角色资源操作关联
   /role-resource-operate/batch:
     post:
       consumes:
@@ -1849,7 +1918,7 @@ paths:
             $ref: '#/definitions/common.Response'
       summary: batch delete
       tags:
-      - Role_resource_operate
+      - 角色资源操作关联
   /role-resource-operate/batch-upsert:
     post:
       consumes:
@@ -1878,7 +1947,7 @@ paths:
             $ref: '#/definitions/common.Response'
       summary: batch update
       tags:
-      - Role_resource_operate
+      - 角色资源操作关联
   /role-resource-operate/groupby:
     get:
       description: GroupBy, for example,  _select=level, then return  {level_val1:sum1,level_val2:sum2},
@@ -1914,7 +1983,7 @@ paths:
             $ref: '#/definitions/common.Response'
       summary: GroupBy
       tags:
-      - Role_resource_operate
+      - 角色资源操作关联
   /role-resource-operate/page:
     get:
       description: page query, _page(from 1 begin), _page_size, _order, and others
@@ -1979,7 +2048,7 @@ paths:
             $ref: '#/definitions/common.Response'
       summary: page query
       tags:
-      - Role_resource_operate
+      - 角色资源操作关联
   /role-with-resource-ids:
     get:
       description: query objects
@@ -2324,7 +2393,7 @@ paths:
             $ref: '#/definitions/common.Response'
       summary: delete
       tags:
-      - Role
+      - 角色
   /role/batch-delete:
     post:
       consumes:
@@ -2352,7 +2421,7 @@ paths:
             $ref: '#/definitions/common.Response'
       summary: batch delete
       tags:
-      - Role
+      - 角色
   /role/batch-upsert:
     post:
       consumes:
@@ -2381,7 +2450,7 @@ paths:
             $ref: '#/definitions/common.Response'
       summary: batch update
       tags:
-      - Role
+      - 角色
   /role/detail:
     get:
       description: 查询角色详情列表
@@ -2454,7 +2523,7 @@ paths:
             $ref: '#/definitions/common.Response'
       summary: GroupBy
       tags:
-      - Role
+      - 角色
   /role/page:
     get:
       description: page query, _page(from 1 begin), _page_size, _order, and others
@@ -2527,7 +2596,7 @@ paths:
             $ref: '#/definitions/common.Response'
       summary: page query
       tags:
-      - Role
+      - 角色
   /test:
     get:
       description: test
@@ -2601,6 +2670,14 @@ paths:
         in: query
         name: org_id
         type: string
+      - description: id_card
+        in: query
+        name: id_card
+        type: string
+      - description: work_number
+        in: query
+        name: work_number
+        type: string
       - description: avatar_url
         in: query
         name: avatar_url
@@ -2612,6 +2689,10 @@ paths:
       - description: update_at
         in: query
         name: update_at
+        type: string
+      - description: remark
+        in: query
+        name: remark
         type: string
       - description: status
         in: query
@@ -2724,6 +2805,14 @@ paths:
         in: query
         name: org_id
         type: string
+      - description: id_card
+        in: query
+        name: id_card
+        type: string
+      - description: work_number
+        in: query
+        name: work_number
+        type: string
       - description: avatar_url
         in: query
         name: avatar_url
@@ -2735,6 +2824,10 @@ paths:
       - description: update_at
         in: query
         name: update_at
+        type: string
+      - description: remark
+        in: query
+        name: remark
         type: string
       - description: status
         in: query
@@ -2979,6 +3072,14 @@ paths:
         in: query
         name: org_id
         type: string
+      - description: id_card
+        in: query
+        name: id_card
+        type: string
+      - description: work_number
+        in: query
+        name: work_number
+        type: string
       - description: avatar_url
         in: query
         name: avatar_url
@@ -2990,6 +3091,10 @@ paths:
       - description: update_at
         in: query
         name: update_at
+        type: string
+      - description: remark
+        in: query
+        name: remark
         type: string
       - description: status
         in: query
@@ -3081,6 +3186,14 @@ paths:
         in: query
         name: org_id
         type: string
+      - description: id_card
+        in: query
+        name: id_card
+        type: string
+      - description: work_number
+        in: query
+        name: work_number
+        type: string
       - description: avatar_url
         in: query
         name: avatar_url
@@ -3092,6 +3205,10 @@ paths:
       - description: update_at
         in: query
         name: update_at
+        type: string
+      - description: remark
+        in: query
+        name: remark
         type: string
       - description: status
         in: query
@@ -3336,6 +3453,14 @@ paths:
         in: query
         name: org_id
         type: string
+      - description: id_card
+        in: query
+        name: id_card
+        type: string
+      - description: work_number
+        in: query
+        name: work_number
+        type: string
       - description: avatar_url
         in: query
         name: avatar_url
@@ -3347,6 +3472,10 @@ paths:
       - description: update_at
         in: query
         name: update_at
+        type: string
+      - description: remark
+        in: query
+        name: remark
         type: string
       - description: status
         in: query
@@ -3617,6 +3746,14 @@ paths:
         in: query
         name: org_id
         type: string
+      - description: id_card
+        in: query
+        name: id_card
+        type: string
+      - description: work_number
+        in: query
+        name: work_number
+        type: string
       - description: avatar_url
         in: query
         name: avatar_url
@@ -3628,6 +3765,10 @@ paths:
       - description: update_at
         in: query
         name: update_at
+        type: string
+      - description: remark
+        in: query
+        name: remark
         type: string
       - description: status
         in: query
@@ -3703,7 +3844,7 @@ paths:
             $ref: '#/definitions/common.Response'
       summary: query objects
       tags:
-      - Userole
+      - 用户角色关联
     post:
       consumes:
       - application/json
@@ -3733,7 +3874,7 @@ paths:
             $ref: '#/definitions/common.Response'
       summary: save
       tags:
-      - Userole
+      - 用户角色关联
   /userole/{id}:
     delete:
       description: delete
@@ -3761,7 +3902,7 @@ paths:
             $ref: '#/definitions/common.Response'
       summary: delete
       tags:
-      - Userole
+      - 用户角色关联
   /userole/batch-delete:
     post:
       consumes:
@@ -3789,7 +3930,7 @@ paths:
             $ref: '#/definitions/common.Response'
       summary: batch delete
       tags:
-      - Userole
+      - 用户角色关联
   /userole/batch-upsert:
     post:
       consumes:
@@ -3818,7 +3959,7 @@ paths:
             $ref: '#/definitions/common.Response'
       summary: batch update
       tags:
-      - Userole
+      - 用户角色关联
   /userole/groupby:
     get:
       description: GroupBy, for example,  _select=level, then return  {level_val1:sum1,level_val2:sum2},
@@ -3854,7 +3995,7 @@ paths:
             $ref: '#/definitions/common.Response'
       summary: GroupBy
       tags:
-      - Userole
+      - 用户角色关联
   /userole/page:
     get:
       description: page query, _page(from 1 begin), _page_size, _order, and others
@@ -3911,5 +4052,5 @@ paths:
             $ref: '#/definitions/common.Response'
       summary: page query
       tags:
-      - Userole
+      - 用户角色关联
 swagger: "2.0"
