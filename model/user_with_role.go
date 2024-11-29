@@ -41,7 +41,7 @@ Table: v_user_with_role
 
 JSON Sample
 -------------------------------------
-{    "id": "WBXnVmErBDyhhRSmYJnZFqYwG",    "tenant_id": "xAveOIiUljscNxZZqXhRlBcAm",    "mobile": "YiSXQyeECnNJdrnoCiVBpLYGE",    "email": "KQQcOukQymtPHYHlGnHOMmNVe",    "identity": "vGCppdBEFdBGjnClSjoQeXwdL",    "name": "fpCMXNGYSjObDyjemQLxPmsmg",    "gender": 50,    "address": "PXOsVdIKBuxJiTTbLpxAtZevp",    "password": "pXMqndmdYErMuyDStTSeGWMwl",    "type": 48,    "org_id": "qVVFbkvBwHdEmwYBosOuluudZ",    "id_card": "eqUErLisOeoKUyAHoXLnmtlcW",    "work_number": "VmmngJfhTKfermtDBbWvOybcq",    "avatar_url": "DpWpyQZcfhAesIdQiCNOyjCOy",    "create_at": 96,    "update_at": 84,    "remark": "faOXyYNlVieoMlKvFxdyEkAVX",    "status": 56,    "roles": 55}
+{    "id": "UXYqopcvIvrFUUoDrynXmbntm",    "tenant_id": "FyBlCdrBrIHjrNHiVTbeGuONX",    "mobile": "KJVpoOqYttNgdGfbqEXyQQQLh",    "email": "omIGNtYZCfedySAMcbmdZIDUy",    "identity": "EjcLDwKDNOEBnbPAVHSGNedWG",    "name": "xBZMEGSwNXcHVAMyYCXhNLlHd",    "gender": 74,    "address": "HUHLAgkUhrATIIOFSyjuDqQDW",    "password": "fAGQUOlnVYfTQoxsZFuRFAAGU",    "type": 50,    "org_id": "iCLAOQmgsZjmdjmdycxVOCOnq",    "id_card": "mFHPPfkBWoubFRLntCnkbVIZc",    "work_number": "lMRJIsVTdqisfUfwNaEXXYnhQ",    "avatar_url": "RCbIDIjdDDuRfndgwPRtwQQLS",    "create_at": 3,    "update_at": 23,    "remark": "rZMVmBdodpoPaAFHVisgGRinF",    "status": 83,    "roles": 22}
 
 
 Comments

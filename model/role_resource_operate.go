@@ -27,7 +27,7 @@ Table: r_role_resource_operate
 
 JSON Sample
 -------------------------------------
-{    "id": "iTBiRXFigQBQTMaZeZlxoCdtZ",    "role_id": "UCaBOpFISiQYROirOHaugKgjh",    "resource_id": "kwuQQPTKsGUxXDPjjXNkCOjuq",    "op": "icnIMiTdViygsHPapAqhmlLop",    "filter_conditions": "iKrFjKiIsBMyHEgoOqHwoUFOh"}
+{    "id": "evSJksQQKNXOSPecycQcnmPEB",    "role_id": "pZMLYkGPjdwSROOnMoOjqDYjJ",    "resource_id": "IlOKJwuhwXWbKZpgNQnNKXqRk",    "op": "dOSYcDBdEWVNFWwRZSDCrvOUv",    "filter_conditions": "dhAfGGSmDGCMOPPXIoQPoLfea"}
 
 
 
