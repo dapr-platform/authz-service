@@ -33,7 +33,7 @@ Table: o_resource
 
 JSON Sample
 -------------------------------------
-{    "id": "GrXEccKZQdaouUMEbLpuWMjGk",    "name": "bnRUonYkaNrsLnOrIAXjoZAop",    "parent_id": "EDOvZeoOVgPZQhWIqibsWhDYw",    "module": "TmCkDLMaQKhZGIoueBwXbAwed",    "service_name": "oTkTurHxILhniSchKpZMDElFp",    "service_name_cn": "wthxGYMGDWVTtAwKSyVyfmVnQ",    "type": 66,    "api_url": "hQbcYGSpZGkDCVpPrBQRFZJgU",    "sort_index": 78,    "data_conditions": "kGdAfFipxeVBcvFraxnINVHJD",    "support_ops": "MAEQOaboWaxtrxiBgApLgnjwC"}
+{    "id": "NXownAoBMYIDdRLwpFxQIjfkW",    "name": "biFARevaKpYHasCXbbJpRVNGB",    "parent_id": "lQOccMEGKlyruGORAgontKEaQ",    "module": "dqClFTFpjjWBwtbMbqRtKXevq",    "service_name": "GQJPGFyVeQPOdtHsGTuJEdaNN",    "service_name_cn": "anKWTgTgUowLVAFTOvDXeRdCQ",    "type": 28,    "api_url": "xqJEgTgtvDiQaBPrOyBfixmoF",    "sort_index": 50,    "data_conditions": "sIHclKuMtTeIwhOcrNixypOdc",    "support_ops": "ynjZlZfMrDoXMPFRvEMxiBhFu"}
 
 
 
