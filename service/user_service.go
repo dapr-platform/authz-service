@@ -11,6 +11,21 @@ import (
 	"time"
 )
 
+func ChangeUserPassword(ctx context.Context, info entity.ChangePasswordInfo) (err error) {
+	qstr := "_select=" + model.User_FIELD_NAME_id + "," + model.User_FIELD_NAME_password + "&" + model.User_FIELD_NAME_id + "=" + info.UserId + "&" + model.User_FIELD_NAME_password + "=" + info.OldPassword
+	user, err := common.DbGetOne[map[string]any](ctx, common.GetDaprClient(), model.UserTableInfo.Name, qstr)
+	if err != nil {
+		return errors.Wrap(err, "DbGetOne")
+	}
+	if user == nil {
+		return errors.New("旧密码错误")
+	}
+	m := *user
+	m[model.User_FIELD_NAME_password] = info.NewPassword
+	m[model.User_FIELD_NAME_update_at] = common.LocalTime(time.Now())
+	return common.DbUpsert[map[string]any](ctx, common.GetDaprClient(), m, model.UserTableInfo.Name, model.User_FIELD_NAME_id)
+
+}
 func GetUserByIdAndPassword(ctx context.Context, id, password string) (user *model.User, err error) {
 
 	users, err := common.DbQuery[model.User](ctx, common.GetDaprClient(), model.UserTableInfo.Name, "id="+id+"&password="+password)
