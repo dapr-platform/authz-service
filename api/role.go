@@ -51,7 +51,7 @@ func RoleGroupbyHandler(w http.ResponseWriter, r *http.Request) {
 // @Router /role/batch-upsert [post]
 func batchUpsertRoleHandler(w http.ResponseWriter, r *http.Request) {
 
-	var entities []map[string]any
+	var entities []model.Role
 	err := common.ReadRequestBody(r, &entities)
 	if err != nil {
 		common.HttpResult(w, common.ErrParam.AppendMsg(err.Error()))
@@ -61,13 +61,25 @@ func batchUpsertRoleHandler(w http.ResponseWriter, r *http.Request) {
 		common.HttpResult(w, common.ErrParam.AppendMsg("len of entities is 0"))
 		return
 	}
+
+	beforeHook, exists := common.GetUpsertBeforeHook("Role")
+	if exists {
+		for _, v := range entities {
+			_, err1 := beforeHook(r, v)
+			if err1 != nil {
+				common.HttpResult(w, common.ErrService.AppendMsg(err1.Error()))
+				return
+			}
+		}
+
+	}
 	for _, v := range entities {
-		if v["id"] == "" {
-			v["id"] = common.NanoId()
+		if v.ID == "" {
+			v.ID = common.NanoId()
 		}
 	}
 
-	err = common.DbBatchUpsert[map[string]any](r.Context(), common.GetDaprClient(), entities, model.RoleTableInfo.Name, model.Role_FIELD_NAME_id)
+	err = common.DbBatchUpsert[model.Role](r.Context(), common.GetDaprClient(), entities, model.RoleTableInfo.Name, model.Role_FIELD_NAME_id)
 	if err != nil {
 		common.HttpResult(w, common.ErrService.AppendMsg(err.Error()))
 		return
@@ -141,9 +153,7 @@ func UpsertRoleHandler(w http.ResponseWriter, r *http.Request) {
 		common.HttpResult(w, common.ErrParam.AppendMsg(err.Error()))
 		return
 	}
-	if val.ID == "" {
-		val.ID = common.NanoId()
-	}
+
 	beforeHook, exists := common.GetUpsertBeforeHook("Role")
 	if exists {
 		v, err1 := beforeHook(r, val)
@@ -153,7 +163,9 @@ func UpsertRoleHandler(w http.ResponseWriter, r *http.Request) {
 		}
 		val = v.(model.Role)
 	}
-
+	if val.ID == "" {
+		val.ID = common.NanoId()
+	}
 	err = common.DbUpsert[model.Role](r.Context(), common.GetDaprClient(), val, model.RoleTableInfo.Name, "id")
 	if err != nil {
 		common.HttpResult(w, common.ErrService.AppendMsg(err.Error()))

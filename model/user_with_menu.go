@@ -42,7 +42,7 @@ Table: v_user_with_menu
 
 JSON Sample
 -------------------------------------
-{    "id": "qMMWecEOCLyRhYSuiAhKpJgAy",    "tenant_id": "ZiluHhNytEYZpkXjAkaGyuoIc",    "mobile": "FFuSnDksIUxusELSMqTSNqnbi",    "email": "nqZuUkWUvbdLglGQFtGIHhMSn",    "identity": "DItVGXVvfUnuotCuPYtPPjJhf",    "name": "kjOvloZDOKTSDdhngOoELshKa",    "zh_name": "jrgxYZkSiaVoTLkXoHXxrhrrA",    "gender": 46,    "address": "gLNmqlrdxrtfBUmQWeAYFduWU",    "password": "YIIhRMdBmLIYXrUUvVFtLgLIF",    "type": 91,    "org_id": "aCRJjpbyHwBXPCfTJotAaVFfp",    "id_card": "OlcbxXACdGtXKMrBuqwANdJul",    "work_number": "KanhtrErxXbdxDaqivxJJmrTq",    "avatar_url": "NCroaNgNFPLoHKDBfkUuqpGQF",    "create_at": 53,    "update_at": 5,    "remark": "QGAlZxrtrKwoUjuPddAdDaLBZ",    "status": 4,    "menu_ids": 24}
+{    "id": "HXRGsltwadajfyajeOTJpasnf",    "tenant_id": "ZmxioMYWbMxOlCGOJCIvSRHic",    "mobile": "dcrSTaFcOlPATsZGsCOJqflDf",    "email": "xsJChImFjidTsoLvRCidgcVKW",    "identity": "ooUOMLvJsxxyqqerqpftJJeos",    "name": "bdcLhxCBsPJZBXpyKhtFJKsoC",    "zh_name": "QfBvhaGKDkdGSFHyYRKIdkvqB",    "gender": 72,    "address": "edxmrlvbLQnCErLhnhHPOvwds",    "password": "pWbgWPeGfxWMloaElWkpLALJE",    "type": 34,    "org_id": "BJwYwivdJTPBpNymysTwpcInj",    "id_card": "xXPHsyHrftXROALjIRnjlReSs",    "work_number": "FFDnqbIZqPmnARIsomRWKJdHX",    "avatar_url": "wZmYyRRyKJNePBDQKOHkfWPjf",    "create_at": 71,    "update_at": 1,    "remark": "nNDpIwVdtmWmisnHHNbhpXVeA",    "status": 50,    "menu_ids": 52}
 
 
 Comments

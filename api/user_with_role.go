@@ -51,7 +51,7 @@ func User_with_roleGroupbyHandler(w http.ResponseWriter, r *http.Request) {
 // @Router /user-with-role/batch-upsert [post]
 func batchUpsertUser_with_roleHandler(w http.ResponseWriter, r *http.Request) {
 
-	var entities []map[string]any
+	var entities []model.User_with_role
 	err := common.ReadRequestBody(r, &entities)
 	if err != nil {
 		common.HttpResult(w, common.ErrParam.AppendMsg(err.Error()))
@@ -61,13 +61,25 @@ func batchUpsertUser_with_roleHandler(w http.ResponseWriter, r *http.Request) {
 		common.HttpResult(w, common.ErrParam.AppendMsg("len of entities is 0"))
 		return
 	}
+
+	beforeHook, exists := common.GetUpsertBeforeHook("User_with_role")
+	if exists {
+		for _, v := range entities {
+			_, err1 := beforeHook(r, v)
+			if err1 != nil {
+				common.HttpResult(w, common.ErrService.AppendMsg(err1.Error()))
+				return
+			}
+		}
+
+	}
 	for _, v := range entities {
-		if v["id"] == "" {
-			v["id"] = common.NanoId()
+		if v.ID == "" {
+			v.ID = common.NanoId()
 		}
 	}
 
-	err = common.DbBatchUpsert[map[string]any](r.Context(), common.GetDaprClient(), entities, model.User_with_roleTableInfo.Name, model.User_with_role_FIELD_NAME_id)
+	err = common.DbBatchUpsert[model.User_with_role](r.Context(), common.GetDaprClient(), entities, model.User_with_roleTableInfo.Name, model.User_with_role_FIELD_NAME_id)
 	if err != nil {
 		common.HttpResult(w, common.ErrService.AppendMsg(err.Error()))
 		return
@@ -167,9 +179,7 @@ func UpsertUser_with_roleHandler(w http.ResponseWriter, r *http.Request) {
 		common.HttpResult(w, common.ErrParam.AppendMsg(err.Error()))
 		return
 	}
-	if val.ID == "" {
-		val.ID = common.NanoId()
-	}
+
 	beforeHook, exists := common.GetUpsertBeforeHook("User_with_role")
 	if exists {
 		v, err1 := beforeHook(r, val)
@@ -179,7 +189,9 @@ func UpsertUser_with_roleHandler(w http.ResponseWriter, r *http.Request) {
 		}
 		val = v.(model.User_with_role)
 	}
-
+	if val.ID == "" {
+		val.ID = common.NanoId()
+	}
 	err = common.DbUpsert[model.User_with_role](r.Context(), common.GetDaprClient(), val, model.User_with_roleTableInfo.Name, "id")
 	if err != nil {
 		common.HttpResult(w, common.ErrService.AppendMsg(err.Error()))

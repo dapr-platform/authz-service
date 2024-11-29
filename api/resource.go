@@ -51,7 +51,7 @@ func ResourceGroupbyHandler(w http.ResponseWriter, r *http.Request) {
 // @Router /resource/batch-upsert [post]
 func batchUpsertResourceHandler(w http.ResponseWriter, r *http.Request) {
 
-	var entities []map[string]any
+	var entities []model.Resource
 	err := common.ReadRequestBody(r, &entities)
 	if err != nil {
 		common.HttpResult(w, common.ErrParam.AppendMsg(err.Error()))
@@ -61,13 +61,25 @@ func batchUpsertResourceHandler(w http.ResponseWriter, r *http.Request) {
 		common.HttpResult(w, common.ErrParam.AppendMsg("len of entities is 0"))
 		return
 	}
+
+	beforeHook, exists := common.GetUpsertBeforeHook("Resource")
+	if exists {
+		for _, v := range entities {
+			_, err1 := beforeHook(r, v)
+			if err1 != nil {
+				common.HttpResult(w, common.ErrService.AppendMsg(err1.Error()))
+				return
+			}
+		}
+
+	}
 	for _, v := range entities {
-		if v["id"] == "" {
-			v["id"] = common.NanoId()
+		if v.ID == "" {
+			v.ID = common.NanoId()
 		}
 	}
 
-	err = common.DbBatchUpsert[map[string]any](r.Context(), common.GetDaprClient(), entities, model.ResourceTableInfo.Name, model.Resource_FIELD_NAME_id)
+	err = common.DbBatchUpsert[model.Resource](r.Context(), common.GetDaprClient(), entities, model.ResourceTableInfo.Name, model.Resource_FIELD_NAME_id)
 	if err != nil {
 		common.HttpResult(w, common.ErrService.AppendMsg(err.Error()))
 		return
@@ -149,9 +161,7 @@ func UpsertResourceHandler(w http.ResponseWriter, r *http.Request) {
 		common.HttpResult(w, common.ErrParam.AppendMsg(err.Error()))
 		return
 	}
-	if val.ID == "" {
-		val.ID = common.NanoId()
-	}
+
 	beforeHook, exists := common.GetUpsertBeforeHook("Resource")
 	if exists {
 		v, err1 := beforeHook(r, val)
@@ -161,7 +171,9 @@ func UpsertResourceHandler(w http.ResponseWriter, r *http.Request) {
 		}
 		val = v.(model.Resource)
 	}
-
+	if val.ID == "" {
+		val.ID = common.NanoId()
+	}
 	err = common.DbUpsert[model.Resource](r.Context(), common.GetDaprClient(), val, model.ResourceTableInfo.Name, "id")
 	if err != nil {
 		common.HttpResult(w, common.ErrService.AppendMsg(err.Error()))

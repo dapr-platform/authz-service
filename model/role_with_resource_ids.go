@@ -33,7 +33,7 @@ Table: v_role_with_resource_ids
 
 JSON Sample
 -------------------------------------
-{    "id": "hwHTLeGCNeCBgwantFjBKNCbh",    "name": "EjqePMaVpIklQkKWwEUAFipyh",    "sort_index": 8,    "status": 76,    "create_at": 9,    "update_at": 93,    "remark": "UTvGhWPPFBHltIJmYZcFnwxWO",    "menu_resource_ids": 72,    "func_resource_ids": 0,    "api_resource_ids": 55,    "data_resource_ids": 37}
+{    "id": "BqEIpysRfrTYDTHSbRSmTikrf",    "name": "yYcBoDJFFiwQDwXEDIoJrAxCH",    "sort_index": 1,    "status": 31,    "create_at": 81,    "update_at": 8,    "remark": "gVbshvrNgRWtBeEplQcqbZjTj",    "menu_resource_ids": 82,    "func_resource_ids": 99,    "api_resource_ids": 66,    "data_resource_ids": 39}
 
 
 Comments
