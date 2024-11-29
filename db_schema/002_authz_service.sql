@@ -7,7 +7,7 @@ CREATE TABLE if not exists o_user(
                        email VARCHAR(255) NOT NULL,
                        identity VARCHAR(255) NOT NULL,
                        name VARCHAR(255) NOT NULL,
-                       nickname VARCHAR(255) NOT NULL,
+                       zh_name VARCHAR(255) NOT NULL,
                        gender integer NOT NULL default 0,
                        address VARCHAR(1024) NOT NULL default '',
                        password VARCHAR(255) NOT NULL,
@@ -32,7 +32,7 @@ COMMENT ON COLUMN o_user.mobile IS '手机号';
 COMMENT ON COLUMN o_user.email IS '邮箱';
 COMMENT ON COLUMN o_user.identity IS '用户标识';
 COMMENT ON COLUMN o_user.name IS '姓名';
-COMMENT ON COLUMN o_user.nickname IS '昵称';
+COMMENT ON COLUMN o_user.zh_name IS '中文名';
 COMMENT ON COLUMN o_user.gender IS '性别(0:未知,1:男,2:女)';
 COMMENT ON COLUMN o_user.address IS '地址';
 COMMENT ON COLUMN o_user.password IS '密码';
