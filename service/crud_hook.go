@@ -15,13 +15,16 @@ func init() {
 }
 func UpsertUserBeforeHook(r *http.Request, in any) (out any, err error) {
 	user := in.(model.User)
-	exists, err := common.DbGetCount(r.Context(), common.GetDaprClient(), model.UserTableInfo.Name, model.User_FIELD_NAME_id, model.User_FIELD_NAME_name+"="+user.Name)
-	if err != nil {
-		return nil, errors.Wrap(err, "DbGetCount错误")
+	if user.ID == "" { //新用户
+		exists, err := common.DbGetCount(r.Context(), common.GetDaprClient(), model.UserTableInfo.Name, model.User_FIELD_NAME_id, model.User_FIELD_NAME_name+"="+user.Name)
+		if err != nil {
+			return nil, errors.Wrap(err, "DbGetCount错误")
+		}
+		if exists > 0 {
+			return nil, errors.New("用户名已存在")
+		}
 	}
-	if exists > 0 {
-		return nil, errors.New("用户名已存在")
-	}
+
 	return in, nil
 }
 
