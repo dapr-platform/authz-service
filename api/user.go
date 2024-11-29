@@ -28,7 +28,7 @@ func InitUserRoute(r chi.Router) {
 
 // @Summary GroupBy
 // @Description GroupBy, for example,  _select=level, then return  {level_val1:sum1,level_val2:sum2}, _where can input status=0
-// @Tags User
+// @Tags 用户
 // @Param _select query string true "_select"
 // @Param _where query string false "_where"
 // @Produce  json
@@ -42,7 +42,7 @@ func UserGroupbyHandler(w http.ResponseWriter, r *http.Request) {
 
 // @Summary batch update
 // @Description batch update
-// @Tags User
+// @Tags 用户
 // @Accept  json
 // @Param entities body []map[string]any true "objects array"
 // @Produce  json
@@ -78,7 +78,7 @@ func batchUpsertUserHandler(w http.ResponseWriter, r *http.Request) {
 
 // @Summary page query
 // @Description page query, _page(from 1 begin), _page_size, _order, and others fields, status=1, name=$like.%CAM%
-// @Tags User
+// @Tags 用户
 // @Param _page query int true "current page"
 // @Param _page_size query int true "page size"
 // @Param _order query string false "order"
@@ -88,6 +88,7 @@ func batchUpsertUserHandler(w http.ResponseWriter, r *http.Request) {
 // @Param email query string false "email"
 // @Param identity query string false "identity"
 // @Param name query string false "name"
+// @Param zh_name query string false "zh_name"
 // @Param gender query string false "gender"
 // @Param address query string false "address"
 // @Param password query string false "password"
@@ -118,7 +119,7 @@ func UserPageListHandler(w http.ResponseWriter, r *http.Request) {
 
 // @Summary query objects
 // @Description query objects
-// @Tags User
+// @Tags 用户
 // @Param _select query string false "_select"
 // @Param _order query string false "order"
 // @Param id query string false "id"
@@ -127,6 +128,7 @@ func UserPageListHandler(w http.ResponseWriter, r *http.Request) {
 // @Param email query string false "email"
 // @Param identity query string false "identity"
 // @Param name query string false "name"
+// @Param zh_name query string false "zh_name"
 // @Param gender query string false "gender"
 // @Param address query string false "address"
 // @Param password query string false "password"
@@ -149,7 +151,7 @@ func UserListHandler(w http.ResponseWriter, r *http.Request) {
 
 // @Summary save
 // @Description save
-// @Tags User
+// @Tags 用户
 // @Accept       json
 // @Param item body model.User true "object"
 // @Produce  json
@@ -186,7 +188,7 @@ func UpsertUserHandler(w http.ResponseWriter, r *http.Request) {
 
 // @Summary delete
 // @Description delete
-// @Tags User
+// @Tags 用户
 // @Param id  path string true "实例id"
 // @Produce  json
 // @Success 200 {object} common.Response{data=model.User} "object"
@@ -207,7 +209,7 @@ func DeleteUserHandler(w http.ResponseWriter, r *http.Request) {
 
 // @Summary batch delete
 // @Description batch delete
-// @Tags User
+// @Tags 用户
 // @Accept  json
 // @Param ids body []string true "id array"
 // @Produce  json

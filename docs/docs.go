@@ -3357,7 +3357,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "User"
+                    "用户"
                 ],
                 "summary": "query objects",
                 "parameters": [
@@ -3407,6 +3407,12 @@ const docTemplate = `{
                         "type": "string",
                         "description": "name",
                         "name": "name",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "zh_name",
+                        "name": "zh_name",
                         "in": "query"
                     },
                     {
@@ -3521,7 +3527,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "User"
+                    "用户"
                 ],
                 "summary": "save",
                 "parameters": [
@@ -3556,6 +3562,314 @@ const docTemplate = `{
                     },
                     "500": {
                         "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/common.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/user-role": {
+            "get": {
+                "description": "查询所有用户角色关系, 可设置page, page_size, order, 以及查询条件等，例如 status=1, name=$like.%25%25CAM%25%25 等",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User_role"
+                ],
+                "summary": "查询所有用户角色关系",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "current page",
+                        "name": "_page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "page size",
+                        "name": "_page_size",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "order",
+                        "name": "_order",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "select",
+                        "name": "_select",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "id",
+                        "name": "id",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "user_id",
+                        "name": "user_id",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "role_id",
+                        "name": "role_id",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "用户角色关系的数组",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/common.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "allOf": [
+                                                {
+                                                    "$ref": "#/definitions/common.Page"
+                                                },
+                                                {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "items": {
+                                                            "type": "array",
+                                                            "items": {
+                                                                "$ref": "#/definitions/model.Userole"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "错误code和错误信息",
+                        "schema": {
+                            "$ref": "#/definitions/common.Response"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "更新用户角色关系",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User_role"
+                ],
+                "summary": "更新用户角色关系",
+                "parameters": [
+                    {
+                        "description": "用户角色关系全部信息",
+                        "name": "item",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.Userole"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "用户角色关系",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/common.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/model.Userole"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "错误code和错误信息",
+                        "schema": {
+                            "$ref": "#/definitions/common.Response"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "添加用户角色关系",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User_role"
+                ],
+                "summary": "添加用户角色关系",
+                "parameters": [
+                    {
+                        "description": "用户角色关系全部信息",
+                        "name": "item",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.Userole"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "用户角色关系",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/common.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/model.Userole"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "错误code和错误信息",
+                        "schema": {
+                            "$ref": "#/definitions/common.Response"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "删除用户角色关系",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User_role"
+                ],
+                "summary": "删除用户角色关系",
+                "parameters": [
+                    {
+                        "description": "id集合",
+                        "name": "item",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "用户角色关系",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/common.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/model.Userole"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "错误code和错误信息",
+                        "schema": {
+                            "$ref": "#/definitions/common.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/user-role/batch": {
+            "post": {
+                "description": "批量添加用户角色关系,参数包含全部的角色",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User_role"
+                ],
+                "summary": "批量添加用户角色关系",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "是否先删除再添加，1:是，0：否 默认为0， ",
+                        "name": "delete_before",
+                        "in": "query"
+                    },
+                    {
+                        "description": "用户角色关系全部信息",
+                        "name": "item",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/model.Userole"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "用户角色关系",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/common.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/model.Userole"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "错误code和错误信息",
                         "schema": {
                             "$ref": "#/definitions/common.Response"
                         }
@@ -4771,7 +5085,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "User"
+                    "用户"
                 ],
                 "summary": "batch delete",
                 "parameters": [
@@ -4814,7 +5128,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "User"
+                    "用户"
                 ],
                 "summary": "batch update",
                 "parameters": [
@@ -4841,6 +5155,46 @@ const docTemplate = `{
                     },
                     "500": {
                         "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/common.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/user/change-password": {
+            "post": {
+                "description": "修改密码",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "修改密码",
+                "parameters": [
+                    {
+                        "description": "密码信息",
+                        "name": "item",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/entity.ChangePasswordInfo"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "用户",
+                        "schema": {
+                            "$ref": "#/definitions/common.Response"
+                        }
+                    },
+                    "500": {
+                        "description": "错误code和错误信息",
                         "schema": {
                             "$ref": "#/definitions/common.Response"
                         }
@@ -4893,7 +5247,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "User"
+                    "用户"
                 ],
                 "summary": "GroupBy",
                 "parameters": [
@@ -4999,7 +5353,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "User"
+                    "用户"
                 ],
                 "summary": "page query",
                 "parameters": [
@@ -5057,6 +5411,12 @@ const docTemplate = `{
                         "type": "string",
                         "description": "name",
                         "name": "name",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "zh_name",
+                        "name": "zh_name",
                         "in": "query"
                     },
                     {
@@ -5175,6 +5535,65 @@ const docTemplate = `{
                 }
             }
         },
+        "/user/status": {
+            "post": {
+                "description": "设置用户状态, 1:正常，2：停用",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "设置用户状态",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "用户状态",
+                        "name": "status",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "description": "用户id集合",
+                        "name": "item",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "用户",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/common.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/model.User"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "错误code和错误信息",
+                        "schema": {
+                            "$ref": "#/definitions/common.Response"
+                        }
+                    }
+                }
+            }
+        },
         "/user/{id}": {
             "delete": {
                 "description": "delete",
@@ -5182,7 +5601,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "User"
+                    "用户"
                 ],
                 "summary": "delete",
                 "parameters": [
@@ -5658,6 +6077,20 @@ const docTemplate = `{
                 }
             }
         },
+        "entity.ChangePasswordInfo": {
+            "type": "object",
+            "properties": {
+                "new_password": {
+                    "type": "string"
+                },
+                "old_password": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "string"
+                }
+            }
+        },
         "entity.MenuId": {
             "type": "object",
             "properties": {
@@ -5712,7 +6145,7 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "address": {
-                    "description": "address",
+                    "description": "地址",
                     "type": "string"
                 },
                 "avatar_url": {
@@ -5724,11 +6157,11 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "email": {
-                    "description": "email",
+                    "description": "邮箱",
                     "type": "string"
                 },
                 "gender": {
-                    "description": "gender",
+                    "description": "性别(0:未知,1:男,2:女)",
                     "type": "integer"
                 },
                 "id": {
@@ -5754,11 +6187,11 @@ const docTemplate = `{
                     }
                 },
                 "mobile": {
-                    "description": "mobile",
+                    "description": "手机号",
                     "type": "string"
                 },
                 "name": {
-                    "description": "name",
+                    "description": "姓名",
                     "type": "string"
                 },
                 "org_id": {
@@ -5766,7 +6199,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "password": {
-                    "description": "password",
+                    "description": "密码",
                     "type": "string"
                 },
                 "remark": {
@@ -5778,7 +6211,7 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "tenant_id": {
-                    "description": "tenant_id",
+                    "description": "租户ID",
                     "type": "string"
                 },
                 "type": {
@@ -5791,6 +6224,10 @@ const docTemplate = `{
                 },
                 "work_number": {
                     "description": "工号",
+                    "type": "string"
+                },
+                "zh_name": {
+                    "description": "中文名",
                     "type": "string"
                 }
             }
@@ -5859,7 +6296,7 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "create_at": {
-                    "description": "create_at",
+                    "description": "创建时间",
                     "type": "string"
                 },
                 "id": {
@@ -5871,19 +6308,19 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "remark": {
-                    "description": "remark",
+                    "description": "备注",
                     "type": "string"
                 },
                 "sort_index": {
-                    "description": "sort_index",
+                    "description": "排序索引",
                     "type": "integer"
                 },
                 "status": {
-                    "description": "status",
+                    "description": "状态(1:正常,2:禁用)",
                     "type": "integer"
                 },
                 "update_at": {
-                    "description": "update_at",
+                    "description": "更新时间",
                     "type": "string"
                 }
             }
@@ -6085,7 +6522,7 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "address": {
-                    "description": "address",
+                    "description": "地址",
                     "type": "string"
                 },
                 "avatar_url": {
@@ -6097,11 +6534,11 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "email": {
-                    "description": "email",
+                    "description": "邮箱",
                     "type": "string"
                 },
                 "gender": {
-                    "description": "gender",
+                    "description": "性别(0:未知,1:男,2:女)",
                     "type": "integer"
                 },
                 "id": {
@@ -6117,11 +6554,11 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "mobile": {
-                    "description": "mobile",
+                    "description": "手机号",
                     "type": "string"
                 },
                 "name": {
-                    "description": "name",
+                    "description": "姓名",
                     "type": "string"
                 },
                 "org_id": {
@@ -6129,7 +6566,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "password": {
-                    "description": "password",
+                    "description": "密码",
                     "type": "string"
                 },
                 "remark": {
@@ -6141,7 +6578,7 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "tenant_id": {
-                    "description": "tenant_id",
+                    "description": "租户ID",
                     "type": "string"
                 },
                 "type": {
@@ -6154,6 +6591,10 @@ const docTemplate = `{
                 },
                 "work_number": {
                     "description": "工号",
+                    "type": "string"
+                },
+                "zh_name": {
+                    "description": "中文名",
                     "type": "string"
                 }
             }

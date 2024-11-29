@@ -72,8 +72,8 @@ begin
 end
 $function$;
 
-insert into o_user(id, tenant_id,mobile, email, identity,name,gender,address, password, type, org_id, id_card, work_number, avatar_url, create_at, update_at,  status)
-values ((select nanoid()),'','+8613911111111', 'admin@business.com','admin','admin',1,'',(SELECT encode(digest('things2024'::bytea, 'sha1'), 'hex')),1,'','','','',now(),now(),1 );
+insert into o_user(id, tenant_id,mobile, email, identity,name,zh_name,gender,address, password, type, org_id, id_card, work_number, avatar_url, create_at, update_at,  status)
+values ((select nanoid()),'','+8613911111111', 'admin@business.com','admin','admin','管理员',1,'',(SELECT encode(digest('things2024'::bytea, 'sha1'), 'hex')),1,'','','','',now(),now(),1 );
 
 
 CREATE TABLE o_resource(
@@ -235,6 +235,7 @@ drop table if exists r_role_resource_operate cascade;
 drop table if exists r_user_role cascade;
 drop table if exists o_role cascade;
 drop table if exists o_resource cascade;
+drop index if exists IDX_o_user_NAME;
 drop table if exists o_user cascade;
 drop function if exists public.nanoid(integer);
 drop extension if exists pgcrypto;

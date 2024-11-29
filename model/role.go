@@ -29,7 +29,7 @@ Table: o_role
 
 JSON Sample
 -------------------------------------
-{    "id": "BFcBPplxsOpYJJgtlJqtlUGlb",    "name": "KqQcFJhOdImmswQfIURbPEaBv",    "sort_index": 27,    "status": 77,    "create_at": 47,    "update_at": 20,    "remark": "DBeQgSTmdKCcHepvqkOkLUsFO"}
+{    "id": "IimwlVSHDJWtBlUrDIEryCBxD",    "name": "DshOSCtGaEbIKHKfaQsQDrxog",    "sort_index": 30,    "status": 35,    "create_at": 17,    "update_at": 42,    "remark": "bIbRmVpYleKmQebxZlPQmNprx"}
 
 
 
@@ -57,15 +57,15 @@ type Role struct {
 
 	Name string `json:"name"` //名称
 
-	SortIndex int32 `json:"sort_index"` //sort_index
+	SortIndex int32 `json:"sort_index"` //排序索引
 
-	Status int32 `json:"status"` //status
+	Status int32 `json:"status"` //状态(1:正常,2:禁用)
 
-	CreateAt common.LocalTime `json:"create_at"` //create_at
+	CreateAt common.LocalTime `json:"create_at"` //创建时间
 
-	UpdateAt common.LocalTime `json:"update_at"` //update_at
+	UpdateAt common.LocalTime `json:"update_at"` //更新时间
 
-	Remark string `json:"remark"` //remark
+	Remark string `json:"remark"` //备注
 
 }
 
@@ -118,7 +118,7 @@ var RoleTableInfo = &TableInfo{
 		&ColumnInfo{
 			Index:              2,
 			Name:               "sort_index",
-			Comment:            `sort_index`,
+			Comment:            `排序索引`,
 			Notes:              ``,
 			Nullable:           false,
 			DatabaseTypeName:   "INT4",
@@ -139,7 +139,7 @@ var RoleTableInfo = &TableInfo{
 		&ColumnInfo{
 			Index:              3,
 			Name:               "status",
-			Comment:            `status`,
+			Comment:            `状态(1:正常,2:禁用)`,
 			Notes:              ``,
 			Nullable:           false,
 			DatabaseTypeName:   "INT4",
@@ -160,7 +160,7 @@ var RoleTableInfo = &TableInfo{
 		&ColumnInfo{
 			Index:              4,
 			Name:               "create_at",
-			Comment:            `create_at`,
+			Comment:            `创建时间`,
 			Notes:              ``,
 			Nullable:           false,
 			DatabaseTypeName:   "TIMESTAMP",
@@ -181,7 +181,7 @@ var RoleTableInfo = &TableInfo{
 		&ColumnInfo{
 			Index:              5,
 			Name:               "update_at",
-			Comment:            `update_at`,
+			Comment:            `更新时间`,
 			Notes:              ``,
 			Nullable:           false,
 			DatabaseTypeName:   "TIMESTAMP",
@@ -202,7 +202,7 @@ var RoleTableInfo = &TableInfo{
 		&ColumnInfo{
 			Index:              6,
 			Name:               "remark",
-			Comment:            `remark`,
+			Comment:            `备注`,
 			Notes:              ``,
 			Nullable:           false,
 			DatabaseTypeName:   "VARCHAR",

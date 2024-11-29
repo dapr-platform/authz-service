@@ -18,6 +18,15 @@ definitions:
       status:
         type: integer
     type: object
+  entity.ChangePasswordInfo:
+    properties:
+      new_password:
+        type: string
+      old_password:
+        type: string
+      user_id:
+        type: string
+    type: object
   entity.MenuId:
     properties:
       resource_id:
@@ -56,7 +65,7 @@ definitions:
   entity.UserInfo:
     properties:
       address:
-        description: address
+        description: 地址
         type: string
       avatar_url:
         description: 头像
@@ -65,10 +74,10 @@ definitions:
         description: 创建时间
         type: string
       email:
-        description: email
+        description: 邮箱
         type: string
       gender:
-        description: gender
+        description: 性别(0:未知,1:男,2:女)
         type: integer
       id:
         description: Primary Key
@@ -87,16 +96,16 @@ definitions:
           $ref: '#/definitions/entity.MenuId'
         type: array
       mobile:
-        description: mobile
+        description: 手机号
         type: string
       name:
-        description: name
+        description: 姓名
         type: string
       org_id:
         description: 组织ID
         type: string
       password:
-        description: password
+        description: 密码
         type: string
       remark:
         description: 备注
@@ -105,7 +114,7 @@ definitions:
         description: 状态(1正常，2:禁止登陆，3:删除
         type: integer
       tenant_id:
-        description: tenant_id
+        description: 租户ID
         type: string
       type:
         description: 用户类型,1:管理员,2:普通用户,3:访客
@@ -115,6 +124,9 @@ definitions:
         type: string
       work_number:
         description: 工号
+        type: string
+      zh_name:
+        description: 中文名
         type: string
     type: object
   entity.UserLoginReq:
@@ -163,7 +175,7 @@ definitions:
   model.Role:
     properties:
       create_at:
-        description: create_at
+        description: 创建时间
         type: string
       id:
         description: 唯一标识
@@ -172,16 +184,16 @@ definitions:
         description: 名称
         type: string
       remark:
-        description: remark
+        description: 备注
         type: string
       sort_index:
-        description: sort_index
+        description: 排序索引
         type: integer
       status:
-        description: status
+        description: 状态(1:正常,2:禁用)
         type: integer
       update_at:
-        description: update_at
+        description: 更新时间
         type: string
     type: object
   model.Role_detail:
@@ -325,7 +337,7 @@ definitions:
   model.User:
     properties:
       address:
-        description: address
+        description: 地址
         type: string
       avatar_url:
         description: 头像
@@ -334,10 +346,10 @@ definitions:
         description: 创建时间
         type: string
       email:
-        description: email
+        description: 邮箱
         type: string
       gender:
-        description: gender
+        description: 性别(0:未知,1:男,2:女)
         type: integer
       id:
         description: Primary Key
@@ -349,16 +361,16 @@ definitions:
         description: 用户标识
         type: string
       mobile:
-        description: mobile
+        description: 手机号
         type: string
       name:
-        description: name
+        description: 姓名
         type: string
       org_id:
         description: 组织ID
         type: string
       password:
-        description: password
+        description: 密码
         type: string
       remark:
         description: 备注
@@ -367,7 +379,7 @@ definitions:
         description: 状态(1正常，2:禁止登陆，3:删除
         type: integer
       tenant_id:
-        description: tenant_id
+        description: 租户ID
         type: string
       type:
         description: 用户类型,1:管理员,2:普通用户,3:访客
@@ -377,6 +389,9 @@ definitions:
         type: string
       work_number:
         description: 工号
+        type: string
+      zh_name:
+        description: 中文名
         type: string
     type: object
   model.User_with_menu:
@@ -2650,6 +2665,10 @@ paths:
         in: query
         name: name
         type: string
+      - description: zh_name
+        in: query
+        name: zh_name
+        type: string
       - description: gender
         in: query
         name: gender
@@ -2718,7 +2737,7 @@ paths:
             $ref: '#/definitions/common.Response'
       summary: query objects
       tags:
-      - User
+      - 用户
     post:
       consumes:
       - application/json
@@ -2748,7 +2767,193 @@ paths:
             $ref: '#/definitions/common.Response'
       summary: save
       tags:
-      - User
+      - 用户
+  /user-role:
+    delete:
+      description: 删除用户角色关系
+      parameters:
+      - description: id集合
+        in: body
+        name: item
+        required: true
+        schema:
+          items:
+            type: string
+          type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 用户角色关系
+          schema:
+            allOf:
+            - $ref: '#/definitions/common.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/model.Userole'
+              type: object
+        "500":
+          description: 错误code和错误信息
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: 删除用户角色关系
+      tags:
+      - User_role
+    get:
+      description: 查询所有用户角色关系, 可设置page, page_size, order, 以及查询条件等，例如 status=1, name=$like.%25%25CAM%25%25
+        等
+      parameters:
+      - description: current page
+        in: query
+        name: _page
+        type: integer
+      - description: page size
+        in: query
+        name: _page_size
+        type: integer
+      - description: order
+        in: query
+        name: _order
+        type: string
+      - description: select
+        in: query
+        name: _select
+        type: string
+      - description: id
+        in: query
+        name: id
+        type: string
+      - description: user_id
+        in: query
+        name: user_id
+        type: string
+      - description: role_id
+        in: query
+        name: role_id
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 用户角色关系的数组
+          schema:
+            allOf:
+            - $ref: '#/definitions/common.Response'
+            - properties:
+                data:
+                  allOf:
+                  - $ref: '#/definitions/common.Page'
+                  - properties:
+                      items:
+                        items:
+                          $ref: '#/definitions/model.Userole'
+                        type: array
+                    type: object
+              type: object
+        "500":
+          description: 错误code和错误信息
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: 查询所有用户角色关系
+      tags:
+      - User_role
+    post:
+      consumes:
+      - application/json
+      description: 添加用户角色关系
+      parameters:
+      - description: 用户角色关系全部信息
+        in: body
+        name: item
+        required: true
+        schema:
+          $ref: '#/definitions/model.Userole'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 用户角色关系
+          schema:
+            allOf:
+            - $ref: '#/definitions/common.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/model.Userole'
+              type: object
+        "500":
+          description: 错误code和错误信息
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: 添加用户角色关系
+      tags:
+      - User_role
+    put:
+      consumes:
+      - application/json
+      description: 更新用户角色关系
+      parameters:
+      - description: 用户角色关系全部信息
+        in: body
+        name: item
+        required: true
+        schema:
+          $ref: '#/definitions/model.Userole'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 用户角色关系
+          schema:
+            allOf:
+            - $ref: '#/definitions/common.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/model.Userole'
+              type: object
+        "500":
+          description: 错误code和错误信息
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: 更新用户角色关系
+      tags:
+      - User_role
+  /user-role/batch:
+    post:
+      consumes:
+      - application/json
+      description: 批量添加用户角色关系,参数包含全部的角色
+      parameters:
+      - description: '是否先删除再添加，1:是，0：否 默认为0， '
+        in: query
+        name: delete_before
+        type: integer
+      - description: 用户角色关系全部信息
+        in: body
+        name: item
+        required: true
+        schema:
+          items:
+            $ref: '#/definitions/model.Userole'
+          type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 用户角色关系
+          schema:
+            allOf:
+            - $ref: '#/definitions/common.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/model.Userole'
+              type: object
+        "500":
+          description: 错误code和错误信息
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: 批量添加用户角色关系
+      tags:
+      - User_role
   /user-with-menu:
     get:
       description: query objects
@@ -3538,7 +3743,7 @@ paths:
             $ref: '#/definitions/common.Response'
       summary: delete
       tags:
-      - User
+      - 用户
   /user/batch-delete:
     post:
       consumes:
@@ -3566,7 +3771,7 @@ paths:
             $ref: '#/definitions/common.Response'
       summary: batch delete
       tags:
-      - User
+      - 用户
   /user/batch-upsert:
     post:
       consumes:
@@ -3594,6 +3799,32 @@ paths:
           schema:
             $ref: '#/definitions/common.Response'
       summary: batch update
+      tags:
+      - 用户
+  /user/change-password:
+    post:
+      consumes:
+      - application/json
+      description: 修改密码
+      parameters:
+      - description: 密码信息
+        in: body
+        name: item
+        required: true
+        schema:
+          $ref: '#/definitions/entity.ChangePasswordInfo'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 用户
+          schema:
+            $ref: '#/definitions/common.Response'
+        "500":
+          description: 错误code和错误信息
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: 修改密码
       tags:
       - User
   /user/current:
@@ -3653,7 +3884,7 @@ paths:
             $ref: '#/definitions/common.Response'
       summary: GroupBy
       tags:
-      - User
+      - 用户
   /user/login:
     post:
       description: login  by identity and password
@@ -3725,6 +3956,10 @@ paths:
       - description: name
         in: query
         name: name
+        type: string
+      - description: zh_name
+        in: query
+        name: zh_name
         type: string
       - description: gender
         in: query
@@ -3798,6 +4033,42 @@ paths:
           schema:
             $ref: '#/definitions/common.Response'
       summary: page query
+      tags:
+      - 用户
+  /user/status:
+    post:
+      description: 设置用户状态, 1:正常，2：停用
+      parameters:
+      - description: 用户状态
+        in: query
+        name: status
+        required: true
+        type: integer
+      - description: 用户id集合
+        in: body
+        name: item
+        required: true
+        schema:
+          items:
+            type: string
+          type: array
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 用户
+          schema:
+            allOf:
+            - $ref: '#/definitions/common.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/model.User'
+              type: object
+        "500":
+          description: 错误code和错误信息
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: 设置用户状态
       tags:
       - User
   /userole:
