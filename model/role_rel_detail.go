@@ -36,7 +36,7 @@ Table: v_role_rel_detail
 
 JSON Sample
 -------------------------------------
-{    "id": "lSLmXUdWjxaPQObmippcKcioM",    "role_id": "CQREIeZHQHOEmGVEUHHGTLYZQ",    "resource_id": "dupXsmmHTgLnAcITVyrhDmNSp",    "op": "NYuyAIDaBuPJRtxanQMHBtVpP",    "filter_conditions": "tBJetCmSCTriNtxtBuomhPUxg",    "role_name": "gnMlJyEChrvUdfQdGCTQCXkIC",    "resource_name": "odlRPAdyqKSuaumGpbgEPwEfQ",    "module": "WhqpOXyPjQqdhQNfuLcxdewuV",    "service_name": "LwTcEfydAfYmvQrHGhhGCVapx",    "service_name_cn": "FamfLNsRZHrLGCAeUnGCFIaKu",    "type": 16,    "api_url": "nYcAniHlFMTXTIQcJGMrlxGue",    "data_conditions": "tiHtwSGFiwYcLUxWtjSFVdnfV",    "support_ops": "FsOlhVMWQxJHopRrehUjHVvfG"}
+{    "id": "xFqvZtnVMEMTrCfdGliIBmWhk",    "role_id": "YWojBXGvHsNFwWeOFLCkUPTVL",    "resource_id": "DVKZwcRolkAjRIVDxNoAKwhTV",    "op": "rZUpnofmJkqSyeUkHnOwfvURV",    "filter_conditions": "lasxJLxLWcBdrlkJRFsZXAlHL",    "role_name": "oetGfQVPIGvASpxQRXmDpItxA",    "resource_name": "gHrqmpRpJkGxkxUAYBeCwpbBk",    "module": "DsNPvpYNNRRNVcibkQgPguGNI",    "service_name": "lwwHqMBKQVNnvBlfQbAnygXqw",    "service_name_cn": "tULRAtZrqspWZNKbqXOPiyEJb",    "type": 60,    "api_url": "vUIMfwmbsNcAjuiTjBkyfiNox",    "data_conditions": "VRAkLnxYPUQtLqfAfbTRWjgYH",    "support_ops": "DyVYtcfAdkqbpZQKKagdANcgy"}
 
 
 Comments

@@ -28,7 +28,7 @@ func InitRole_with_resource_idsRoute(r chi.Router) {
 
 // @Summary GroupBy
 // @Description GroupBy, for example,  _select=level, then return  {level_val1:sum1,level_val2:sum2}, _where can input status=0
-// @Tags Role_with_resource_ids
+// @Tags 角色资源ID关联视图
 // @Param _select query string true "_select"
 // @Param _where query string false "_where"
 // @Produce  json
@@ -42,7 +42,7 @@ func Role_with_resource_idsGroupbyHandler(w http.ResponseWriter, r *http.Request
 
 // @Summary batch update
 // @Description batch update
-// @Tags Role_with_resource_ids
+// @Tags 角色资源ID关联视图
 // @Accept  json
 // @Param entities body []map[string]any true "objects array"
 // @Produce  json
@@ -61,6 +61,11 @@ func batchUpsertRole_with_resource_idsHandler(w http.ResponseWriter, r *http.Req
 		common.HttpResult(w, common.ErrParam.AppendMsg("len of entities is 0"))
 		return
 	}
+	for _, v := range entities {
+		if v["id"] == "" {
+			v["id"] = common.NanoId()
+		}
+	}
 
 	err = common.DbBatchUpsert[map[string]any](r.Context(), common.GetDaprClient(), entities, model.Role_with_resource_idsTableInfo.Name, model.Role_with_resource_ids_FIELD_NAME_id)
 	if err != nil {
@@ -73,7 +78,7 @@ func batchUpsertRole_with_resource_idsHandler(w http.ResponseWriter, r *http.Req
 
 // @Summary page query
 // @Description page query, _page(from 1 begin), _page_size, _order, and others fields, status=1, name=$like.%CAM%
-// @Tags Role_with_resource_ids
+// @Tags 角色资源ID关联视图
 // @Param _page query int true "current page"
 // @Param _page_size query int true "page size"
 // @Param _order query string false "order"
@@ -106,7 +111,7 @@ func Role_with_resource_idsPageListHandler(w http.ResponseWriter, r *http.Reques
 
 // @Summary query objects
 // @Description query objects
-// @Tags Role_with_resource_ids
+// @Tags 角色资源ID关联视图
 // @Param _select query string false "_select"
 // @Param _order query string false "order"
 // @Param id query string false "id"
@@ -130,7 +135,7 @@ func Role_with_resource_idsListHandler(w http.ResponseWriter, r *http.Request) {
 
 // @Summary save
 // @Description save
-// @Tags Role_with_resource_ids
+// @Tags 角色资源ID关联视图
 // @Accept       json
 // @Param item body model.Role_with_resource_ids true "object"
 // @Produce  json
@@ -143,6 +148,9 @@ func UpsertRole_with_resource_idsHandler(w http.ResponseWriter, r *http.Request)
 	if err != nil {
 		common.HttpResult(w, common.ErrParam.AppendMsg(err.Error()))
 		return
+	}
+	if val.ID == "" {
+		val.ID = common.NanoId()
 	}
 	beforeHook, exists := common.GetUpsertBeforeHook("Role_with_resource_ids")
 	if exists {
@@ -164,7 +172,7 @@ func UpsertRole_with_resource_idsHandler(w http.ResponseWriter, r *http.Request)
 
 // @Summary delete
 // @Description delete
-// @Tags Role_with_resource_ids
+// @Tags 角色资源ID关联视图
 // @Param id  path string true "实例id"
 // @Produce  json
 // @Success 200 {object} common.Response{data=model.Role_with_resource_ids} "object"
@@ -185,7 +193,7 @@ func DeleteRole_with_resource_idsHandler(w http.ResponseWriter, r *http.Request)
 
 // @Summary batch delete
 // @Description batch delete
-// @Tags Role_with_resource_ids
+// @Tags 角色资源ID关联视图
 // @Accept  json
 // @Param ids body []string true "id array"
 // @Produce  json

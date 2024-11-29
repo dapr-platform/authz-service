@@ -924,7 +924,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Role_detail"
+                    "角色详情视图"
                 ],
                 "summary": "query objects",
                 "parameters": [
@@ -1046,7 +1046,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Role_detail"
+                    "角色详情视图"
                 ],
                 "summary": "save",
                 "parameters": [
@@ -1098,7 +1098,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Role_detail"
+                    "角色详情视图"
                 ],
                 "summary": "batch delete",
                 "parameters": [
@@ -1141,7 +1141,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Role_detail"
+                    "角色详情视图"
                 ],
                 "summary": "batch update",
                 "parameters": [
@@ -1182,7 +1182,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Role_detail"
+                    "角色详情视图"
                 ],
                 "summary": "GroupBy",
                 "parameters": [
@@ -1239,7 +1239,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Role_detail"
+                    "角色详情视图"
                 ],
                 "summary": "page query",
                 "parameters": [
@@ -1380,7 +1380,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Role_detail"
+                    "角色详情视图"
                 ],
                 "summary": "delete",
                 "parameters": [
@@ -1427,7 +1427,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Role_rel_detail"
+                    "角色资源关联详情视图"
                 ],
                 "summary": "query objects",
                 "parameters": [
@@ -1567,7 +1567,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Role_rel_detail"
+                    "角色资源关联详情视图"
                 ],
                 "summary": "save",
                 "parameters": [
@@ -1619,7 +1619,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Role_rel_detail"
+                    "角色资源关联详情视图"
                 ],
                 "summary": "batch delete",
                 "parameters": [
@@ -1662,7 +1662,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Role_rel_detail"
+                    "角色资源关联详情视图"
                 ],
                 "summary": "batch update",
                 "parameters": [
@@ -1703,7 +1703,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Role_rel_detail"
+                    "角色资源关联详情视图"
                 ],
                 "summary": "GroupBy",
                 "parameters": [
@@ -1760,7 +1760,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Role_rel_detail"
+                    "角色资源关联详情视图"
                 ],
                 "summary": "page query",
                 "parameters": [
@@ -1919,7 +1919,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Role_rel_detail"
+                    "角色资源关联详情视图"
                 ],
                 "summary": "delete",
                 "parameters": [
@@ -2459,7 +2459,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Role_with_resource_ids"
+                    "角色资源ID关联视图"
                 ],
                 "summary": "query objects",
                 "parameters": [
@@ -2581,7 +2581,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Role_with_resource_ids"
+                    "角色资源ID关联视图"
                 ],
                 "summary": "save",
                 "parameters": [
@@ -2633,7 +2633,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Role_with_resource_ids"
+                    "角色资源ID关联视图"
                 ],
                 "summary": "batch delete",
                 "parameters": [
@@ -2676,7 +2676,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Role_with_resource_ids"
+                    "角色资源ID关联视图"
                 ],
                 "summary": "batch update",
                 "parameters": [
@@ -2717,7 +2717,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Role_with_resource_ids"
+                    "角色资源ID关联视图"
                 ],
                 "summary": "GroupBy",
                 "parameters": [
@@ -2774,7 +2774,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Role_with_resource_ids"
+                    "角色资源ID关联视图"
                 ],
                 "summary": "page query",
                 "parameters": [
@@ -2915,7 +2915,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Role_with_resource_ids"
+                    "角色资源ID关联视图"
                 ],
                 "summary": "delete",
                 "parameters": [
@@ -3884,7 +3884,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "User_with_menu"
+                    "用户菜单关联视图"
                 ],
                 "summary": "query objects",
                 "parameters": [
@@ -3934,6 +3934,12 @@ const docTemplate = `{
                         "type": "string",
                         "description": "name",
                         "name": "name",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "zh_name",
+                        "name": "zh_name",
                         "in": "query"
                     },
                     {
@@ -4054,7 +4060,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "User_with_menu"
+                    "用户菜单关联视图"
                 ],
                 "summary": "save",
                 "parameters": [
@@ -4106,7 +4112,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "User_with_menu"
+                    "用户菜单关联视图"
                 ],
                 "summary": "batch delete",
                 "parameters": [
@@ -4149,7 +4155,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "User_with_menu"
+                    "用户菜单关联视图"
                 ],
                 "summary": "batch update",
                 "parameters": [
@@ -4190,7 +4196,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "User_with_menu"
+                    "用户菜单关联视图"
                 ],
                 "summary": "GroupBy",
                 "parameters": [
@@ -4247,7 +4253,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "User_with_menu"
+                    "用户菜单关联视图"
                 ],
                 "summary": "page query",
                 "parameters": [
@@ -4305,6 +4311,12 @@ const docTemplate = `{
                         "type": "string",
                         "description": "name",
                         "name": "name",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "zh_name",
+                        "name": "zh_name",
                         "in": "query"
                     },
                     {
@@ -4436,7 +4448,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "User_with_menu"
+                    "用户菜单关联视图"
                 ],
                 "summary": "delete",
                 "parameters": [
@@ -4483,7 +4495,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "User_with_role"
+                    "用户角色关联视图"
                 ],
                 "summary": "query objects",
                 "parameters": [
@@ -4533,6 +4545,12 @@ const docTemplate = `{
                         "type": "string",
                         "description": "name",
                         "name": "name",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "zh_name",
+                        "name": "zh_name",
                         "in": "query"
                     },
                     {
@@ -4653,7 +4671,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "User_with_role"
+                    "用户角色关联视图"
                 ],
                 "summary": "save",
                 "parameters": [
@@ -4705,7 +4723,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "User_with_role"
+                    "用户角色关联视图"
                 ],
                 "summary": "batch delete",
                 "parameters": [
@@ -4748,7 +4766,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "User_with_role"
+                    "用户角色关联视图"
                 ],
                 "summary": "batch update",
                 "parameters": [
@@ -4789,7 +4807,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "User_with_role"
+                    "用户角色关联视图"
                 ],
                 "summary": "GroupBy",
                 "parameters": [
@@ -4846,7 +4864,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "User_with_role"
+                    "用户角色关联视图"
                 ],
                 "summary": "page query",
                 "parameters": [
@@ -4904,6 +4922,12 @@ const docTemplate = `{
                         "type": "string",
                         "description": "name",
                         "name": "name",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "zh_name",
+                        "name": "zh_name",
                         "in": "query"
                     },
                     {
@@ -5035,7 +5059,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "User_with_role"
+                    "用户角色关联视图"
                 ],
                 "summary": "delete",
                 "parameters": [
@@ -6676,6 +6700,10 @@ const docTemplate = `{
                 "work_number": {
                     "description": "work_number",
                     "type": "string"
+                },
+                "zh_name": {
+                    "description": "zh_name",
+                    "type": "string"
                 }
             }
         },
@@ -6755,6 +6783,10 @@ const docTemplate = `{
                 },
                 "work_number": {
                     "description": "work_number",
+                    "type": "string"
+                },
+                "zh_name": {
+                    "description": "zh_name",
                     "type": "string"
                 }
             }

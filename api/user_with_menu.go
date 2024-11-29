@@ -28,7 +28,7 @@ func InitUser_with_menuRoute(r chi.Router) {
 
 // @Summary GroupBy
 // @Description GroupBy, for example,  _select=level, then return  {level_val1:sum1,level_val2:sum2}, _where can input status=0
-// @Tags User_with_menu
+// @Tags 用户菜单关联视图
 // @Param _select query string true "_select"
 // @Param _where query string false "_where"
 // @Produce  json
@@ -42,7 +42,7 @@ func User_with_menuGroupbyHandler(w http.ResponseWriter, r *http.Request) {
 
 // @Summary batch update
 // @Description batch update
-// @Tags User_with_menu
+// @Tags 用户菜单关联视图
 // @Accept  json
 // @Param entities body []map[string]any true "objects array"
 // @Produce  json
@@ -61,6 +61,11 @@ func batchUpsertUser_with_menuHandler(w http.ResponseWriter, r *http.Request) {
 		common.HttpResult(w, common.ErrParam.AppendMsg("len of entities is 0"))
 		return
 	}
+	for _, v := range entities {
+		if v["id"] == "" {
+			v["id"] = common.NanoId()
+		}
+	}
 
 	err = common.DbBatchUpsert[map[string]any](r.Context(), common.GetDaprClient(), entities, model.User_with_menuTableInfo.Name, model.User_with_menu_FIELD_NAME_id)
 	if err != nil {
@@ -73,7 +78,7 @@ func batchUpsertUser_with_menuHandler(w http.ResponseWriter, r *http.Request) {
 
 // @Summary page query
 // @Description page query, _page(from 1 begin), _page_size, _order, and others fields, status=1, name=$like.%CAM%
-// @Tags User_with_menu
+// @Tags 用户菜单关联视图
 // @Param _page query int true "current page"
 // @Param _page_size query int true "page size"
 // @Param _order query string false "order"
@@ -83,6 +88,7 @@ func batchUpsertUser_with_menuHandler(w http.ResponseWriter, r *http.Request) {
 // @Param email query string false "email"
 // @Param identity query string false "identity"
 // @Param name query string false "name"
+// @Param zh_name query string false "zh_name"
 // @Param gender query string false "gender"
 // @Param address query string false "address"
 // @Param password query string false "password"
@@ -114,7 +120,7 @@ func User_with_menuPageListHandler(w http.ResponseWriter, r *http.Request) {
 
 // @Summary query objects
 // @Description query objects
-// @Tags User_with_menu
+// @Tags 用户菜单关联视图
 // @Param _select query string false "_select"
 // @Param _order query string false "order"
 // @Param id query string false "id"
@@ -123,6 +129,7 @@ func User_with_menuPageListHandler(w http.ResponseWriter, r *http.Request) {
 // @Param email query string false "email"
 // @Param identity query string false "identity"
 // @Param name query string false "name"
+// @Param zh_name query string false "zh_name"
 // @Param gender query string false "gender"
 // @Param address query string false "address"
 // @Param password query string false "password"
@@ -146,7 +153,7 @@ func User_with_menuListHandler(w http.ResponseWriter, r *http.Request) {
 
 // @Summary save
 // @Description save
-// @Tags User_with_menu
+// @Tags 用户菜单关联视图
 // @Accept       json
 // @Param item body model.User_with_menu true "object"
 // @Produce  json
@@ -159,6 +166,9 @@ func UpsertUser_with_menuHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		common.HttpResult(w, common.ErrParam.AppendMsg(err.Error()))
 		return
+	}
+	if val.ID == "" {
+		val.ID = common.NanoId()
 	}
 	beforeHook, exists := common.GetUpsertBeforeHook("User_with_menu")
 	if exists {
@@ -180,7 +190,7 @@ func UpsertUser_with_menuHandler(w http.ResponseWriter, r *http.Request) {
 
 // @Summary delete
 // @Description delete
-// @Tags User_with_menu
+// @Tags 用户菜单关联视图
 // @Param id  path string true "实例id"
 // @Produce  json
 // @Success 200 {object} common.Response{data=model.User_with_menu} "object"
@@ -201,7 +211,7 @@ func DeleteUser_with_menuHandler(w http.ResponseWriter, r *http.Request) {
 
 // @Summary batch delete
 // @Description batch delete
-// @Tags User_with_menu
+// @Tags 用户菜单关联视图
 // @Accept  json
 // @Param ids body []string true "id array"
 // @Produce  json

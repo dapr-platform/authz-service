@@ -452,6 +452,9 @@ definitions:
       work_number:
         description: work_number
         type: string
+      zh_name:
+        description: zh_name
+        type: string
     type: object
   model.User_with_role:
     properties:
@@ -510,6 +513,9 @@ definitions:
         type: string
       work_number:
         description: work_number
+        type: string
+      zh_name:
+        description: zh_name
         type: string
     type: object
   model.Userole:
@@ -1175,7 +1181,7 @@ paths:
             $ref: '#/definitions/common.Response'
       summary: query objects
       tags:
-      - Role_detail
+      - 角色详情视图
     post:
       consumes:
       - application/json
@@ -1205,7 +1211,7 @@ paths:
             $ref: '#/definitions/common.Response'
       summary: save
       tags:
-      - Role_detail
+      - 角色详情视图
   /role-detail/{id}:
     delete:
       description: delete
@@ -1233,7 +1239,7 @@ paths:
             $ref: '#/definitions/common.Response'
       summary: delete
       tags:
-      - Role_detail
+      - 角色详情视图
   /role-detail/batch-delete:
     post:
       consumes:
@@ -1261,7 +1267,7 @@ paths:
             $ref: '#/definitions/common.Response'
       summary: batch delete
       tags:
-      - Role_detail
+      - 角色详情视图
   /role-detail/batch-upsert:
     post:
       consumes:
@@ -1290,7 +1296,7 @@ paths:
             $ref: '#/definitions/common.Response'
       summary: batch update
       tags:
-      - Role_detail
+      - 角色详情视图
   /role-detail/groupby:
     get:
       description: GroupBy, for example,  _select=level, then return  {level_val1:sum1,level_val2:sum2},
@@ -1326,7 +1332,7 @@ paths:
             $ref: '#/definitions/common.Response'
       summary: GroupBy
       tags:
-      - Role_detail
+      - 角色详情视图
   /role-detail/page:
     get:
       description: page query, _page(from 1 begin), _page_size, _order, and others
@@ -1415,7 +1421,7 @@ paths:
             $ref: '#/definitions/common.Response'
       summary: page query
       tags:
-      - Role_detail
+      - 角色详情视图
   /role-rel-detail:
     get:
       description: query objects
@@ -1504,7 +1510,7 @@ paths:
             $ref: '#/definitions/common.Response'
       summary: query objects
       tags:
-      - Role_rel_detail
+      - 角色资源关联详情视图
     post:
       consumes:
       - application/json
@@ -1534,7 +1540,7 @@ paths:
             $ref: '#/definitions/common.Response'
       summary: save
       tags:
-      - Role_rel_detail
+      - 角色资源关联详情视图
   /role-rel-detail/{id}:
     delete:
       description: delete
@@ -1562,7 +1568,7 @@ paths:
             $ref: '#/definitions/common.Response'
       summary: delete
       tags:
-      - Role_rel_detail
+      - 角色资源关联详情视图
   /role-rel-detail/batch-delete:
     post:
       consumes:
@@ -1590,7 +1596,7 @@ paths:
             $ref: '#/definitions/common.Response'
       summary: batch delete
       tags:
-      - Role_rel_detail
+      - 角色资源关联详情视图
   /role-rel-detail/batch-upsert:
     post:
       consumes:
@@ -1619,7 +1625,7 @@ paths:
             $ref: '#/definitions/common.Response'
       summary: batch update
       tags:
-      - Role_rel_detail
+      - 角色资源关联详情视图
   /role-rel-detail/groupby:
     get:
       description: GroupBy, for example,  _select=level, then return  {level_val1:sum1,level_val2:sum2},
@@ -1655,7 +1661,7 @@ paths:
             $ref: '#/definitions/common.Response'
       summary: GroupBy
       tags:
-      - Role_rel_detail
+      - 角色资源关联详情视图
   /role-rel-detail/page:
     get:
       description: page query, _page(from 1 begin), _page_size, _order, and others
@@ -1756,7 +1762,7 @@ paths:
             $ref: '#/definitions/common.Response'
       summary: page query
       tags:
-      - Role_rel_detail
+      - 角色资源关联详情视图
   /role-resource-operate:
     get:
       description: query objects
@@ -2140,7 +2146,7 @@ paths:
             $ref: '#/definitions/common.Response'
       summary: query objects
       tags:
-      - Role_with_resource_ids
+      - 角色资源ID关联视图
     post:
       consumes:
       - application/json
@@ -2170,7 +2176,7 @@ paths:
             $ref: '#/definitions/common.Response'
       summary: save
       tags:
-      - Role_with_resource_ids
+      - 角色资源ID关联视图
   /role-with-resource-ids/{id}:
     delete:
       description: delete
@@ -2198,7 +2204,7 @@ paths:
             $ref: '#/definitions/common.Response'
       summary: delete
       tags:
-      - Role_with_resource_ids
+      - 角色资源ID关联视图
   /role-with-resource-ids/batch-delete:
     post:
       consumes:
@@ -2226,7 +2232,7 @@ paths:
             $ref: '#/definitions/common.Response'
       summary: batch delete
       tags:
-      - Role_with_resource_ids
+      - 角色资源ID关联视图
   /role-with-resource-ids/batch-upsert:
     post:
       consumes:
@@ -2255,7 +2261,7 @@ paths:
             $ref: '#/definitions/common.Response'
       summary: batch update
       tags:
-      - Role_with_resource_ids
+      - 角色资源ID关联视图
   /role-with-resource-ids/groupby:
     get:
       description: GroupBy, for example,  _select=level, then return  {level_val1:sum1,level_val2:sum2},
@@ -2291,7 +2297,7 @@ paths:
             $ref: '#/definitions/common.Response'
       summary: GroupBy
       tags:
-      - Role_with_resource_ids
+      - 角色资源ID关联视图
   /role-with-resource-ids/page:
     get:
       description: page query, _page(from 1 begin), _page_size, _order, and others
@@ -2380,7 +2386,7 @@ paths:
             $ref: '#/definitions/common.Response'
       summary: page query
       tags:
-      - Role_with_resource_ids
+      - 角色资源ID关联视图
   /role/{id}:
     delete:
       description: delete
@@ -2990,6 +2996,10 @@ paths:
         in: query
         name: name
         type: string
+      - description: zh_name
+        in: query
+        name: zh_name
+        type: string
       - description: gender
         in: query
         name: gender
@@ -3062,7 +3072,7 @@ paths:
             $ref: '#/definitions/common.Response'
       summary: query objects
       tags:
-      - User_with_menu
+      - 用户菜单关联视图
     post:
       consumes:
       - application/json
@@ -3092,7 +3102,7 @@ paths:
             $ref: '#/definitions/common.Response'
       summary: save
       tags:
-      - User_with_menu
+      - 用户菜单关联视图
   /user-with-menu/{id}:
     delete:
       description: delete
@@ -3120,7 +3130,7 @@ paths:
             $ref: '#/definitions/common.Response'
       summary: delete
       tags:
-      - User_with_menu
+      - 用户菜单关联视图
   /user-with-menu/batch-delete:
     post:
       consumes:
@@ -3148,7 +3158,7 @@ paths:
             $ref: '#/definitions/common.Response'
       summary: batch delete
       tags:
-      - User_with_menu
+      - 用户菜单关联视图
   /user-with-menu/batch-upsert:
     post:
       consumes:
@@ -3177,7 +3187,7 @@ paths:
             $ref: '#/definitions/common.Response'
       summary: batch update
       tags:
-      - User_with_menu
+      - 用户菜单关联视图
   /user-with-menu/groupby:
     get:
       description: GroupBy, for example,  _select=level, then return  {level_val1:sum1,level_val2:sum2},
@@ -3213,7 +3223,7 @@ paths:
             $ref: '#/definitions/common.Response'
       summary: GroupBy
       tags:
-      - User_with_menu
+      - 用户菜单关联视图
   /user-with-menu/page:
     get:
       description: page query, _page(from 1 begin), _page_size, _order, and others
@@ -3256,6 +3266,10 @@ paths:
       - description: name
         in: query
         name: name
+        type: string
+      - description: zh_name
+        in: query
+        name: zh_name
         type: string
       - description: gender
         in: query
@@ -3334,7 +3348,7 @@ paths:
             $ref: '#/definitions/common.Response'
       summary: page query
       tags:
-      - User_with_menu
+      - 用户菜单关联视图
   /user-with-role:
     get:
       description: query objects
@@ -3370,6 +3384,10 @@ paths:
       - description: name
         in: query
         name: name
+        type: string
+      - description: zh_name
+        in: query
+        name: zh_name
         type: string
       - description: gender
         in: query
@@ -3443,7 +3461,7 @@ paths:
             $ref: '#/definitions/common.Response'
       summary: query objects
       tags:
-      - User_with_role
+      - 用户角色关联视图
     post:
       consumes:
       - application/json
@@ -3473,7 +3491,7 @@ paths:
             $ref: '#/definitions/common.Response'
       summary: save
       tags:
-      - User_with_role
+      - 用户角色关联视图
   /user-with-role/{id}:
     delete:
       description: delete
@@ -3501,7 +3519,7 @@ paths:
             $ref: '#/definitions/common.Response'
       summary: delete
       tags:
-      - User_with_role
+      - 用户角色关联视图
   /user-with-role/batch-delete:
     post:
       consumes:
@@ -3529,7 +3547,7 @@ paths:
             $ref: '#/definitions/common.Response'
       summary: batch delete
       tags:
-      - User_with_role
+      - 用户角色关联视图
   /user-with-role/batch-upsert:
     post:
       consumes:
@@ -3558,7 +3576,7 @@ paths:
             $ref: '#/definitions/common.Response'
       summary: batch update
       tags:
-      - User_with_role
+      - 用户角色关联视图
   /user-with-role/groupby:
     get:
       description: GroupBy, for example,  _select=level, then return  {level_val1:sum1,level_val2:sum2},
@@ -3594,7 +3612,7 @@ paths:
             $ref: '#/definitions/common.Response'
       summary: GroupBy
       tags:
-      - User_with_role
+      - 用户角色关联视图
   /user-with-role/page:
     get:
       description: page query, _page(from 1 begin), _page_size, _order, and others
@@ -3637,6 +3655,10 @@ paths:
       - description: name
         in: query
         name: name
+        type: string
+      - description: zh_name
+        in: query
+        name: zh_name
         type: string
       - description: gender
         in: query
@@ -3715,7 +3737,7 @@ paths:
             $ref: '#/definitions/common.Response'
       summary: page query
       tags:
-      - User_with_role
+      - 用户角色关联视图
   /user/{id}:
     delete:
       description: delete
