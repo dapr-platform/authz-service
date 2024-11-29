@@ -2,13 +2,27 @@ package service
 
 import (
 	"authz-service/model"
-	"github.com/dapr-platform/common"
 	"net/http"
+
+	"github.com/dapr-platform/common"
+	"github.com/pkg/errors"
 )
 
 func init() {
 	common.RegisterDeleteBeforeHook("User", DeleteUserBeforeHook)
 	common.RegisterDeleteBeforeHook("Role", DeleteRoleBeforeHook)
+	common.RegisterUpsertBeforeHook("User", UpsertUserBeforeHook)
+}
+func UpsertUserBeforeHook(r *http.Request, in any) (out any, err error) {
+	user := in.(model.User)
+	exists, err := common.DbGetCount(r.Context(), common.GetDaprClient(), model.UserTableInfo.Name, model.User_FIELD_NAME_id, model.User_FIELD_NAME_name+"="+user.Name)
+	if err != nil {
+		return nil, errors.Wrap(err, "DbGetCount错误")
+	}
+	if exists > 0 {
+		return nil, errors.New("用户名已存在")
+	}
+	return in, nil
 }
 
 func DeleteUserBeforeHook(r *http.Request, in any) (out any, err error) {
