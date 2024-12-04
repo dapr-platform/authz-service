@@ -6,6 +6,9 @@ import (
 	"authz-service/eventpub"
 	"authz-service/model"
 	"context"
+	"net/http"
+	"time"
+
 	"github.com/dapr-platform/common"
 	"github.com/go-oauth2/oauth2/v4"
 	"github.com/go-oauth2/oauth2/v4/generates"
@@ -15,8 +18,6 @@ import (
 	"github.com/go-oauth2/oauth2/v4/store"
 	"github.com/golang-jwt/jwt"
 	"github.com/pkg/errors"
-	"net/http"
-	"time"
 )
 
 var OauthServer *server.Server
@@ -46,7 +47,7 @@ func init() {
 	OauthServer = server.NewServer(serverConfig, manager)
 	OauthServer.SetPasswordAuthorizationHandler(passwordAuthHandler)
 	OauthServer.SetClientInfoHandler(func(r *http.Request) (clientID, clientSecret string, err error) {
-		return clientID, clientSecret, nil
+		return myconfig.CLIENT_ID, myconfig.CLIENT_SECRET, nil
 	})
 
 }
