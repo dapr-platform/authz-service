@@ -4,10 +4,11 @@ import (
 	"authz-service/config"
 	"authz-service/model"
 	"authz-service/service"
+	"net/http"
+
 	"github.com/dapr-platform/common"
 	"github.com/dchest/captcha"
 	"github.com/go-chi/chi/v5"
-	"net/http"
 )
 
 func initOauthRoute(r chi.Router) {
@@ -50,7 +51,7 @@ func tokenByFieldHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	client_secret := r.FormValue("client_secret")
-	if field == "" {
+	if client_secret == "" {
 		common.Logger.Error("client_secret is required")
 		http.Error(w, "client_secret is required", http.StatusBadRequest)
 		return
@@ -108,16 +109,19 @@ func tokenHandler(w http.ResponseWriter, r *http.Request) {
 			vKey := r.FormValue("captcha_key")
 			vVal := r.FormValue("captcha_value")
 			if vKey == "" || vVal == "" {
+				common.Logger.Error("captcha key or value error")
 				common.HttpError(w, common.ErrParam.AppendMsg("captcha key or value error"), http.StatusBadRequest)
 				return
 			}
 			if !captcha.VerifyString(vKey, vVal) {
+				common.Logger.Error("captcha key or value error")
 				common.HttpError(w, common.ErrParam.AppendMsg("captcha key or value error"), http.StatusNotAcceptable)
 				return
 			}
 		}
 		user, err := service.GetUserByFieldName(r.Context(), "identity", identity)
 		if err != nil {
+			common.Logger.Error("get user by field error: " + err.Error())
 			common.HttpError(w, common.ErrParam.AppendMsg(err.Error()), http.StatusInternalServerError)
 			return
 		}
@@ -127,21 +131,25 @@ func tokenHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		if user.Status != 1 {
+			common.Logger.Error("user is forbidden for ", identity)
 			common.HttpError(w, common.ErrParam.AppendMsg("user is forbidden"), http.StatusBadRequest)
 			return
 		}
 		r.Form.Set("username", user.ID)
 		err = service.OauthServer.HandleTokenRequest(w, r)
 		if err != nil {
+			common.Logger.Error("handle token request error: " + err.Error())
 			common.HttpError(w, common.ErrService.AppendMsg(err.Error()), http.StatusInternalServerError)
 		}
 	} else if grantType == "refresh_token" {
 		err := service.OauthServer.HandleTokenRequest(w, r)
 		if err != nil {
+			common.Logger.Error("handle refresh token request error: " + err.Error())
 			common.HttpError(w, common.ErrParam.AppendMsg(err.Error()), http.StatusInternalServerError)
 		}
 	} else {
-		common.HttpError(w, common.ErrParam.AppendMsg("grant_type "+grantType+" is not support "), http.StatusBadRequest)
+		common.Logger.Error("grant_type " + grantType + " is not support")
+		common.HttpError(w, common.ErrParam.AppendMsg("grant_type "+grantType+" is not support"), http.StatusBadRequest)
 	}
 
 }
