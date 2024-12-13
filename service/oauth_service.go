@@ -47,6 +47,7 @@ func init() {
 	OauthServer = server.NewServer(serverConfig, manager)
 	OauthServer.SetPasswordAuthorizationHandler(passwordAuthHandler)
 	OauthServer.SetClientInfoHandler(func(r *http.Request) (clientID, clientSecret string, err error) {
+		common.Logger.Info("client info handler called")
 		return myconfig.CLIENT_ID, myconfig.CLIENT_SECRET, nil
 	})
 
