@@ -115,14 +115,20 @@ func BatchAddUser_roleHandler(w http.ResponseWriter, r *http.Request) {
 			}
 		}
 	}
-
-	err = common.DbBatchUpsertIg[model.Userole](r.Context(), common.GetDaprClient(), iinfos, model.UseroleTableInfo.Name, model.Userole_FIELD_NAME_user_id+","+model.Userole_FIELD_NAME_role_id, model.Userole_FIELD_NAME_id)
-	if err != nil {
-		common.HttpResult(w, common.ErrParam.AppendMsg("DbBatchInsert error ").AppendMsg(err.Error()))
+	if len(iinfos) == 0 {
+		common.HttpResult(w, common.OK)
 		return
+	}else{
+		err = common.DbBatchUpsertIg[model.Userole](r.Context(), common.GetDaprClient(), iinfos, model.UseroleTableInfo.Name, model.Userole_FIELD_NAME_user_id+","+model.Userole_FIELD_NAME_role_id, model.Userole_FIELD_NAME_id)
+		if err != nil {
+			common.HttpResult(w, common.ErrParam.AppendMsg("DbBatchInsert error ").AppendMsg(err.Error()))
+			return
+		}
+		common.HttpResult(w, common.OK.WithData(iinfos))
 	}
+	
 
-	common.HttpResult(w, common.OK.WithData(iinfos))
+
 
 }
 

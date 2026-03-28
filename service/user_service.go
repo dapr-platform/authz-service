@@ -113,27 +113,9 @@ func getUserFromStateStore(ctx context.Context, id string) (user *entity.UserInf
 }
 
 func GetCurrentUserInfo(ctx context.Context, val string) (user *entity.UserInfo, err error) {
-	user, err = getUserFromStateStore(ctx, val)
-	if err != nil {
-		common.Logger.Error("getUserFromStateStore error", err.Error())
-		return
-	}
-	if user == nil {
-		user, err = getUserInfoByIdFromDb(ctx, val)
-		if err != nil {
-			common.Logger.Error("getUserInfoByIdFromDb error", err.Error())
-			return
-		}
-		if user == nil {
-			err = errors.New("can't find user " + val + " in db. ")
-		} else {
-			buf, _ := json.Marshal(user)
-			return user, common.SaveInStateStore(ctx, common.GetDaprClient(), common.GLOBAL_STATESTOR_NAME, common.USER_STATESTORE_KEY_PREFIX+user.ID, buf, true, time.Second*time.Duration(common.USER_EXPIRED_SECONDS))
-		}
+	//不使用缓存了
+	return getUserInfoByIdFromDb(ctx, val)
 
-	}
-
-	return
 }
 
 func getUserInfoByIdFromDb(ctx context.Context, id string) (user *entity.UserInfo, err error) {
