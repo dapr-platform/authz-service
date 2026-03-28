@@ -4,6 +4,7 @@ import "authz-service/model"
 
 type MenuId struct {
 	ResourceId string `json:"resource_id"` //for example proj-001
+	ResourceName string `json:"resource_name"` //for example 项目
 }
 type UserInfo struct {
 	model.User

@@ -5,10 +5,11 @@ import (
 	"authz-service/model"
 	"context"
 	"encoding/json"
-	"github.com/dapr-platform/common"
-	"github.com/pkg/errors"
 	"net/url"
 	"time"
+
+	"github.com/dapr-platform/common"
+	"github.com/pkg/errors"
 )
 
 func ChangeUserPassword(ctx context.Context, info entity.ChangePasswordInfo) (err error) {
@@ -155,22 +156,10 @@ func getUserInfoByIdFromDb(ctx context.Context, id string) (user *entity.UserInf
 		}
 		for _, v := range allMenuResources {
 			user.MenuIds = append(user.MenuIds, entity.MenuId{
-				ResourceId: v.ID,
+				ResourceId:   v.ID,
+				ResourceName: v.Name,
 			})
 		}
-
-	} else {
-		user.IsAdmin = 0
 	}
-	menuIds := make([]entity.MenuId, 0)
-	tmpMap := make(map[string]string, 0)
-	for _, m := range user.MenuIds {
-		_, exist := tmpMap[m.ResourceId]
-		if !exist { //去重
-			tmpMap[m.ResourceId] = m.ResourceId
-			menuIds = append(menuIds, m)
-		}
-	}
-	user.MenuIds = menuIds
 	return user, nil
 }
