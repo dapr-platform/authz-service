@@ -7,7 +7,11 @@ import (
 	"net/http"
 
 	"strings"
+
+	"time"
 )
+
+var _ = time.Now()
 
 func InitUser_with_menuRoute(r chi.Router) {
 
@@ -28,7 +32,7 @@ func InitUser_with_menuRoute(r chi.Router) {
 
 // @Summary GroupBy
 // @Description GroupBy, for example,  _select=level, then return  {level_val1:sum1,level_val2:sum2}, _where can input status=0
-// @Tags 用户菜单关联视图
+// @Tags User_with_menu
 // @Param _select query string true "_select"
 // @Param _where query string false "_where"
 // @Produce  json
@@ -42,7 +46,7 @@ func User_with_menuGroupbyHandler(w http.ResponseWriter, r *http.Request) {
 
 // @Summary batch update
 // @Description batch update
-// @Tags 用户菜单关联视图
+// @Tags User_with_menu
 // @Accept  json
 // @Param entities body []map[string]any true "objects array"
 // @Produce  json
@@ -77,6 +81,15 @@ func batchUpsertUser_with_menuHandler(w http.ResponseWriter, r *http.Request) {
 		if v.ID == "" {
 			v.ID = common.NanoId()
 		}
+
+		if time.Time(v.CreateAt).IsZero() {
+			v.CreateAt = common.LocalTime(time.Now())
+		}
+
+		if time.Time(v.UpdateAt).IsZero() {
+			v.UpdateAt = common.LocalTime(time.Now())
+		}
+
 	}
 
 	err = common.DbBatchUpsert[model.User_with_menu](r.Context(), common.GetDaprClient(), entities, model.User_with_menuTableInfo.Name, model.User_with_menu_FIELD_NAME_id)
@@ -90,10 +103,11 @@ func batchUpsertUser_with_menuHandler(w http.ResponseWriter, r *http.Request) {
 
 // @Summary page query
 // @Description page query, _page(from 1 begin), _page_size, _order, and others fields, status=1, name=$like.%CAM%
-// @Tags 用户菜单关联视图
+// @Tags User_with_menu
 // @Param _page query int true "current page"
 // @Param _page_size query int true "page size"
 // @Param _order query string false "order"
+// @Param _select query string true "_select"
 // @Param id query string false "id"
 // @Param tenant_id query string false "tenant_id"
 // @Param mobile query string false "mobile"
@@ -115,7 +129,7 @@ func batchUpsertUser_with_menuHandler(w http.ResponseWriter, r *http.Request) {
 // @Param status query string false "status"
 // @Param menu_ids query string false "menu_ids"
 // @Produce  json
-// @Success 200 {object} common.Response{data=common.Page{items=[]model.User_with_menu}} "objects array"
+// @Success 200 {object} common.Response{data=common.PageGeneric[model.User_with_menu]} "objects array"
 // @Failure 500 {object} common.Response ""
 // @Router /user-with-menu/page [get]
 func User_with_menuPageListHandler(w http.ResponseWriter, r *http.Request) {
@@ -132,7 +146,7 @@ func User_with_menuPageListHandler(w http.ResponseWriter, r *http.Request) {
 
 // @Summary query objects
 // @Description query objects
-// @Tags 用户菜单关联视图
+// @Tags User_with_menu
 // @Param _select query string false "_select"
 // @Param _order query string false "order"
 // @Param id query string false "id"
@@ -165,7 +179,7 @@ func User_with_menuListHandler(w http.ResponseWriter, r *http.Request) {
 
 // @Summary save
 // @Description save
-// @Tags 用户菜单关联视图
+// @Tags User_with_menu
 // @Accept       json
 // @Param item body model.User_with_menu true "object"
 // @Produce  json
@@ -192,6 +206,15 @@ func UpsertUser_with_menuHandler(w http.ResponseWriter, r *http.Request) {
 	if val.ID == "" {
 		val.ID = common.NanoId()
 	}
+
+	if time.Time(val.CreateAt).IsZero() {
+		val.CreateAt = common.LocalTime(time.Now())
+	}
+
+	if time.Time(val.UpdateAt).IsZero() {
+		val.UpdateAt = common.LocalTime(time.Now())
+	}
+
 	err = common.DbUpsert[model.User_with_menu](r.Context(), common.GetDaprClient(), val, model.User_with_menuTableInfo.Name, "id")
 	if err != nil {
 		common.HttpResult(w, common.ErrService.AppendMsg(err.Error()))
@@ -202,7 +225,7 @@ func UpsertUser_with_menuHandler(w http.ResponseWriter, r *http.Request) {
 
 // @Summary delete
 // @Description delete
-// @Tags 用户菜单关联视图
+// @Tags User_with_menu
 // @Param id  path string true "实例id"
 // @Produce  json
 // @Success 200 {object} common.Response{data=model.User_with_menu} "object"
@@ -223,7 +246,7 @@ func DeleteUser_with_menuHandler(w http.ResponseWriter, r *http.Request) {
 
 // @Summary batch delete
 // @Description batch delete
-// @Tags 用户菜单关联视图
+// @Tags User_with_menu
 // @Accept  json
 // @Param ids body []string true "id array"
 // @Produce  json

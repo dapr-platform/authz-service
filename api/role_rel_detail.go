@@ -7,7 +7,11 @@ import (
 	"net/http"
 
 	"strings"
+
+	"time"
 )
+
+var _ = time.Now()
 
 func InitRole_rel_detailRoute(r chi.Router) {
 
@@ -77,6 +81,7 @@ func batchUpsertRole_rel_detailHandler(w http.ResponseWriter, r *http.Request) {
 		if v.ID == "" {
 			v.ID = common.NanoId()
 		}
+
 	}
 
 	err = common.DbBatchUpsert[model.Role_rel_detail](r.Context(), common.GetDaprClient(), entities, model.Role_rel_detailTableInfo.Name, model.Role_rel_detail_FIELD_NAME_id)
@@ -94,6 +99,7 @@ func batchUpsertRole_rel_detailHandler(w http.ResponseWriter, r *http.Request) {
 // @Param _page query int true "current page"
 // @Param _page_size query int true "page size"
 // @Param _order query string false "order"
+// @Param _select query string true "_select"
 // @Param id query string false "id"
 // @Param role_id query string false "role_id"
 // @Param resource_id query string false "resource_id"
@@ -109,7 +115,7 @@ func batchUpsertRole_rel_detailHandler(w http.ResponseWriter, r *http.Request) {
 // @Param data_conditions query string false "data_conditions"
 // @Param support_ops query string false "support_ops"
 // @Produce  json
-// @Success 200 {object} common.Response{data=common.Page{items=[]model.Role_rel_detail}} "objects array"
+// @Success 200 {object} common.Response{data=common.PageGeneric[model.Role_rel_detail]} "objects array"
 // @Failure 500 {object} common.Response ""
 // @Router /role-rel-detail/page [get]
 func Role_rel_detailPageListHandler(w http.ResponseWriter, r *http.Request) {
@@ -180,6 +186,7 @@ func UpsertRole_rel_detailHandler(w http.ResponseWriter, r *http.Request) {
 	if val.ID == "" {
 		val.ID = common.NanoId()
 	}
+
 	err = common.DbUpsert[model.Role_rel_detail](r.Context(), common.GetDaprClient(), val, model.Role_rel_detailTableInfo.Name, "id")
 	if err != nil {
 		common.HttpResult(w, common.ErrService.AppendMsg(err.Error()))

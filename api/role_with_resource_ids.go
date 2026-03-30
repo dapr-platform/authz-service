@@ -7,7 +7,11 @@ import (
 	"net/http"
 
 	"strings"
+
+	"time"
 )
+
+var _ = time.Now()
 
 func InitRole_with_resource_idsRoute(r chi.Router) {
 
@@ -77,6 +81,15 @@ func batchUpsertRole_with_resource_idsHandler(w http.ResponseWriter, r *http.Req
 		if v.ID == "" {
 			v.ID = common.NanoId()
 		}
+
+		if time.Time(v.CreateAt).IsZero() {
+			v.CreateAt = common.LocalTime(time.Now())
+		}
+
+		if time.Time(v.UpdateAt).IsZero() {
+			v.UpdateAt = common.LocalTime(time.Now())
+		}
+
 	}
 
 	err = common.DbBatchUpsert[model.Role_with_resource_ids](r.Context(), common.GetDaprClient(), entities, model.Role_with_resource_idsTableInfo.Name, model.Role_with_resource_ids_FIELD_NAME_id)
@@ -94,6 +107,7 @@ func batchUpsertRole_with_resource_idsHandler(w http.ResponseWriter, r *http.Req
 // @Param _page query int true "current page"
 // @Param _page_size query int true "page size"
 // @Param _order query string false "order"
+// @Param _select query string true "_select"
 // @Param id query string false "id"
 // @Param name query string false "name"
 // @Param sort_index query string false "sort_index"
@@ -106,7 +120,7 @@ func batchUpsertRole_with_resource_idsHandler(w http.ResponseWriter, r *http.Req
 // @Param api_resource_ids query string false "api_resource_ids"
 // @Param data_resource_ids query string false "data_resource_ids"
 // @Produce  json
-// @Success 200 {object} common.Response{data=common.Page{items=[]model.Role_with_resource_ids}} "objects array"
+// @Success 200 {object} common.Response{data=common.PageGeneric[model.Role_with_resource_ids]} "objects array"
 // @Failure 500 {object} common.Response ""
 // @Router /role-with-resource-ids/page [get]
 func Role_with_resource_idsPageListHandler(w http.ResponseWriter, r *http.Request) {
@@ -174,6 +188,15 @@ func UpsertRole_with_resource_idsHandler(w http.ResponseWriter, r *http.Request)
 	if val.ID == "" {
 		val.ID = common.NanoId()
 	}
+
+	if time.Time(val.CreateAt).IsZero() {
+		val.CreateAt = common.LocalTime(time.Now())
+	}
+
+	if time.Time(val.UpdateAt).IsZero() {
+		val.UpdateAt = common.LocalTime(time.Now())
+	}
+
 	err = common.DbUpsert[model.Role_with_resource_ids](r.Context(), common.GetDaprClient(), val, model.Role_with_resource_idsTableInfo.Name, "id")
 	if err != nil {
 		common.HttpResult(w, common.ErrService.AppendMsg(err.Error()))

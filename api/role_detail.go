@@ -7,7 +7,11 @@ import (
 	"net/http"
 
 	"strings"
+
+	"time"
 )
+
+var _ = time.Now()
 
 func InitRole_detailRoute(r chi.Router) {
 
@@ -77,6 +81,15 @@ func batchUpsertRole_detailHandler(w http.ResponseWriter, r *http.Request) {
 		if v.ID == "" {
 			v.ID = common.NanoId()
 		}
+
+		if time.Time(v.CreateAt).IsZero() {
+			v.CreateAt = common.LocalTime(time.Now())
+		}
+
+		if time.Time(v.UpdateAt).IsZero() {
+			v.UpdateAt = common.LocalTime(time.Now())
+		}
+
 	}
 
 	err = common.DbBatchUpsert[model.Role_detail](r.Context(), common.GetDaprClient(), entities, model.Role_detailTableInfo.Name, model.Role_detail_FIELD_NAME_id)
@@ -94,6 +107,7 @@ func batchUpsertRole_detailHandler(w http.ResponseWriter, r *http.Request) {
 // @Param _page query int true "current page"
 // @Param _page_size query int true "page size"
 // @Param _order query string false "order"
+// @Param _select query string true "_select"
 // @Param id query string false "id"
 // @Param name query string false "name"
 // @Param sort_index query string false "sort_index"
@@ -106,7 +120,7 @@ func batchUpsertRole_detailHandler(w http.ResponseWriter, r *http.Request) {
 // @Param api_resources query string false "api_resources"
 // @Param data_resources query string false "data_resources"
 // @Produce  json
-// @Success 200 {object} common.Response{data=common.Page{items=[]model.Role_detail}} "objects array"
+// @Success 200 {object} common.Response{data=common.PageGeneric[model.Role_detail]} "objects array"
 // @Failure 500 {object} common.Response ""
 // @Router /role-detail/page [get]
 func Role_detailPageListHandler(w http.ResponseWriter, r *http.Request) {
@@ -174,6 +188,15 @@ func UpsertRole_detailHandler(w http.ResponseWriter, r *http.Request) {
 	if val.ID == "" {
 		val.ID = common.NanoId()
 	}
+
+	if time.Time(val.CreateAt).IsZero() {
+		val.CreateAt = common.LocalTime(time.Now())
+	}
+
+	if time.Time(val.UpdateAt).IsZero() {
+		val.UpdateAt = common.LocalTime(time.Now())
+	}
+
 	err = common.DbUpsert[model.Role_detail](r.Context(), common.GetDaprClient(), val, model.Role_detailTableInfo.Name, "id")
 	if err != nil {
 		common.HttpResult(w, common.ErrService.AppendMsg(err.Error()))
