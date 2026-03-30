@@ -137,9 +137,10 @@ func getUserInfoByIdFromDb(ctx context.Context, id string) (user *entity.UserInf
 			return nil, errors.Wrap(err, "db query all resource error")
 		}
 		for _, v := range allMenuResources {
+			vv := v
 			user.MenuIds = append(user.MenuIds, entity.MenuId{
-				ResourceId:   v.ID,
-				ResourceName: v.Name,
+				ResourceId:   vv.ID,
+				ResourceName: vv.Name,
 			})
 		}
 	}

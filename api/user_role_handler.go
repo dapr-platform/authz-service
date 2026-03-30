@@ -4,6 +4,7 @@ import (
 	"authz-service/model"
 	"net/http"
 	"strconv"
+	"strings"
 
 	"github.com/dapr-platform/common"
 	"github.com/go-chi/chi/v5"
@@ -79,6 +80,7 @@ func AddUser_roleHandler(w http.ResponseWriter, r *http.Request) {
 // @Tags User_role
 // @Accept       json
 // @Param delete_before query int false "是否先删除再添加，1:是，0：否 默认为0， "
+// @Param user_ids query string false "用户id, 多个用,分隔"
 // @Param item body []model.Userole true "用户角色关系全部信息"
 // @Produce  json
 // @Success 200 {object} common.Response{data=model.Userole} "用户角色关系"
@@ -87,6 +89,7 @@ func AddUser_roleHandler(w http.ResponseWriter, r *http.Request) {
 func BatchAddUser_roleHandler(w http.ResponseWriter, r *http.Request) {
 	deleteBefore := 0
 	dstr := r.URL.Query().Get("delete_before")
+
 	if dstr != "" {
 		deleteBefore, _ = strconv.Atoi(dstr)
 	}
@@ -106,6 +109,14 @@ func BatchAddUser_roleHandler(w http.ResponseWriter, r *http.Request) {
 		userIds[info.UserID] = info.UserID
 		iinfos = append(iinfos, info)
 	}
+	userIdsStr := r.URL.Query().Get("user_ids")
+	if userIdsStr != "" {
+		userIdsArr := strings.Split(userIdsStr, ",")
+		for _,u :=range userIdsArr{
+			userIds[u] = u
+		}
+	}
+
 	if deleteBefore == 1 {
 		for k, _ := range userIds {
 			err = common.DbDeleteByOps(r.Context(), common.GetDaprClient(), model.UseroleTableInfo.Name, []string{"user_id"}, []string{"=="}, []any{k})
@@ -118,7 +129,7 @@ func BatchAddUser_roleHandler(w http.ResponseWriter, r *http.Request) {
 	if len(iinfos) == 0 {
 		common.HttpResult(w, common.OK)
 		return
-	}else{
+	} else {
 		err = common.DbBatchUpsertIg[model.Userole](r.Context(), common.GetDaprClient(), iinfos, model.UseroleTableInfo.Name, model.Userole_FIELD_NAME_user_id+","+model.Userole_FIELD_NAME_role_id, model.Userole_FIELD_NAME_id)
 		if err != nil {
 			common.HttpResult(w, common.ErrParam.AppendMsg("DbBatchInsert error ").AppendMsg(err.Error()))
@@ -126,9 +137,6 @@ func BatchAddUser_roleHandler(w http.ResponseWriter, r *http.Request) {
 		}
 		common.HttpResult(w, common.OK.WithData(iinfos))
 	}
-	
-
-
 
 }
 
