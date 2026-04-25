@@ -15,6 +15,8 @@ func initOauthRoute(r chi.Router) {
 	r.HandleFunc(common.BASE_CONTEXT+"/oauth/token", tokenHandler)
 	r.HandleFunc(common.BASE_CONTEXT+"/oauth/token-by-field", tokenByFieldHandler)
 	r.HandleFunc(common.BASE_CONTEXT+"/oauth/token-valid", tokenValidHandler)
+	r.Post(common.BASE_CONTEXT+"/oauth/sso-token", ssoTokenHandler)
+	r.Post(common.BASE_CONTEXT+"/oauth/sso-logout", ssoLogoutHandler)
 }
 
 // @Summary 根据用户字段 get token
@@ -176,4 +178,107 @@ func tokenValidHandler(w http.ResponseWriter, r *http.Request) {
 	} else {
 		http.Error(w, "tokenInfo read error: "+err.Error(), http.StatusForbidden)
 	}
+}
+
+// @Summary SSO单点登录获取token
+// @Description 通过中台SSO ticket换取本地JWT token
+// @Tags Oauth2
+// @Accept json
+// @Param req body service.SSORestoreRequest true "SSO ticket"
+// @Produce json
+// @Success 200 {object} model.TokenInfo "token info"
+// @Failure 400 {object} string ""
+// @Failure 500 {object} string ""
+// @Router /oauth/sso-token [post]
+func ssoTokenHandler(w http.ResponseWriter, r *http.Request) {
+	if !config.SSO_ENABLED {
+		common.HttpError(w, common.ErrParam.AppendMsg("SSO功能未启用"), http.StatusBadRequest)
+		return
+	}
+
+	var req service.SSORestoreRequest
+	err := common.ReadRequestBody(r, &req)
+	if err != nil {
+		common.Logger.Error("读取SSO请求体失败: " + err.Error())
+		common.HttpError(w, common.ErrParam.AppendMsg(err.Error()), http.StatusBadRequest)
+		return
+	}
+	if req.Ticket == "" {
+		common.HttpError(w, common.ErrParam.AppendMsg("ticket不能为空"), http.StatusBadRequest)
+		return
+	}
+
+	ssoUser, err := service.SSORestoreTicket(req.Ticket)
+	if err != nil {
+		common.Logger.Error("SSO ticket验证失败: " + err.Error())
+		common.HttpError(w, common.ErrService.AppendMsg("SSO ticket验证失败: "+err.Error()), http.StatusInternalServerError)
+		return
+	}
+
+	user, err := service.GetUserByFieldName(r.Context(), "identity", ssoUser.LoginName)
+	if err != nil {
+		common.Logger.Error("查询本地用户失败: " + err.Error())
+		common.HttpError(w, common.ErrService.AppendMsg(err.Error()), http.StatusInternalServerError)
+		return
+	}
+	if user == nil {
+		common.Logger.Error("SSO用户在本地不存在: " + ssoUser.LoginName)
+		common.HttpError(w, common.ErrParam.AppendMsg("用户不存在，请先同步用户数据"), http.StatusBadRequest)
+		return
+	}
+	if user.Status != 1 {
+		common.HttpError(w, common.ErrParam.AppendMsg("用户已被禁用"), http.StatusBadRequest)
+		return
+	}
+
+	r.Form = make(map[string][]string)
+	r.Form.Set("username", user.ID)
+	r.Form.Set("password", user.Password)
+	r.Form.Set("grant_type", "password")
+	err = service.OauthServer.HandleTokenRequest(w, r)
+	if err != nil {
+		common.Logger.Error("签发token失败: " + err.Error())
+		common.HttpError(w, common.ErrService.AppendMsg(err.Error()), http.StatusInternalServerError)
+	}
+}
+
+// SSOLogoutReq SSO登出请求体
+type SSOLogoutReq struct {
+	Code string `json:"code"`
+}
+
+// @Summary SSO单点登出
+// @Description 调用中台SSO登出接口，根据用户编号一键退出
+// @Tags Oauth2
+// @Accept json
+// @Param req body SSOLogoutReq true "用户编号"
+// @Produce json
+// @Success 200 {object} common.Response "成功"
+// @Failure 500 {object} common.Response "失败"
+// @Router /oauth/sso-logout [post]
+func ssoLogoutHandler(w http.ResponseWriter, r *http.Request) {
+	if !config.SSO_ENABLED {
+		common.HttpError(w, common.ErrParam.AppendMsg("SSO功能未启用"), http.StatusBadRequest)
+		return
+	}
+
+	var req SSOLogoutReq
+	err := common.ReadRequestBody(r, &req)
+	if err != nil {
+		common.HttpError(w, common.ErrParam.AppendMsg(err.Error()), http.StatusBadRequest)
+		return
+	}
+	if req.Code == "" {
+		common.HttpError(w, common.ErrParam.AppendMsg("code不能为空"), http.StatusBadRequest)
+		return
+	}
+
+	err = service.SSORevokeByCode(req.Code)
+	if err != nil {
+		common.Logger.Error("SSO登出失败: " + err.Error())
+		common.HttpError(w, common.ErrService.AppendMsg(err.Error()), http.StatusInternalServerError)
+		return
+	}
+
+	common.HttpResult(w, common.OK)
 }
