@@ -278,13 +278,13 @@ func ssoFetchMembersPage(pageNumber, pageSize int) ([]SSOSyncMember, bool, error
 }
 
 // ssoUpsertLocalUser 将中台人员数据写入/更新到本地 o_user 表
+// 中台 code（员工编码）作为本地 identity 的唯一映射
 func ssoUpsertLocalUser(ctx context.Context, member *SSOSyncMember) error {
-	loginName := member.Username
-	if loginName == "" {
-		loginName = member.Code
+	if member.Code == "" {
+		return fmt.Errorf("中台人员编号(code)为空，跳过")
 	}
 
-	existingUser, _ := GetUserByFieldName(ctx, "identity", loginName)
+	existingUser, _ := GetUserByFieldName(ctx, "identity", member.Code)
 
 	now := common.LocalTime(time.Now())
 	gender := ssoMapGender(member.Gender)
@@ -315,7 +315,7 @@ func ssoUpsertLocalUser(ctx context.Context, member *SSOSyncMember) error {
 		info[model.User_FIELD_NAME_email] = member.Email
 		info[model.User_FIELD_NAME_gender] = gender
 		info[model.User_FIELD_NAME_org_id] = orgID
-		info[model.User_FIELD_NAME_work_number] = member.Code
+		info[model.User_FIELD_NAME_work_number] = member.Username
 		info[model.User_FIELD_NAME_status] = status
 		info[model.User_FIELD_NAME_update_at] = now
 		return common.DbUpsert[map[string]any](ctx, common.GetDaprClient(), info, model.UserTableInfo.Name, model.User_FIELD_NAME_id)
@@ -324,7 +324,7 @@ func ssoUpsertLocalUser(ctx context.Context, member *SSOSyncMember) error {
 	newUser := model.User{
 		ID:         common.NanoId(),
 		TenantID:   "default",
-		Identity:   loginName,
+		Identity:   member.Code,
 		Name:       member.Name,
 		ZhName:     member.Name,
 		Mobile:     member.PhoneNumber,
@@ -333,7 +333,7 @@ func ssoUpsertLocalUser(ctx context.Context, member *SSOSyncMember) error {
 		Password:   common.NanoId(),
 		Type:       2,
 		OrgID:      orgID,
-		WorkNumber: member.Code,
+		WorkNumber: member.Username,
 		Status:     status,
 		CreateAt:   now,
 		UpdateAt:   now,

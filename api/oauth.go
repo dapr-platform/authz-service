@@ -215,14 +215,15 @@ func ssoTokenHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	user, err := service.GetUserByFieldName(r.Context(), "identity", ssoUser.LoginName)
+	// 中台 code（员工编码）对应本地 identity
+	user, err := service.GetUserByFieldName(r.Context(), "identity", ssoUser.Code)
 	if err != nil {
 		common.Logger.Error("查询本地用户失败: " + err.Error())
 		common.HttpError(w, common.ErrService.AppendMsg(err.Error()), http.StatusInternalServerError)
 		return
 	}
 	if user == nil {
-		common.Logger.Error("SSO用户在本地不存在: " + ssoUser.LoginName)
+		common.Logger.Error("SSO用户在本地不存在, code: " + ssoUser.Code)
 		common.HttpError(w, common.ErrParam.AppendMsg("用户不存在，请先同步用户数据"), http.StatusBadRequest)
 		return
 	}
@@ -242,16 +243,9 @@ func ssoTokenHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// SSOLogoutReq SSO登出请求体
-type SSOLogoutReq struct {
-	Code string `json:"code"`
-}
-
 // @Summary SSO单点登出
-// @Description 调用中台SSO登出接口，根据用户编号一键退出
+// @Description 调用中台SSO登出接口，自动从当前登录用户JWT中获取用户编号进行登出
 // @Tags Oauth2
-// @Accept json
-// @Param req body SSOLogoutReq true "用户编号"
 // @Produce json
 // @Success 200 {object} common.Response "成功"
 // @Failure 500 {object} common.Response "失败"
@@ -262,18 +256,20 @@ func ssoLogoutHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var req SSOLogoutReq
-	err := common.ReadRequestBody(r, &req)
+	sub, err := common.ExtractUserSub(r)
 	if err != nil {
-		common.HttpError(w, common.ErrParam.AppendMsg(err.Error()), http.StatusBadRequest)
-		return
-	}
-	if req.Code == "" {
-		common.HttpError(w, common.ErrParam.AppendMsg("code不能为空"), http.StatusBadRequest)
+		common.HttpError(w, common.ErrParam.AppendMsg("无法获取当前用户: "+err.Error()), http.StatusBadRequest)
 		return
 	}
 
-	err = service.SSORevokeByCode(req.Code)
+	user, err := service.GetUserByFieldName(r.Context(), "id", sub)
+	if err != nil || user == nil {
+		common.HttpError(w, common.ErrParam.AppendMsg("用户不存在"), http.StatusBadRequest)
+		return
+	}
+
+	// identity 存储的就是中台 code（员工编码）
+	err = service.SSORevokeByCode(user.Identity)
 	if err != nil {
 		common.Logger.Error("SSO登出失败: " + err.Error())
 		common.HttpError(w, common.ErrService.AppendMsg(err.Error()), http.StatusInternalServerError)
